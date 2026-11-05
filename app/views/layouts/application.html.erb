@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= content_for(:title) || "Shichimi · 七味" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="theme-color" content="#d1382b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Shichimi">
+    <meta name="application-name" content="Shichimi">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= yield :head %>
+    <%= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="<%= content_for(:body_class) %>">
+    <% unless content_for?(:bare) %>
+      <header class="topbar">
+        <%= link_to root_path, class: "brand" do %><span class="brand-mark">七</span> Shichimi<% end %>
+        <% if authenticated? %>
+          <nav class="topnav">
+            <%= link_to "Today", root_path %>
+            <%= link_to "Workouts", workouts_path %>
+            <%= link_to "Exercises", exercises_path %>
+            <%= link_to "Routine", routine_items_path %>
+            <%= link_to "History", workout_logs_path %>
+            <%= link_to "Stats", stats_path %>
+            <%= link_to "Settings", settings_path %>
+          </nav>
+        <% else %>
+          <nav class="topnav">
+            <%= link_to "Exercises", exercises_path %>
+            <%= link_to "Sign in", new_session_path %>
+          </nav>
+        <% end %>
+      </header>
+    <% end %>
+
+    <% flash.each do |type, message| %>
+      <div class="flash flash-<%= type == "notice" ? "notice" : "alert" %>" role="status"><%= message %></div>
+    <% end %>
+
+    <main class="<%= content_for?(:bare) ? "bare" : "page" %>">
+      <%= yield %>
+    </main>
+
+    <% if authenticated? && !content_for?(:bare) %>
+      <nav class="tabbar" aria-label="Primary">
+        <%= link_to root_path, class: ("on" if current_page?(root_path)) do %><span>今</span>Today<% end %>
+        <%= link_to workouts_path, class: ("on" if controller_name == "workouts") do %><span>練</span>Workouts<% end %>
+        <%= link_to routine_items_path, class: ("on" if controller_name == "routine_items") do %><span>型</span>Routine<% end %>
+        <%= link_to workout_logs_path, class: ("on" if controller_name == "workout_logs") do %><span>記</span>History<% end %>
+        <%= link_to stats_path, class: ("on" if controller_name == "stats") do %><span>計</span>Stats<% end %>
+      </nav>
+    <% end %>
+  </body>
+</html>

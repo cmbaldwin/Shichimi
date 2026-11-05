@@ -1,0 +1,21 @@
+<% content_for :title, "Sign up · Shichimi" %>
+<section class="auth card">
+  <h1>Start your seven</h1>
+  <p class="muted">Seven minutes a day, tracked.</p>
+  <%= form_with model: @user, url: registration_path, class: "stack" do |f| %>
+    <% if @user.errors.any? %>
+      <div class="flash flash-alert"><%= @user.errors.full_messages.to_sentence %></div>
+    <% end %>
+    <%= f.label :name %>
+    <%= f.text_field :name, autocomplete: "nickname" %>
+    <%= f.label :email_address, "Email" %>
+    <%= f.email_field :email_address, required: true, autocomplete: "username" %>
+    <%= f.label :password %>
+    <%= f.password_field :password, required: true, minlength: 8, autocomplete: "new-password" %>
+    <%= f.label :password_confirmation, "Confirm password" %>
+    <%= f.password_field :password_confirmation, required: true, autocomplete: "new-password" %>
+    <%= f.hidden_field :time_zone, value: "Asia/Tokyo", data: { controller: "timezone" } %>
+    <%= f.submit "Create account", class: "btn btn-primary" %>
+  <% end %>
+  <p class="muted">Already have an account? <%= link_to "Sign in", new_session_path %></p>
+</section>

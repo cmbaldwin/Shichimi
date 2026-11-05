@@ -1,0 +1,87 @@
+# Seven timing formats, one per spice in shichimi tōgarashi. heat: 1 (mild) .. 5 (hot).
+# total time = rounds * (n*work + (n-1)*rest) + (rounds-1)*round_rest, n = stations.
+# `science` text is verified by the research pass; keep claims to what the cited paper shows.
+- key: classic
+  name: Classic 12
+  spice: Chinpi
+  ja: 陳皮
+  heat: 3
+  work: 30
+  rest: 10
+  rounds: 1
+  round_rest: 10
+  stations: 12
+  summary: The original high-intensity circuit. 12 stations, 30 seconds on, 10 seconds to switch.
+  science: Klika & Jordan (2013), ACSM's Health & Fitness Journal 17(3). 12 body-weight exercises ordered so that muscle groups alternate, letting one rest while the next works.
+- key: sprint
+  name: Tōgarashi Sprint
+  spice: Tōgarashi
+  ja: 唐辛子
+  heat: 5
+  work: 20
+  rest: 10
+  rounds: 1
+  round_rest: 10
+  stations: 8
+  summary: The original Tabata protocol. Eight 20-second all-out efforts with 10 seconds of rest, done in 4 minutes.
+  science: Tabata et al. (1996), Medicine & Science in Sports & Exercise 28(10). 8 × 20 s / 10 s intervals improved both aerobic and anaerobic capacity. Body-weight moves make it Tabata-style rather than the cycle-ergometer original.
+- key: tabata
+  name: Sansho Seven
+  spice: Sansho
+  ja: 山椒
+  heat: 4
+  work: 20
+  rest: 10
+  rounds: 2
+  round_rest: 10
+  stations: 7
+  summary: Tabata-style 20/10 intervals across 7 moves, done twice through for 14 intervals in 7 minutes.
+  science: McRae et al. (2012), Applied Physiology, Nutrition, and Metabolism 37(6). Whole-body 20 s / 10 s calisthenics (burpees, jumping jacks, mountain climbers) raised VO2peak about as much as 30 minutes of treadmill running.
+- key: fifty_ten
+  name: Shōga Fifty
+  spice: Shōga
+  ja: 生姜
+  heat: 3
+  work: 50
+  rest: 10
+  rounds: 1
+  round_rest: 10
+  stations: 8
+  summary: Long 50-second efforts with quick 10-second switches across 8 moves. More time under tension, fewer transitions.
+  science: Archila et al. (2021), International Journal of Exercise Science 14(3). A body-weight circuit of 1-minute bouts done 3×/week raised VO2peak in 6 weeks.
+- key: forty_twenty
+  name: Nori Forty
+  spice: Aonori
+  ja: 青のり
+  heat: 2
+  work: 40
+  rest: 20
+  rounds: 1
+  round_rest: 20
+  stations: 7
+  summary: A 2:1 work-to-rest ratio across 7 moves. Enough rest to keep form crisp, enough work to stay breathless.
+  science: A 2:1 work-to-rest ratio is the most common interval structure in HIIT research. The longer rest keeps power output and technique high across the set.
+- key: easy
+  name: Goma Easy
+  spice: Goma
+  ja: 胡麻
+  heat: 1
+  work: 30
+  rest: 30
+  rounds: 1
+  round_rest: 30
+  stations: 7
+  summary: Equal work and rest across 7 moves. For beginners, recovery days and slow mornings.
+  science: WHO 2020 physical activity guidelines. Every move counts, and short bouts of any intensity add to weekly totals. 1:1 intervals let your heart rate come down between efforts.
+- key: double
+  name: Asa no Mi Double
+  spice: Asa no mi
+  ja: 麻の実
+  heat: 4
+  work: 30
+  rest: 10
+  rounds: 2
+  round_rest: 60
+  stations: 12
+  summary: The Classic 12 circuit done twice, with a 60-second breather in between. About 16 minutes.
+  science: Klika & Jordan (2013) suggest repeating the 7-minute circuit 2–3 times for a bigger training effect.
