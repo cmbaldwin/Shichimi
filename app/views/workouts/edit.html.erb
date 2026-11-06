@@ -1,0 +1,4 @@
+<% content_for :title, "Edit workout · Shichimi" %>
+<h1>Edit workout</h1>
+<%= render "form", workout: @workout %>
+<%= button_to "Delete workout", workout_path(@workout), method: :delete, class: "btn btn-danger", form: { data: { turbo_confirm: "Delete this workout?" } } %>

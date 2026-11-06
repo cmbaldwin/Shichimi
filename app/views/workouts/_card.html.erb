@@ -1,0 +1,7 @@
+<% f = workout.workout_format %>
+<%= link_to workout_path(workout), class: "card wcard", data: { format: workout.format } do %>
+  <div class="spread"><strong><%= workout.name %></strong><span class="num muted"><%= mmss workout.total_seconds %></span></div>
+  <div class="muted"><%= f.spice %> <%= heat_marks f.heat %> · <%= level_label workout.level %></div>
+  <div class="row chips"><%= category_summary workout %></div>
+  <div class="muted small"><%= workout_flags(workout).join(" · ") %></div>
+<% end %>

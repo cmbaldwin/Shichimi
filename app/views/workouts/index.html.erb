@@ -1,0 +1,28 @@
+<% content_for :title, "Workouts · Shichimi" %>
+<div class="spread"><h1>Workouts</h1><%= link_to "New workout", new_workout_path, class: "btn btn-primary btn-small" %></div>
+<nav class="tabs">
+  <%= link_to "Catalog", workouts_path(request.query_parameters.except("scope")), class: ("on" unless @mine) %>
+  <%= link_to "Mine", workouts_path(request.query_parameters.merge("scope" => "mine")), class: ("on" if @mine) %>
+</nav>
+<%= form_with url: workouts_path, method: :get, class: "filters card", data: { controller: "autosubmit", turbo_frame: "results", turbo_action: "advance" } do |f| %>
+  <%= hidden_field_tag :scope, "mine" if @mine %>
+  <%= search_field_tag :q, params[:q], placeholder: "Search by name", "aria-label": "Search", data: { action: "input->autosubmit#debounced" } %>
+  <div class="filter-row">
+    <%= select_tag :fmt, options_for_select(WorkoutFormat.all.map { [ "#{it.spice} (#{it.name})", it.key ] }, params[:fmt]), include_blank: "Any format", "aria-label": "Format", data: { action: "autosubmit#submit" } %>
+    <%= select_tag :focus, options_for_select(Workout::FOCI.map { [ it.titleize, it ] }, params[:focus]), include_blank: "Any focus", "aria-label": "Focus", data: { action: "autosubmit#submit" } %>
+    <%= select_tag :level, options_for_select([ [ "Easy", 1 ], [ "Medium", 2 ], [ "Hard", 3 ] ], params[:level]), include_blank: "Any level", "aria-label": "Level", data: { action: "autosubmit#submit" } %>
+  </div>
+  <div class="row checks">
+    <% { low_impact: "Low impact", no_floor: "No floor", no_equipment: "No equipment" }.each do |k, label| %>
+      <label class="check"><%= check_box_tag k, 1, params[k] == "1", data: { action: "autosubmit#submit" } %> <%= label %></label>
+    <% end %>
+  </div>
+<% end %>
+<%= turbo_frame_tag "results" do %>
+  <p class="muted small"><%= pluralize @workouts.size, "workout" %></p>
+  <% if @workouts.empty? %>
+    <p class="card muted"><%= @mine ? "You have no custom workouts yet." : "Nothing matches those filters." %></p>
+  <% else %>
+    <div class="grid"><%= render partial: "workouts/card", collection: @workouts, as: :workout %></div>
+  <% end %>
+<% end %>

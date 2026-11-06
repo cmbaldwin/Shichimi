@@ -1,0 +1,24 @@
+<% slugs = workout.exercise_slugs.presence || [] %>
+<% slugs += [ "" ] * (workout.exercise_slugs.size < 7 ? 7 - slugs.size : 0) %>
+<% opts = Exercise.all.map { [ "#{it.name} (#{it.category})", it.slug ] } %>
+<%= form_with model: workout, class: "stack card", data: { controller: "stations" } do |f| %>
+  <% if workout.errors.any? %><div class="flash flash-alert"><%= workout.errors.full_messages.to_sentence %></div><% end %>
+  <%= f.label :name %>
+  <%= f.text_field :name, required: true %>
+  <%= f.label :format, "Format" %>
+  <%= f.select :format, WorkoutFormat.all.map { [ "#{it.spice}: #{it.name} (#{it.work}s on / #{it.rest}s off#{", #{it.rounds} rounds" if it.rounds > 1})", it.key ] } %>
+  <div class="filter-row">
+    <div><%= f.label :focus %><%= f.select :focus, Workout::FOCI.map { [ it.titleize, it ] } %></div>
+    <div><%= f.label :level %><%= f.select :level, [ [ "Easy", 1 ], [ "Medium", 2 ], [ "Hard", 3 ] ] %></div>
+  </div>
+  <fieldset class="stations">
+    <legend>Stations (<span data-stations-target="count"></span>)</legend>
+    <p class="muted small">Alternate categories so one muscle group rests while another works. Blank rows are ignored.</p>
+    <ol data-stations-target="list">
+      <% slugs.each do |s| %><%= render "workouts/station", opts: opts, selected: s %><% end %>
+    </ol>
+    <template data-stations-target="template"><%= render "workouts/station", opts: opts, selected: "" %></template>
+    <button type="button" class="btn btn-small" data-action="stations#add">Add station</button>
+  </fieldset>
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>

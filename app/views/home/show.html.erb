@@ -1,0 +1,18 @@
+<% content_for :title, "Shichimi · 七味 · Seven minutes. Seven spices." %>
+<section class="hero">
+  <p class="ja">七味 · shichimi · ナナフン · nana-fun: 七分 = seven minutes</p>
+  <h1>Seven minutes. Seven spices.</h1>
+  <p class="lead">Guided body-weight workouts, shorter than two cup ramens and change. A 3D coach shows every move, a timer runs the intervals, and each workout is built on published research.</p>
+  <div class="row">
+    <%= link_to "Sign up free", new_registration_path, class: "btn btn-primary" %>
+    <%= link_to "Sign in", new_session_path, class: "btn" %>
+  </div>
+</section>
+
+<section class="grid pitch">
+  <div class="card"><h3>100 workouts</h3><p class="muted">Seven timing formats, one per spice: from the 12-station classic to a 4-minute sprint.</p></div>
+  <div class="card"><h3>30 exercises</h3><p class="muted">Every move animated in 3D, with easier and harder versions. Quiet picks for apartments.</p></div>
+  <div class="card"><h3>Habit tools</h3><p class="muted">Routine rotation, streaks, weekly goal, history and gentle reminders.</p></div>
+</section>
+
+<p class="row"><%= link_to "Browse the exercises", exercises_path %> <%= link_to "Read the science", "/science" %></p>

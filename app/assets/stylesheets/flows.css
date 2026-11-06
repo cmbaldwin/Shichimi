@@ -1,0 +1,42 @@
+/* App flows: home, library, routine, history, settings. Uses tokens from application.css. */
+.hero { padding: 24px 0; }
+.hero h1 { font-size: clamp(2rem, 9vw, 3.2rem); }
+.lead { font-size: 1.1rem; max-width: 36rem; color: var(--muted); }
+.pitch { margin: 16px 0; }
+.small { font-size: .85rem; }
+.big { font-size: 2.2rem; font-weight: 700; }
+.btn-big { min-height: 56px; padding: 12px 36px; font-size: 1.2rem; }
+.today-card, .fallen, .next-god { margin-bottom: 16px; }
+.today-card { border-left: 6px solid var(--format, var(--accent)); }
+.fallen { border-left: 6px solid var(--core); }
+.weekdots { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; font-size: .75rem; color: var(--muted); }
+.weekdots i { display: block; width: 28px; height: 28px; margin: 4px auto 0; border-radius: 50%; border: 2px solid var(--line); }
+.weekdots .done i { background: var(--ok); border-color: var(--ok); }
+.weekdots .today span { color: var(--accent); font-weight: 700; }
+.weekdots .today i { border-color: var(--accent); }
+progress { width: 100%; height: 8px; accent-color: var(--accent); }
+.wcard { display: flex; flex-direction: column; gap: 6px; text-decoration: none; border-left: 5px solid var(--format, var(--line)); }
+.chips { gap: 4px; }
+.tabs { display: flex; gap: 8px; margin: 8px 0 12px; }
+.tabs a { padding: 6px 16px; border-radius: 999px; text-decoration: none; border: 1px solid var(--line); font-weight: 600; }
+.tabs a.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.filters { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+.filter-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; }
+.check { display: inline-flex; align-items: center; gap: 6px; font-weight: 500; min-height: 32px; }
+.check input { width: 18px; height: 18px; accent-color: var(--accent); }
+fieldset { border: 1px solid var(--line); border-radius: 10px; padding: 12px; min-width: 0; }
+.stations ol { list-style: none; margin: 0 0 12px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.station { display: flex; gap: 6px; align-items: center; }
+.station select { flex: 1; min-width: 0; }
+.station .num { width: 1.5rem; text-align: right; color: var(--muted); }
+.routine { list-style: none; padding: 0; margin: 0; }
+.routine li, .log-row { border-left: 5px solid var(--format, var(--line)); }
+.wname { font-weight: 700; text-decoration: none; }
+.chip.next { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+form.inline { display: inline; margin: 0; }
+.btn:disabled { opacity: .4; cursor: default; }
+.month { margin-top: 24px; }
+.pager { margin-top: 16px; }
+.days { display: flex; flex-wrap: wrap; gap: 4px 12px; }
+.auth h1 { margin-bottom: .75em; }
+.auth .stack > .btn { width: 100%; }

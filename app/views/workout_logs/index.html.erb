@@ -1,0 +1,24 @@
+<% content_for :title, "History · Shichimi" %>
+<h1>History</h1>
+<% if @logs.empty? %>
+  <div class="card stack"><p class="muted">No workouts logged yet.</p><%= link_to "Start one", workouts_path, class: "btn btn-primary" %></div>
+<% end %>
+<% @by_month.each do |month, logs| %>
+  <h2 class="month"><%= month.strftime("%B %Y") %></h2>
+  <div class="stack">
+    <% logs.each do |log| %>
+      <div class="card spread log-row" data-format="<%= log.format %>">
+        <div>
+          <div class="muted small"><%= log.performed_at.in_time_zone(current_user.zone).strftime("%a %-d %b, %H:%M") %></div>
+          <%= link_to log.workout_name, workout_log_path(log), class: "wname" %>
+          <div class="muted small"><span class="num"><%= mmss log.duration_seconds %></span> · <%= log.completed_slugs.size %> done<%= " · RPE #{log.rpe}" if log.rpe %></div>
+        </div>
+        <%= button_to "Delete", workout_log_path(log), method: :delete, class: "btn btn-small btn-danger", form: { data: { turbo_confirm: "Delete this entry?" } } %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+<nav class="row pager">
+  <%= link_to "Newer", workout_logs_path(page: @page - 1), class: "btn btn-small" if @page > 1 %>
+  <%= link_to "Older", workout_logs_path(page: @page + 1), class: "btn btn-small" if @more %>
+</nav>

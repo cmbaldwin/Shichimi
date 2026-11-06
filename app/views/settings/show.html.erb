@@ -1,0 +1,27 @@
+<% content_for :title, "Settings · Shichimi" %>
+<% u = current_user %>
+<h1>Settings</h1>
+<%= form_with model: u, url: settings_path, method: :patch, class: "stack card" do |f| %>
+  <% if u.errors.any? %><div class="flash flash-alert"><%= u.errors.full_messages.to_sentence %></div><% end %>
+  <%= f.label :name %><%= f.text_field :name %>
+  <%= f.label :time_zone, "Time zone" %>
+  <%= f.select :time_zone, ActiveSupport::TimeZone.all.map { [ "#{it.name} (#{it.tzinfo.identifier})", it.tzinfo.identifier ] }.uniq(&:last).sort_by(&:last) %>
+  <%= f.label :weight_kg, "Weight (kg)" %>
+  <%= f.number_field :weight_kg, step: 0.1, min: 20, max: 300 %>
+  <p class="muted small">Optional. Only used to estimate calories burned.</p>
+  <%= f.label :weekly_goal, "Weekly goal (workout days)" %>
+  <%= f.number_field :weekly_goal, min: 1, max: 14 %>
+  <label class="check"><%= f.check_box :voice_enabled %> Voice cues</label>
+  <label class="check"><%= f.check_box :reminders_enabled %> Daily reminders</label>
+  <%= f.label :reminder_time, "Reminder time" %><%= f.time_field :reminder_time %>
+  <fieldset class="days"><legend>Reminder days</legend>
+    <% %w[Sun Mon Tue Wed Thu Fri Sat].each_with_index do |d, i| %>
+      <label class="check"><%= check_box_tag "user[reminder_days][]", i, u.reminder_days.include?(i.to_s), id: "day_#{i}" %> <%= d %></label>
+    <% end %>
+  </fieldset>
+  <%= f.submit "Save", class: "btn btn-primary" %>
+<% end %>
+<% if lookup_context.exists?("push_subscriptions/toggle", [], true) %>
+  <%= render "push_subscriptions/toggle" %>
+<% end %>
+<%= button_to "Sign out", session_path, method: :delete, class: "btn" %>

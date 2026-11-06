@@ -1,0 +1,7 @@
+<li class="station">
+  <span class="num" data-n></span>
+  <%= select_tag "workout[exercise_slugs][]", options_for_select(opts, selected), include_blank: true, "aria-label": "Exercise" %>
+  <button type="button" class="btn btn-small" data-action="stations#up" aria-label="Move up">&uarr;</button>
+  <button type="button" class="btn btn-small" data-action="stations#down" aria-label="Move down">&darr;</button>
+  <button type="button" class="btn btn-small btn-danger" data-action="stations#remove" aria-label="Remove">&times;</button>
+</li>

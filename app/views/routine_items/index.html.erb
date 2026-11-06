@@ -1,0 +1,26 @@
+<% content_for :title, "Routine · Shichimi" %>
+<h1>Routine</h1>
+<% if @items.empty? %>
+  <div class="card stack"><p class="muted">Your routine is empty. Add workouts and Shichimi will rotate through them for you.</p>
+    <%= link_to "Browse the library", workouts_path, class: "btn btn-primary" %></div>
+<% else %>
+  <p class="muted">Finish a routine workout and the next one moves to the top of Today.</p>
+  <ol class="routine stack">
+    <% @items.each_with_index do |item, i| w = item.workout %>
+      <li class="card" data-format="<%= w.format %>">
+        <div class="spread">
+          <div>
+            <%= link_to w.name, workout_path(w), class: "wname" %>
+            <% if w == @next %><span class="chip next">Next up</span><% end %>
+            <div class="muted small"><%= w.workout_format.spice %> · <span class="num"><%= mmss w.total_seconds %></span></div>
+          </div>
+          <div class="row">
+            <%= button_to "↑", move_routine_item_path(item, direction: "up"), method: :patch, class: "btn btn-small", disabled: i.zero?, form_class: "inline", aria: { label: "Move up" } %>
+            <%= button_to "↓", move_routine_item_path(item, direction: "down"), method: :patch, class: "btn btn-small", disabled: i == @items.size - 1, form_class: "inline", aria: { label: "Move down" } %>
+            <%= button_to "Remove", routine_item_path(item), method: :delete, class: "btn btn-small btn-danger", form_class: "inline" %>
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ol>
+<% end %>

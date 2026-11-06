@@ -1,0 +1,47 @@
+<% content_for :title, "Today · Shichimi" %>
+<% week = @stats.week; goal = @stats.weekly_goal_progress; today = current_user.today %>
+<h1><%= @greeting %>, <%= current_user.display_name %></h1>
+
+<% if @fallen %>
+  <section class="card fallen">
+    <h2>七転び八起き</h2>
+    <p class="muted">Fall seven times, get up eight. Your streak slipped; today is a fresh start.</p>
+  </section>
+<% end %>
+<% if @workout %>
+  <section class="card today-card" data-format="<%= @workout.format %>">
+    <p class="muted">Today's workout</p>
+    <h2><%= @workout.name %></h2>
+    <p class="muted"><%= @workout.workout_format.spice %> <%= heat_marks @workout.workout_format.heat %> · <span class="num"><%= mmss @workout.total_seconds %></span> · <%= level_label @workout.level %></p>
+    <div class="row">
+      <%= link_to "Start", play_workout_path(@workout), class: "btn btn-primary btn-big" %>
+      <%= link_to "See details", workout_path(@workout), class: "btn" %>
+    </div>
+  </section>
+<% end %>
+
+<section class="card stack">
+  <div class="spread">
+    <div><span class="big num"><%= @stats.current_streak %></span> <span class="muted">day streak</span></div>
+    <div class="muted num"><%= goal[:done_days] %> / <%= goal[:goal] %> this week</div>
+  </div>
+  <div class="weekdots">
+    <% week.each do |d| %>
+      <div class="<%= "done" if d[:done] %> <%= "today" if d[:date] == today %>">
+        <span><%= d[:date].strftime("%a")[0, 2] %></span><i aria-label="<%= d[:done] ? "done" : "not done" %>"></i>
+      </div>
+    <% end %>
+  </div>
+  <progress max="<%= goal[:goal] %>" value="<%= [ goal[:done_days], goal[:goal] ].min %>"></progress>
+</section>
+
+<% if @god %>
+  <p class="card next-god"><strong><%= @god[:ja] %> <%= @god[:name] %></strong> <span class="muted">next to unlock: <%= @god[:progress] %> / <%= @god[:goal] %></span></p>
+<% end %>
+
+<p class="muted">
+  <% if @last_log %>Last workout: <%= link_to @last_log.workout_name, workout_log_path(@last_log) %>, <%= ago @last_log.performed_at %>.<% else %>No workouts yet. Your first seven minutes await.<% end %>
+</p>
+
+<h2>Quick picks</h2>
+<div class="grid"><%= render partial: "workouts/card", collection: @picks, as: :workout %></div>
