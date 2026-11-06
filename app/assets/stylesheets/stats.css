@@ -1,0 +1,81 @@
+/* Stats page: server-rendered HTML/CSS/SVG charts. Colors only via tokens; every chart also has text. */
+.stats { --heat-0: color-mix(in srgb, var(--ink) 8%, var(--card)); }
+.stats section.card { padding: 16px; }
+.stats h2 { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.stats .small { font-size: .8rem; }
+.stats .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.stats .num { font-family: var(--mono); }
+
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(104px, 1fr)); gap: 12px; margin: 0; }
+.tiles dt { color: var(--muted); font-size: .8rem; }
+.tiles dd { margin: 0; font-size: 1.5rem; font-weight: 700; }
+.tiles small { font-size: .8rem; font-weight: 500; color: var(--muted); }
+
+.weekdots { list-style: none; display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin: 0; padding: 0; text-align: center; font-size: .8rem; color: var(--muted); }
+.weekdots li { display: grid; gap: 4px; justify-items: center; }
+.weekdots .dot { width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; color: var(--accent-ink); font-weight: 700; }
+.weekdots .done .dot { background: var(--ok); border-color: var(--ok); }
+.weekdots .now { color: var(--ink); font-weight: 700; }
+.weekdots .now .dot { border-color: var(--accent); }
+
+.meter + .meter { margin-top: 14px; }
+.track { height: 10px; border-radius: 5px; background: var(--heat-0); overflow: hidden; margin-top: 6px; }
+.track i { display: block; height: 100%; border-radius: 5px; background: var(--ok); }
+
+.heat-scroll { overflow-x: auto; padding-bottom: 4px; }
+.heatmap { display: grid; grid-template-rows: repeat(7, 11px); grid-auto-flow: column; grid-auto-columns: 11px; gap: 3px; width: max-content; }
+.heatmap i, .sw { border-radius: 2px; background: var(--heat-0); }
+.stats [data-level="1"] { background: color-mix(in srgb, var(--accent) 28%, var(--heat-0)) !important; }
+.stats [data-level="2"] { background: color-mix(in srgb, var(--accent) 50%, var(--heat-0)) !important; }
+.stats [data-level="3"] { background: color-mix(in srgb, var(--accent) 75%, var(--heat-0)) !important; }
+.stats [data-level="4"] { background: var(--accent) !important; }
+.heatmap .future { opacity: .35; }
+.legend { display: flex; align-items: center; gap: 3px; margin: 8px 0 0; }
+.legend .sw { display: inline-block; width: 11px; height: 11px; }
+
+.bars { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; height: 150px; align-items: end; }
+.bars li { display: grid; grid-template-rows: 16px 1fr 16px; height: 100%; text-align: center; font-size: .7rem; color: var(--muted); min-width: 0; }
+.bars i { align-self: end; background: var(--accent); border-radius: 4px 4px 0 0; min-height: 2px; width: 100%; }
+.bars li:last-child i { outline: 2px solid var(--ink); outline-offset: -2px; outline-style: dotted; }
+.bars .lab { font-size: .6rem; white-space: nowrap; overflow: hidden; }
+
+.balance { display: flex; gap: 2px; height: 22px; }
+.balance i { border-radius: 4px; min-width: 4px; }
+.key { list-style: none; padding: 0; margin: 12px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 6px; }
+.key .sw { display: inline-block; width: 10px; height: 10px; }
+
+.mini { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; height: 96px; align-items: end; }
+.mini.hours { grid-template-columns: repeat(24, 1fr); }
+.mini.days { grid-template-columns: repeat(7, 1fr); gap: 6px; height: 120px; }
+.mini li { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; gap: 2px; }
+.mini i { display: block; width: 100%; background: var(--accent); border-radius: 3px 3px 0 0; min-height: 2px; }
+.mini.days li { display: grid; grid-template-rows: auto 1fr auto; justify-items: stretch; text-align: center; }
+.mini.days i { align-self: end; }
+.axis { display: flex; justify-content: space-between; margin-top: 4px; }
+
+.spark { width: 100%; height: auto; overflow: visible; }
+.spark .line { stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.spark .ref { stroke: var(--line); stroke-dasharray: 3 3; }
+.spark .end { fill: var(--accent); stroke: var(--card); stroke-width: 2; }
+
+.rank { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.rank li { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+.empty { text-align: center; padding: 32px 16px !important; }
+
+/* Shichifuku medallions (partial is also used outside .stats, so no .stats scope) */
+.gods { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; text-align: center; }
+.god { display: grid; gap: 2px; justify-items: center; font-size: .65rem; min-width: 0; }
+.god .medal { width: 100%; max-width: 44px; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; font-size: 1.15rem; font-weight: 700; border: 2px solid var(--line); color: var(--muted); }
+.god.unlocked .medal { background: var(--format); border-color: var(--format); color: var(--paper); box-shadow: 0 0 0 2px var(--card), 0 0 0 4px var(--format); }
+.god .gname { font-weight: 600; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.god.locked .gname, .god.locked .gstate { color: var(--muted); }
+.god .gstate { font-family: var(--mono); font-size: .6rem; }
+.god .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 480px) { .god .gname { font-size: .55rem; } .god .medal { font-size: .95rem; } }
+
+.stats, .stats > * { min-width: 0; }
+.spark { max-height: 130px; }
+@media (min-width: 761px) {
+  .heatmap { grid-template-rows: repeat(7, 16px); grid-auto-columns: 16px; gap: 4px; }
+  .stats .grid { grid-template-columns: 1fr 1fr; }
+}

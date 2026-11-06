@@ -1,0 +1,16 @@
+<%# Shichifuku: the Seven Lucky Gods. Locals: stats (a Stats). Styles in stats.css (loaded app-wide). %>
+<% gods = stats.lucky_gods %>
+<section class="card gods-card" aria-labelledby="h-gods">
+  <h2 id="h-gods">Seven Lucky Gods <span class="ja">七福神 · <span class="num"><%= gods.count { it[:unlocked] } %> / 7</span></span></h2>
+  <ol class="gods">
+    <% gods.each do |g| %>
+      <li class="god <%= g[:unlocked] ? "unlocked" : "locked" %>" data-format="<%= g[:format] %>"
+          title="<%= g[:name] %>: <%= g[:blurb] %> <%= g[:unlocked] ? "Unlocked #{g[:unlocked_on]}." : "#{g[:progress]} of #{g[:goal]}." %>">
+        <span class="medal" aria-hidden="true"><%= g[:ja].first %></span>
+        <span class="gname"><%= g[:name] %></span>
+        <span class="gstate num"><%= g[:unlocked] ? "✓ unlocked" : "#{g[:progress]}/#{g[:goal]}" %></span>
+        <span class="visually-hidden"><%= g[:ja] %>. <%= g[:blurb] %> <%= g[:unlocked] ? "Unlocked on #{g[:unlocked_on]}." : "Locked, #{g[:progress]} of #{g[:goal]}." %></span>
+      </li>
+    <% end %>
+  </ol>
+</section>

@@ -1,0 +1,150 @@
+<% content_for :title, "Stats · Shichimi" %>
+<% s = @stats %>
+<div class="stats stack">
+  <h1>Stats <span class="ja">統計</span></h1>
+
+  <% if s.any? %>
+    <% prog = s.weekly_goal_progress; tot = s.totals; who = s.who_targets %>
+
+    <section class="card stats-hero" aria-labelledby="h-streak">
+      <h2 id="h-streak" class="visually-hidden">Streaks</h2>
+      <dl class="tiles">
+        <div><dt>Current streak</dt><dd class="num"><%= s.current_streak %><small> days</small></dd></div>
+        <div><dt>Longest streak</dt><dd class="num"><%= s.longest_streak %><small> days</small></dd></div>
+        <div><dt>Last workout</dt><dd class="num"><%= case s.days_since_last_workout when 0 then "today" when 1 then "yesterday" else "#{s.days_since_last_workout} d ago" end %></dd></div>
+        <div><dt>Sessions</dt><dd class="num"><%= tot[:sessions] %></dd></div>
+        <div><dt>Minutes</dt><dd class="num"><%= number_with_delimiter tot[:minutes] %></dd></div>
+        <div><dt>Work minutes</dt><dd class="num"><%= number_with_delimiter tot[:work_minutes] %></dd></div>
+        <% if tot[:kcal] %><div><dt>Est. kcal</dt><dd class="num"><%= number_with_delimiter tot[:kcal] %></dd></div><% end %>
+      </dl>
+    </section>
+
+    <%= render "stats/lucky_gods", stats: s %>
+
+    <section class="card" aria-labelledby="h-week">
+      <h2 id="h-week">This week <span class="muted num"><%= prog[:done_days] %> / <%= prog[:goal] %> days</span></h2>
+      <ol class="weekdots">
+        <% s.week.each do |d| %>
+          <li class="<%= "done" if d[:done] %> <%= "now" if d[:date] == s.today %>" title="<%= l d[:date], format: :long %>: <%= d[:done] ? "#{d[:minutes]} min" : "no workout" %>">
+            <span class="dot" aria-hidden="true"><%= d[:done] ? "✓" : "" %></span>
+            <span><%= d[:date].strftime("%a") %></span>
+            <span class="visually-hidden"><%= d[:done] ? "done, #{d[:minutes]} minutes" : "no workout" %></span>
+          </li>
+        <% end %>
+      </ol>
+    </section>
+
+    <section class="card" aria-labelledby="h-who">
+      <h2 id="h-who">WHO weekly targets</h2>
+      <% [ [ "Vigorous minutes", who[:vigorous], "min" ], [ "Muscle-strengthening days", who[:strength_days], "days" ] ].each do |label, m, unit| %>
+        <% pct = [ (m[:value] * 100.0 / m[:target]).round, 100 ].min %>
+        <div class="meter">
+          <div class="spread"><span><%= label %></span><span class="num"><%= m[:value] %> / <%= m[:target] %> <%= unit %><%= " ✓" if m[:value] >= m[:target] %></span></div>
+          <div class="track" role="meter" aria-label="<%= label %>" aria-valuemin="0" aria-valuemax="<%= m[:target] %>" aria-valuenow="<%= [ m[:value], m[:target] ].min %>" aria-valuetext="<%= m[:value] %> of <%= m[:target] %> <%= unit %>"><i style="width: <%= pct %>%"></i></div>
+        </div>
+      <% end %>
+      <p class="muted small">Interval work time counts as vigorous; a day counts as strengthening if it had lower or upper body work.</p>
+    </section>
+
+    <section class="card" aria-labelledby="h-heat">
+      <h2 id="h-heat">Last 26 weeks</h2>
+      <% hm = s.heatmap; max = hm.map { it[:minutes] }.max.to_i %>
+      <div class="heat-scroll">
+        <div class="heatmap" role="img" aria-label="Heatmap of workout minutes per day over the last 26 weeks. <%= hm.count { it[:done] } %> active days.">
+          <% hm.each do |d| %>
+            <% lvl = d[:minutes].zero? ? 0 : [ (d[:minutes] * 4.0 / max).ceil, 4 ].min %>
+            <i class="<%= "future" if d[:future] %>" data-level="<%= lvl %>" title="<%= d[:date] %>: <%= d[:minutes] %> min"></i>
+          <% end %>
+        </div>
+      </div>
+      <p class="legend muted small" aria-hidden="true">Less <i class="sw" data-level="0"></i><i class="sw" data-level="1"></i><i class="sw" data-level="2"></i><i class="sw" data-level="3"></i><i class="sw" data-level="4"></i> More</p>
+    </section>
+
+    <section class="card" aria-labelledby="h-weeks">
+      <h2 id="h-weeks">Weekly minutes</h2>
+      <% ws = s.weekly_series; wmax = [ ws.map { it[:minutes] }.max, 1 ].max %>
+      <ol class="bars" role="list">
+        <% ws.each do |w| %>
+          <li title="Week of <%= w[:week_start] %>: <%= w[:minutes] %> min, <%= w[:sessions] %> sessions">
+            <span class="val num"><%= w[:minutes] if w[:minutes] > 0 %></span>
+            <i style="height: <%= (w[:minutes] * 100.0 / wmax).round %>%"></i>
+            <span class="lab num"><%= w[:week_start].strftime("%-m/%-d") %></span>
+            <span class="visually-hidden"><%= w[:minutes] %> minutes, <%= w[:sessions] %> sessions</span>
+          </li>
+        <% end %>
+      </ol>
+      <p class="muted small">Week starting (Monday). Minutes per week, last 12 weeks.</p>
+    </section>
+
+    <section class="card" aria-labelledby="h-cat">
+      <h2 id="h-cat">Balance, last 30 days</h2>
+      <% cb = s.category_balance; ctot = cb.values.sum %>
+      <% if ctot.zero? %>
+        <p class="muted">No work time in the last 30 days.</p>
+      <% else %>
+        <div class="balance" role="img" aria-label="<%= cb.map { |c, v| "#{c} #{(v * 100.0 / ctot).round}%" }.join(", ") %>">
+          <% cb.each do |c, v| %><% next if v.zero? %><i style="flex: <%= v %>; background: var(--<%= c %>)" title="<%= c.capitalize %>: <%= (v / 60.0).round %> min"></i><% end %>
+        </div>
+        <ul class="key">
+          <% cb.each do |c, v| %>
+            <li><span class="chip" data-category="<%= c %>"><i class="sw" style="background: var(--<%= c %>)"></i><%= c.capitalize %></span> <span class="num"><%= (v * 100.0 / ctot).round %>% · <%= (v / 60.0).round %> min</span></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </section>
+
+    <div class="grid">
+      <section class="card" aria-labelledby="h-hour">
+        <h2 id="h-hour">Time of day</h2>
+        <% hh = s.hour_histogram; hmax = [ hh.max, 1 ].max %>
+        <ol class="mini hours" role="img" aria-label="Sessions by hour. <%= hh.each_with_index.select { |c, _| c > 0 }.map { |c, h| "#{h}:00 #{c}" }.join(", ") %>">
+          <% hh.each_with_index do |c, h| %><li title="<%= h %>:00, <%= c %> sessions"><i style="height: <%= (c * 100.0 / hmax).round %>%"></i></li><% end %>
+        </ol>
+        <div class="axis muted small num" aria-hidden="true"><span>0</span><span>6</span><span>12</span><span>18</span><span>23</span></div>
+      </section>
+      <section class="card" aria-labelledby="h-wd">
+        <h2 id="h-wd">Weekdays</h2>
+        <% wd = s.weekday_histogram; wmax2 = [ wd.max, 1 ].max %>
+        <ol class="mini days">
+          <% %w[Mon Tue Wed Thu Fri Sat Sun].each_with_index do |n, i| %>
+            <li title="<%= n %>: <%= wd[i] %> sessions"><span class="num small"><%= wd[i] %></span><i style="height: <%= (wd[i] * 100.0 / wmax2).round %>%"></i><span class="small muted"><%= n[0] %><span class="visually-hidden"><%= n[1..] %></span></span></li>
+          <% end %>
+        </ol>
+      </section>
+    </div>
+
+    <section class="card" aria-labelledby="h-rpe">
+      <h2 id="h-rpe">Effort (RPE) <% if s.rpe_average %><span class="muted num">avg <%= s.rpe_average %></span><% end %></h2>
+      <% t = s.rpe_trend %>
+      <% if t.size < 2 %>
+        <p class="muted">Rate a few workouts to see your effort trend.</p>
+      <% else %>
+        <% w = 300.0; h = 60.0; pts = t.each_with_index.map { |v, i| [ (i * w / (t.size - 1)).round(1), (h - (v - 1) * h / 9.0).round(1) ] } %>
+        <svg class="spark" viewBox="-6 -6 <%= w + 12 %> <%= h + 12 %>" role="img" aria-label="Effort ratings over your last <%= t.size %> rated workouts, from <%= t.first %> to <%= t.last %> on a 1 to 10 scale">
+          <title>RPE, last <%= t.size %> rated workouts: <%= t.join(", ") %></title>
+          <line x1="0" x2="<%= w %>" y1="<%= h - (5 - 1) * h / 9.0 %>" y2="<%= h - (5 - 1) * h / 9.0 %>" class="ref"/>
+          <polyline points="<%= pts.map { it.join(",") }.join(" ") %>" fill="none" class="line"/>
+          <circle cx="<%= pts.last[0] %>" cy="<%= pts.last[1] %>" r="4" class="end"/>
+        </svg>
+        <p class="muted small">Latest <span class="num"><%= t.last %></span> of 10. Dashed line = 5.</p>
+      <% end %>
+    </section>
+
+    <div class="grid">
+      <section class="card" aria-labelledby="h-tw">
+        <h2 id="h-tw">Top workouts</h2>
+        <ol class="rank"><% s.top_workouts.each do |name, c| %><li><span><%= name %></span><b class="num"><%= c %>×</b></li><% end %></ol>
+      </section>
+      <section class="card" aria-labelledby="h-te">
+        <h2 id="h-te">Top exercises</h2>
+        <ol class="rank"><% s.top_exercises.each do |name, c, cat| %><li><span><% if cat %><span class="chip" data-category="<%= cat %>"><%= cat %></span> <% end %><%= name %></span><b class="num"><%= c %>×</b></li><% end %></ol>
+      </section>
+    </div>
+  <% else %>
+    <section class="card empty">
+      <h2>Nothing to chart yet</h2>
+      <p class="muted">Finish your first 7-minute workout and your streak, weekly rhythm and balance will show up here.</p>
+      <%= link_to "Pick a workout", workouts_path, class: "btn btn-primary" %>
+    </section>
+  <% end %>
+</div>
