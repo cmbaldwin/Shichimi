@@ -152,3 +152,6 @@ textarea { min-height: 88px; }
   [data-format="double"] { --format: #c08a66; }
 }
 .chip[data-format] { color: var(--format); border-color: color-mix(in srgb, var(--format) 40%, transparent); }
+
+/* The hidden attribute must win over display utilities like .row/.btn. */
+[hidden] { display: none !important; }

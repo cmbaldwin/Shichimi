@@ -9,10 +9,12 @@
   <div data-push-target="off" hidden>
     <button type="button" class="btn btn-primary" data-action="push#subscribe">Enable notifications on this device</button>
   </div>
-  <div class="row" data-push-target="on" hidden>
-    <span class="muted">Notifications are on for this device.</span>
-    <button type="button" class="btn" data-action="push#test">Send test notification</button>
-    <button type="button" class="btn" data-action="push#unsubscribe">Turn off</button>
+  <div class="stack" data-push-target="on" hidden>
+    <p class="muted">Notifications are on for this device.</p>
+    <div class="row">
+      <button type="button" class="btn" data-action="push#test">Send test notification</button>
+      <button type="button" class="btn" data-action="push#unsubscribe">Turn off</button>
+    </div>
   </div>
   <p class="muted" data-push-target="message" role="status"></p>
 </div>
