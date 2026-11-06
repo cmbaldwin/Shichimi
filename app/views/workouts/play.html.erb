@@ -1,7 +1,7 @@
 <% content_for :bare, true %>
 <% content_for :body_class, "player-page" %>
 <% content_for :title, "#{@workout.name} · Shichimi" %>
-<% dev = Rails.env.development? %>
+<% dev = Rails.env.local? %><%# ?autostart=1&seek=N: dev and test only %>
 <%= tag.div class: "player", data: {
       controller: "player",
       player_timeline_value: @workout.timeline.to_json,

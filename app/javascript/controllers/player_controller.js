@@ -36,7 +36,7 @@ export default class extends Controller {
     document.removeEventListener("visibilitychange", this.vis)
     this.releaseWake()
     speechSynthesis?.cancel()
-    this.audio?.close()
+    this.audio?.close().catch(() => {})
     this.mannequin?.dispose()
   }
 
@@ -209,7 +209,7 @@ export default class extends Controller {
   unlockAudio() {
     try {
       this.audio = new (window.AudioContext || window.webkitAudioContext)()
-      this.audio.resume()
+      this.audio.resume().catch(() => {})
       this.beep(440, 0.03, 0.001) // silent-ish blip to fully unlock iOS
     } catch { /* no audio */ }
   }

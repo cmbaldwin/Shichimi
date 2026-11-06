@@ -329,7 +329,7 @@ export class Mannequin {
   tick(now) {
     this.raf = null
     if (!this.running) return
-    this.time += Math.min(0.1, (now - this.last) / 1000) * this.speed
+    this.time += Math.max(0, Math.min(0.1, (now - this.last) / 1000)) * this.speed // rAF timestamps can precede performance.now(); a negative dt made poseAt index -1
     this.last = now
     this.draw()
     this.raf = requestAnimationFrame(this.tick)
