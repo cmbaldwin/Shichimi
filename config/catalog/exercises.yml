@@ -1,90 +1,150 @@
 # 30 exercises. Structural fields (slug..sides) are the contract: don't change them without updating AGENTS.md.
 # Content fields (ja, muscles, cues, easier, harder, met) are filled by the catalog pass.
+# MET values follow the 2024 Adult Compendium of Physical Activities (Conditioning exercise, group 02),
+# rounded to the 2011 entries they descend from:
+#   02020 calisthenics, vigorous effort (jumping jacks, burpees, jumping/plyometric moves): 8.0
+#   02022 calisthenics, moderate effort (push-ups, squats, lunges, dips): 3.8 to 5.0
+#   02024 calisthenics, light/moderate (core, back, glute-bridge style floor work): 2.8 to 3.8
+#   Step-ups and shadow boxing: moderate, set to 5.0. Isometric holds (wall sit, planks): 3.3 to 3.8.
+# Values are estimates for a 7-minute circuit; the app uses them for the optional kcal figure only.
 # Motion (3D animation) lives in motions/<slug>.yml.
 - slug: jumping_jacks
   name: Jumping Jacks
   category: cardio
   impact: high
   level: 1
-  equipment: null
+  equipment:
   floor: false
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: ジャンピングジャック
+  muscles:
+  - calves
+  - quadriceps
+  - glutes
+  - shoulders
+  cues:
+  - Land softly on the balls of your feet
+  - Keep knees slightly soft
+  - Reach arms fully overhead
+  - Breathe steadily
+  easier: 'Step-out jacks: step side to side without jumping, or try Shadow Boxing.'
+  harder: Cross-over jacks (arms and legs cross in the middle) or add a squat at the
+    wide point.
+  met: 8.0
 - slug: high_knees
   name: High Knees
   category: cardio
   impact: high
   level: 2
-  equipment: null
+  equipment:
   floor: false
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: 腿上げ（ももあげ）
+  muscles:
+  - hip-flexors
+  - quadriceps
+  - calves
+  - core
+  cues:
+  - Drive knees to hip height
+  - Stay tall, chest lifted
+  - Pump arms opposite to legs
+  - Land light and quiet
+  easier: March in place with the same knee height, no jumping.
+  harder: Sprint the pace, or drive each knee above hip height.
+  met: 8.0
 - slug: mountain_climbers
   name: Mountain Climbers
   category: cardio
   impact: low
   level: 2
-  equipment: null
+  equipment:
   floor: true
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: マウンテンクライマー
+  muscles:
+  - core
+  - shoulders
+  - hip-flexors
+  - quadriceps
+  - chest
+  cues:
+  - Hands under shoulders, body in a line
+  - Drive knees toward your chest
+  - Keep hips level, not piking up
+  - Breathe out as you switch
+  easier: Slow the tempo, or put your hands on a chair seat or sturdy table.
+  harder: Faster pace, or cross each knee toward the opposite elbow.
+  met: 8.0
 - slug: burpees
   name: Burpees
   category: cardio
   impact: high
   level: 3
-  equipment: null
+  equipment:
   floor: true
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: バーピー
+  muscles:
+  - quadriceps
+  - glutes
+  - chest
+  - shoulders
+  - core
+  cues:
+  - Hands down, jump or step feet back
+  - Keep your back flat in the plank
+  - Stand tall, then jump lightly
+  - Pace yourself, form over speed
+  easier: Step back and forward instead of jumping, with no push-up (or try Squat
+    Jumps).
+  harder: Add a push-up at the bottom and a tuck jump at the top.
+  met: 8.0
 - slug: squat_jumps
   name: Squat Jumps
   category: cardio
   impact: high
   level: 2
-  equipment: null
+  equipment:
   floor: false
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: ジャンプスクワット
+  muscles:
+  - quadriceps
+  - glutes
+  - calves
+  - hamstrings
+  cues:
+  - Sit hips back before you jump
+  - Drive through the whole foot
+  - Land softly with bent knees
+  - Knees track over your toes
+  easier: Plain Squats with a fast rise onto your toes.
+  harder: Add a tuck at the top, or pause in the bottom for a second.
+  met: 8.0
 - slug: skater_hops
   name: Skater Hops
   category: cardio
   impact: high
   level: 2
-  equipment: null
+  equipment:
   floor: false
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: スケーターホップ
+  muscles:
+  - glutes
+  - quadriceps
+  - calves
+  - hip-abductors
+  - core
+  cues:
+  - Leap sideways, land on one foot
+  - Soft knee, hips back on landing
+  - Swing arms across for balance
+  - Hold the landing a moment
+  easier: Step wide side to side without hopping (or try Lateral Lunges).
+  harder: Bigger leaps, or touch the floor on each landing.
+  met: 8.0
 - slug: step_up
   name: Step-ups
   category: cardio
@@ -93,40 +153,64 @@
   equipment: chair
   floor: false
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: ステップアップ
+  muscles:
+  - quadriceps
+  - glutes
+  - calves
+  - hamstrings
+  cues:
+  - Plant your whole foot on the chair
+  - Drive up through the heel
+  - Stand tall at the top
+  - Use a sturdy chair against a wall
+  easier: Use a lower step, or a stair, and go slower.
+  harder: Drive the back knee up at the top, or step faster.
+  met: 5.0
 - slug: shadow_boxing
   name: Shadow Boxing
   category: cardio
   impact: low
   level: 1
-  equipment: null
+  equipment:
   floor: false
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: シャドーボクシング
+  muscles:
+  - shoulders
+  - core
+  - calves
+  - triceps
+  cues:
+  - Knees soft, weight on the balls of your feet
+  - Rotate hips with every punch
+  - Guard up, chin tucked
+  - Stay light and keep moving
+  easier: Throw slower punches with feet planted.
+  harder: Add quick footwork and fast combinations (or try High Knees).
+  met: 5.0
 - slug: squat
   name: Squats
   category: lower
   impact: low
   level: 1
-  equipment: null
+  equipment:
   floor: false
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: スクワット
+  muscles:
+  - quadriceps
+  - glutes
+  - hamstrings
+  - core
+  cues:
+  - Feet shoulder-width, chest proud
+  - Sit hips back and down
+  - Knees track over your toes
+  - Drive up through your heels
+  easier: Squat to a chair and stand back up.
+  harder: Slow the lowering to 3 seconds, or try Squat Jumps.
+  met: 5.0
 - slug: wall_sit
   name: Wall Sit
   category: lower
@@ -135,110 +219,174 @@
   equipment: wall
   floor: false
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: ウォールシット（壁椅子）
+  muscles:
+  - quadriceps
+  - glutes
+  - calves
+  - core
+  cues:
+  - Back flat against the wall
+  - Thighs parallel, knees over ankles
+  - Press heels into the floor
+  - Breathe, keep hands off your thighs
+  easier: Slide up so your knees bend less than a right angle.
+  harder: Lift one foot for a few seconds at a time, alternating.
+  met: 3.8
 - slug: lunge
   name: Alternating Lunges
   category: lower
   impact: low
   level: 2
-  equipment: null
+  equipment:
   floor: false
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: 交互ランジ
+  muscles:
+  - quadriceps
+  - glutes
+  - hamstrings
+  - calves
+  cues:
+  - Long step, torso upright
+  - Lower back knee toward the floor
+  - Front knee stays over the ankle
+  - Push through the front heel
+  easier: Shallow lunges holding a wall for balance (or try Squats).
+  harder: Take bigger steps and pause at the bottom, or add a hop (Squat Jumps).
+  met: 5.0
 - slug: lateral_lunge
   name: Lateral Lunges
   category: lower
   impact: low
   level: 2
-  equipment: null
+  equipment:
   floor: false
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: サイドランジ
+  muscles:
+  - glutes
+  - adductors
+  - quadriceps
+  - hamstrings
+  cues:
+  - Step wide, toes forward
+  - Sit back into the stepping hip
+  - Keep the other leg straight
+  - Push off to return
+  easier: Shorter side step, only a shallow bend (or try Sumo Squats).
+  harder: Add a knee drive on return, or hop (Skater Hops).
+  met: 4.5
 - slug: glute_bridge
   name: Glute Bridge
   category: lower
   impact: low
   level: 1
-  equipment: null
+  equipment:
   floor: true
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: ヒップリフト（グルートブリッジ）
+  muscles:
+  - glutes
+  - hamstrings
+  - lower-back
+  - core
+  cues:
+  - Feet flat, close to your hips
+  - Press through your heels to lift
+  - Squeeze glutes, ribs down
+  - Lower slowly, one vertebra at a time
+  easier: Smaller lift range, pausing for a breath at the top.
+  harder: Lift one foot off the floor and alternate legs.
+  met: 3.0
 - slug: calf_raise
   name: Calf Raises
   category: lower
   impact: low
   level: 1
-  equipment: null
+  equipment:
   floor: false
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: カーフレイズ
+  muscles:
+  - calves
+  - soleus
+  - ankles
+  - feet
+  cues:
+  - Rise slowly onto your toes
+  - Pause one beat at the top
+  - Lower for a slow three count
+  - Hold a wall if you wobble
+  easier: Hold a wall for support and use a smaller range.
+  harder: Raise on one leg at a time, or stand on a stair edge.
+  met: 3.0
 - slug: sumo_squat
   name: Sumo Squats
   category: lower
   impact: low
   level: 1
-  equipment: null
+  equipment:
   floor: false
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: ワイドスクワット
+  muscles:
+  - adductors
+  - glutes
+  - quadriceps
+  - hamstrings
+  cues:
+  - Feet wide, toes turned out
+  - Sit straight down between your feet
+  - Knees follow your toes
+  - Squeeze glutes at the top
+  easier: Narrower stance with a shallow squat.
+  harder: Lower slowly and add a calf raise at the top.
+  met: 4.5
 - slug: push_up
   name: Push-ups
   category: upper
   impact: low
   level: 2
-  equipment: null
+  equipment:
   floor: true
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: 腕立て伏せ
+  muscles:
+  - chest
+  - triceps
+  - shoulders
+  - core
+  cues:
+  - Hands under shoulders, body in a line
+  - Elbows about 45 degrees from your body
+  - Lower your chest to a fist's height
+  - Don't let hips sag
+  easier: Knee Push-ups, or hands on a table or counter.
+  harder: Slow the lowering, or try Push-up & Rotation.
+  met: 5.0
 - slug: knee_push_up
   name: Knee Push-ups
   category: upper
   impact: low
   level: 1
-  equipment: null
+  equipment:
   floor: true
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: 膝つき腕立て伏せ
+  muscles:
+  - chest
+  - triceps
+  - shoulders
+  - core
+  cues:
+  - Knees down, body a straight slope
+  - Hands under shoulders
+  - Lower your chest with control
+  - Press the floor away
+  easier: Hands on a counter or wall, body upright.
+  harder: Full Push-ups.
+  met: 3.8
 - slug: tricep_dip
   name: Triceps Dips
   category: upper
@@ -247,177 +395,277 @@
   equipment: chair
   floor: false
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
+  ja: 椅子ディップス（トライセプスディップ）
+  muscles:
+  - triceps
+  - shoulders
+  - chest
+  cues:
+  - Hands on a sturdy chair edge
+  - Keep hips close to the chair
+  - Elbows point back, not out
+  - Lower only until shoulders feel fine
+  easier: Bend knees and keep a shallower dip.
+  harder: Straighten legs and lift one foot.
   met: 4.0
 - slug: push_up_rotation
   name: Push-up & Rotation
   category: upper
   impact: low
   level: 3
-  equipment: null
+  equipment:
   floor: true
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: プッシュアップローテーション
+  muscles:
+  - chest
+  - triceps
+  - shoulders
+  - obliques
+  - core
+  cues:
+  - Lower with control, then press up
+  - Rotate your whole torso, arm to ceiling
+  - Feet planted, hips steady
+  - Look at your top hand
+  easier: Plain Push-ups, or Knee Push-ups with the rotation.
+  harder: Hold a dumbbell or filled bottle in the top hand.
+  met: 5.0
 - slug: pike_push_up
   name: Pike Push-ups
   category: upper
   impact: low
   level: 3
-  equipment: null
+  equipment:
   floor: true
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: パイクプッシュアップ
+  muscles:
+  - shoulders
+  - triceps
+  - upper-chest
+  - core
+  cues:
+  - Hips high, body an upside-down V
+  - Lower the top of your head forward
+  - Elbows track back, not wide
+  - Press the floor away
+  easier: Shallower dip with hands wider, or Plank Shoulder Taps.
+  harder: Elevate your feet on a chair.
+  met: 5.0
 - slug: shoulder_taps
   name: Plank Shoulder Taps
   category: upper
   impact: low
   level: 2
-  equipment: null
+  equipment:
   floor: true
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: ショルダータップ
+  muscles:
+  - shoulders
+  - core
+  - chest
+  - obliques
+  cues:
+  - Feet wide for a steady base
+  - Tap each shoulder, hips level
+  - Squeeze your glutes and belly
+  - Breathe, don't hold your breath
+  easier: Do it on your knees, or hands on a chair seat.
+  harder: Feet closer together, or add a push-up between taps.
+  met: 4.5
 - slug: inchworm
   name: Inchworms
   category: upper
   impact: low
   level: 2
-  equipment: null
+  equipment:
   floor: true
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
+  ja: インチワーム
+  muscles:
+  - hamstrings
+  - shoulders
+  - core
+  - chest
+  cues:
+  - Soft knees, fold forward from the hips
+  - Walk hands out to a plank
+  - Keep your core tight, no sagging
+  - Walk feet to hands, stand tall
+  easier: Walk hands out a short way, bending knees freely.
+  harder: Add a push-up at the plank each rep.
   met: 4.0
 - slug: crunch
   name: Crunches
   category: core
   impact: low
   level: 1
-  equipment: null
+  equipment:
   floor: true
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: クランチ
+  muscles:
+  - abdominals
+  - obliques
+  - hip-flexors
+  cues:
+  - Lower back stays on the floor
+  - Lift shoulder blades, chin off chest
+  - Exhale as you curl up
+  - Slow, never pull on your neck
+  easier: Smaller lift range, hands behind your thighs.
+  harder: Hold at the top for 2 seconds (or try Bicycle Crunches).
+  met: 3.0
 - slug: plank
   name: Plank
   category: core
   impact: low
   level: 1
-  equipment: null
+  equipment:
   floor: true
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: プランク
+  muscles:
+  - abdominals
+  - obliques
+  - shoulders
+  - glutes
+  cues:
+  - Elbows under shoulders, body in a line
+  - Glutes tight, don't let hips sag
+  - Look at the floor, neck long
+  - Breathe slowly the whole time
+  easier: Plank on your knees, or hands on a chair seat.
+  harder: Lift one foot or arm, or try Side Plank.
+  met: 3.3
 - slug: side_plank
   name: Side Plank
   category: core
   impact: low
   level: 2
-  equipment: null
+  equipment:
   floor: true
   sides: true
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: サイドプランク
+  muscles:
+  - obliques
+  - glutes
+  - shoulders
+  - core
+  cues:
+  - Elbow under shoulder, hips stacked
+  - Lift hips until you're in a line
+  - Squeeze your glutes
+  - Switch sides at the halfway cue
+  easier: Bottom knee down, or plank on the forearms.
+  harder: Raise the top leg, or reach the top arm under.
+  met: 3.3
 - slug: bicycle_crunch
   name: Bicycle Crunches
   category: core
   impact: low
   level: 2
-  equipment: null
+  equipment:
   floor: true
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: バイシクルクランチ
+  muscles:
+  - obliques
+  - abdominals
+  - hip-flexors
+  cues:
+  - Lower back pressed into the floor
+  - Turn your ribs toward the knee
+  - Slow and controlled, no neck pull
+  - Extend the other leg long
+  easier: Do it slowly with feet on the floor, or try Crunches.
+  harder: Lower the straight leg closer to the floor.
+  met: 3.8
 - slug: dead_bug
   name: Dead Bug
   category: core
   impact: low
   level: 1
-  equipment: null
+  equipment:
   floor: true
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: デッドバグ
+  muscles:
+  - abdominals
+  - obliques
+  - hip-flexors
+  cues:
+  - Lower back flat against the floor
+  - Move opposite arm and leg slowly
+  - Exhale as you extend
+  - Stop the reach before your back lifts
+  easier: Move only the legs, or only the arms.
+  harder: Hold a light weight in your hands.
+  met: 2.8
 - slug: bird_dog
   name: Bird Dog
   category: core
   impact: low
   level: 1
-  equipment: null
+  equipment:
   floor: true
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: バードドッグ
+  muscles:
+  - core
+  - glutes
+  - lower-back
+  - shoulders
+  cues:
+  - Hands under shoulders, knees under hips
+  - Reach opposite arm and leg
+  - Hips level, spine neutral
+  - Pause one beat at full reach
+  easier: Lift just the leg, or just the arm.
+  harder: Draw elbow to knee under your belly each rep.
+  met: 2.8
 - slug: superman
   name: Superman
   category: core
   impact: low
   level: 1
-  equipment: null
+  equipment:
   floor: true
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: スーパーマン（背筋運動）
+  muscles:
+  - lower-back
+  - glutes
+  - hamstrings
+  - upper-back
+  cues:
+  - Arms long, forehead near the floor
+  - Lift chest and legs a little
+  - Look down to keep your neck long
+  - Squeeze glutes, lower slowly
+  easier: Lift only your arms, then only your legs (or Bird Dog).
+  harder: Hold at the top for 3 seconds with arms in a T.
+  met: 2.8
 - slug: standing_knee_crunch
   name: Standing Knee Crunch
   category: core
   impact: low
   level: 1
-  equipment: null
+  equipment:
   floor: false
   sides: false
-  ja: null
-  muscles: []
-  cues: []
-  easier: null
-  harder: null
-  met: 4.0
+  ja: スタンディングニークランチ
+  muscles:
+  - abdominals
+  - hip-flexors
+  - obliques
+  cues:
+  - Stand tall, reach arms overhead
+  - Pull the elbows toward the knee
+  - Brace the belly, no leaning back
+  - Alternate knees at a steady beat
+  easier: March in place with hands behind your head.
+  harder: Crunch the opposite elbow to the knee, faster.
+  met: 3.8

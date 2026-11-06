@@ -1,1 +1,1690 @@
-[]
+# 100 catalog workouts. Synced into the DB by Workout.sync_catalog! (db:seed). Rules: test/models/catalog_test.rb.
+- slug: the-original
+  name: The Original
+  format: classic
+  level: 2
+  focus: full
+  exercises:
+  - jumping_jacks
+  - wall_sit
+  - push_up
+  - crunch
+  - step_up
+  - squat
+  - tricep_dip
+  - plank
+  - high_knees
+  - lunge
+  - push_up_rotation
+  - side_plank
+  about: The exact 12 exercises from Klika & Jordan (2013), in their order. Cardio,
+    legs, arms and core take turns so each muscle group rests while another works.
+- slug: paper-walls
+  name: Paper Walls
+  format: classic
+  level: 1
+  focus: quiet
+  exercises:
+  - step_up
+  - squat
+  - knee_push_up
+  - dead_bug
+  - shadow_boxing
+  - glute_bridge
+  - tricep_dip
+  - bird_dog
+  - mountain_climbers
+  - sumo_squat
+  - shoulder_taps
+  - plank
+  about: Nothing jumps, so the neighbours below stay asleep. It still rotates cardio,
+    legs, arms and core so no muscle works twice in a row.
+- slug: room-service
+  name: Room Service
+  format: classic
+  level: 2
+  focus: full
+  exercises:
+  - jumping_jacks
+  - squat
+  - push_up
+  - bicycle_crunch
+  - shadow_boxing
+  - lateral_lunge
+  - shoulder_taps
+  - plank
+  - high_knees
+  - glute_bridge
+  - push_up_rotation
+  - side_plank
+  about: 'Built for a hotel room: no chair, no wall, just a patch of floor. Pushing,
+    squatting and trunk work trade places every 30 seconds.'
+- slug: standing-reset
+  name: Standing Reset
+  format: classic
+  level: 1
+  focus: standing
+  exercises:
+  - jumping_jacks
+  - squat
+  - shadow_boxing
+  - lateral_lunge
+  - high_knees
+  - calf_raise
+  - tricep_dip
+  - sumo_squat
+  - step_up
+  - standing_knee_crunch
+  - skater_hops
+  - lunge
+  about: A break from your desk with no floor work and no mat. Legs and cardio alternate,
+    with one arm move and one core move to break up the rhythm.
+- slug: first-steps
+  name: First Steps
+  format: classic
+  level: 1
+  focus: full
+  exercises:
+  - step_up
+  - squat
+  - knee_push_up
+  - dead_bug
+  - jumping_jacks
+  - sumo_squat
+  - tricep_dip
+  - bird_dog
+  - shadow_boxing
+  - glute_bridge
+  - inchworm
+  - plank
+  about: 'The gentlest full circuit: the easiest version of each move, ordered so
+    nothing tires the same muscles twice running. A good first week.'
+- slug: moonlit-strength
+  name: Moonlit Strength
+  format: classic
+  level: 1
+  focus: quiet
+  exercises:
+  - squat
+  - knee_push_up
+  - glute_bridge
+  - dead_bug
+  - sumo_squat
+  - shoulder_taps
+  - calf_raise
+  - bird_dog
+  - lateral_lunge
+  - push_up
+  - lunge
+  - plank
+  about: Slow, quiet strength for late evenings with no cardio and no jumping. Legs,
+    arms and core take turns, so the floor stays quiet and each muscle gets a rest.
+- slug: plyo-furnace
+  name: Plyo Furnace
+  format: classic
+  level: 3
+  focus: cardio
+  exercises:
+  - squat_jumps
+  - lunge
+  - pike_push_up
+  - bicycle_crunch
+  - skater_hops
+  - lateral_lunge
+  - push_up_rotation
+  - side_plank
+  - burpees
+  - sumo_squat
+  - push_up
+  - plank
+  about: Jumps, hops and burpees on every cardio turn, with strength moves in between
+    to let your breathing settle a little. For people who already tolerate impact
+    well.
+- slug: front-loaded
+  name: Front-Loaded
+  format: classic
+  level: 3
+  focus: full
+  exercises:
+  - burpees
+  - lateral_lunge
+  - push_up_rotation
+  - side_plank
+  - skater_hops
+  - lunge
+  - pike_push_up
+  - bicycle_crunch
+  - high_knees
+  - wall_sit
+  - tricep_dip
+  - crunch
+  about: The hardest, most technical moves come first, while you are fresh and your
+    form is sharp. It eases off toward the end, when fatigue makes complex moves sloppy.
+- slug: legs-and-lungs
+  name: Legs & Lungs
+  format: classic
+  level: 2
+  focus: lower
+  exercises:
+  - jumping_jacks
+  - squat
+  - high_knees
+  - lunge
+  - skater_hops
+  - lateral_lunge
+  - squat_jumps
+  - sumo_squat
+  - step_up
+  - wall_sit
+  - mountain_climbers
+  - calf_raise
+  about: Cardio and leg moves alternate all the way through. Your legs get a different
+    job each time, so the heart works hard without the thighs burning out early.
+- slug: arms-and-abs
+  name: Arms & Abs
+  format: classic
+  level: 2
+  focus: upper
+  exercises:
+  - push_up
+  - plank
+  - tricep_dip
+  - bicycle_crunch
+  - shoulder_taps
+  - side_plank
+  - push_up_rotation
+  - dead_bug
+  - pike_push_up
+  - crunch
+  - knee_push_up
+  - bird_dog
+  about: For days when your legs are sore. Upper body and core swap every 30 seconds,
+    so your arms rest during the core moves and your trunk rests during the pushing.
+- slug: sore-arm-day
+  name: Sore-Arm Day
+  format: classic
+  level: 2
+  focus: lower
+  exercises:
+  - squat
+  - plank
+  - lunge
+  - bicycle_crunch
+  - glute_bridge
+  - side_plank
+  - lateral_lunge
+  - dead_bug
+  - sumo_squat
+  - bird_dog
+  - wall_sit
+  - crunch
+  about: 'The mirror of Arms & Abs: legs and core only, so tired shoulders and chest
+    can recover. The plank holds can be done on the forearms.'
+- slug: chair-antidote
+  name: Chair Antidote
+  format: classic
+  level: 1
+  focus: lower
+  exercises:
+  - glute_bridge
+  - superman
+  - sumo_squat
+  - bird_dog
+  - calf_raise
+  - inchworm
+  - lunge
+  - plank
+  - squat
+  - dead_bug
+  - wall_sit
+  - knee_push_up
+  about: Built to counter a day of sitting, with glutes, hamstrings and back muscles
+    doing most of the work. Each one is followed by something different so none of
+    them tire early.
+- slug: one-side-at-a-time
+  name: Steady Ones
+  format: classic
+  level: 2
+  focus: full
+  exercises:
+  - step_up
+  - lunge
+  - shoulder_taps
+  - side_plank
+  - skater_hops
+  - lateral_lunge
+  - push_up_rotation
+  - bird_dog
+  - shadow_boxing
+  - calf_raise
+  - tricep_dip
+  - dead_bug
+  about: Single-leg and single-arm moves that challenge balance and show up any left-right
+    gap. The order alternates body areas so a wobbly leg gets a break before the next
+    test.
+- slug: every-direction
+  name: Every Direction
+  format: classic
+  level: 2
+  focus: full
+  exercises:
+  - skater_hops
+  - lateral_lunge
+  - inchworm
+  - side_plank
+  - jumping_jacks
+  - lunge
+  - shoulder_taps
+  - bicycle_crunch
+  - high_knees
+  - sumo_squat
+  - push_up_rotation
+  - plank
+  about: Forward, sideways, up and down. Moving in different directions keeps your
+    hips and ankles working through their full range, with a rest for each area in
+    between.
+- slug: heart-rate-up
+  name: Heart Rate Up
+  format: classic
+  level: 2
+  focus: cardio
+  exercises:
+  - jumping_jacks
+  - squat
+  - mountain_climbers
+  - push_up
+  - squat_jumps
+  - bicycle_crunch
+  - high_knees
+  - lateral_lunge
+  - skater_hops
+  - tricep_dip
+  - shadow_boxing
+  - plank
+  about: Six cardio moves, each followed by a strength move. The breathing stays high,
+    but your legs and arms get a short break so you can keep the effort up.
+- slug: upper-hand
+  name: Upper Hand
+  format: classic
+  level: 3
+  focus: upper
+  exercises:
+  - push_up
+  - squat
+  - push_up_rotation
+  - jumping_jacks
+  - pike_push_up
+  - bicycle_crunch
+  - shoulder_taps
+  - lunge
+  - tricep_dip
+  - high_knees
+  - inchworm
+  - side_plank
+  about: Push-ups and pressing variations every other turn, with legs, cardio or core
+    in between. The gaps give your shoulders a chance to recover before the next press.
+- slug: leg-day-lite
+  name: Leg Day Lite
+  format: classic
+  level: 2
+  focus: lower
+  exercises:
+  - squat
+  - jumping_jacks
+  - lunge
+  - plank
+  - lateral_lunge
+  - high_knees
+  - sumo_squat
+  - crunch
+  - wall_sit
+  - shadow_boxing
+  - glute_bridge
+  - push_up
+  about: Squats, lunges and holds on every other station, with light cardio and core
+    between them. A leg-focused session that does not leave you unable to walk.
+- slug: core-compass
+  name: Core Compass
+  format: classic
+  level: 2
+  focus: core
+  exercises:
+  - plank
+  - jumping_jacks
+  - bicycle_crunch
+  - squat
+  - side_plank
+  - push_up
+  - dead_bug
+  - high_knees
+  - bird_dog
+  - lunge
+  - crunch
+  - tricep_dip
+  about: 'Every other move works your trunk from a different angle: front, sides,
+    and lower back. Cardio, legs and arms fill the gaps so your abs get a rest each
+    time.'
+- slug: chair-and-wall
+  name: Chair & Wall
+  format: classic
+  level: 1
+  focus: standing
+  exercises:
+  - step_up
+  - wall_sit
+  - tricep_dip
+  - standing_knee_crunch
+  - shadow_boxing
+  - squat
+  - jumping_jacks
+  - sumo_squat
+  - high_knees
+  - lunge
+  - skater_hops
+  - calf_raise
+  about: Only a chair and a wall. No floor, no mat, no getting dirty, so it works
+    at the office, in the lounge or a corridor.
+- slug: sunrise-twelve
+  name: Sunrise Twelve
+  format: classic
+  level: 1
+  focus: quiet
+  exercises:
+  - shadow_boxing
+  - glute_bridge
+  - knee_push_up
+  - bird_dog
+  - step_up
+  - sumo_squat
+  - tricep_dip
+  - dead_bug
+  - mountain_climbers
+  - calf_raise
+  - inchworm
+  - superman
+  about: A gentle morning wake-up with no jumping, so the household sleeps on. It
+    builds slowly from loose cardio to a longer back-and-glute finish.
+- slug: full-spectrum
+  name: Full Spectrum
+  format: classic
+  level: 2
+  focus: full
+  exercises:
+  - mountain_climbers
+  - sumo_squat
+  - shoulder_taps
+  - bicycle_crunch
+  - squat_jumps
+  - wall_sit
+  - tricep_dip
+  - plank
+  - skater_hops
+  - lateral_lunge
+  - inchworm
+  - dead_bug
+  about: 'A bit of everything: low-impact and high-impact cardio, legs, arms and core.
+    Each area is only worked once before it gets a break.'
+- slug: skill-before-fatigue
+  name: Skill Before Fatigue
+  format: classic
+  level: 3
+  focus: full
+  exercises:
+  - push_up_rotation
+  - lateral_lunge
+  - burpees
+  - side_plank
+  - pike_push_up
+  - lunge
+  - squat_jumps
+  - bicycle_crunch
+  - push_up
+  - squat
+  - jumping_jacks
+  - crunch
+  about: Complex moves like push-up rotations and pike push-ups come early, when your
+    coordination is best. Simpler, more forgiving moves are saved for the tired last
+    third.
+- slug: easy-on-the-knees
+  name: Easy on the Knees
+  format: classic
+  level: 2
+  focus: quiet
+  exercises:
+  - mountain_climbers
+  - glute_bridge
+  - push_up
+  - plank
+  - shadow_boxing
+  - wall_sit
+  - tricep_dip
+  - side_plank
+  - step_up
+  - calf_raise
+  - shoulder_taps
+  - bicycle_crunch
+  about: No jumping or deep lunges, so the knees take a break. The pace is still brisk
+    because cardio, legs, arms and core take turns.
+- slug: heat-and-core
+  name: Heat & Core
+  format: classic
+  level: 3
+  focus: cardio
+  exercises:
+  - jumping_jacks
+  - plank
+  - high_knees
+  - bicycle_crunch
+  - skater_hops
+  - side_plank
+  - squat_jumps
+  - crunch
+  - mountain_climbers
+  - dead_bug
+  - burpees
+  - superman
+  about: Hard cardio moves alternate with core work, so your trunk holds steady while
+    your legs and lungs go flat out. Your abs rest during each jump or run.
+- slug: upright-twelve
+  name: Upright Twelve
+  format: classic
+  level: 2
+  focus: standing
+  exercises:
+  - squat
+  - jumping_jacks
+  - lunge
+  - high_knees
+  - lateral_lunge
+  - skater_hops
+  - sumo_squat
+  - squat_jumps
+  - calf_raise
+  - standing_knee_crunch
+  - wall_sit
+  - step_up
+  about: Entirely on your feet and still demanding. Legs and cardio alternate in a
+    pattern that tires neither one before the next round of the other.
+- slug: sansho-classic
+  name: Sansho Classic
+  format: tabata
+  level: 2
+  focus: full
+  exercises:
+  - jumping_jacks
+  - squat
+  - push_up
+  - crunch
+  - high_knees
+  - lunge
+  - tricep_dip
+  about: The classic muscle-group rotation squeezed into seven moves. You do it twice
+    with only 10 seconds between rounds, so the end of round one flows into the start
+    of round two.
+- slug: whisper-sansho
+  name: Whisper Sansho
+  format: tabata
+  level: 2
+  focus: quiet
+  exercises:
+  - mountain_climbers
+  - squat
+  - knee_push_up
+  - dead_bug
+  - shadow_boxing
+  - glute_bridge
+  - shoulder_taps
+  about: Tabata-style intervals with no jumping. Seven low-impact moves run twice
+    through, and the rotation of cardio, legs, arms and core keeps each group fresh.
+- slug: hotel-spark
+  name: Hotel Spark
+  format: tabata
+  level: 2
+  focus: full
+  exercises:
+  - jumping_jacks
+  - lateral_lunge
+  - shoulder_taps
+  - crunch
+  - high_knees
+  - glute_bridge
+  - push_up_rotation
+  about: 'Seven short bursts that need only floor space. No chair, no wall: perfect
+    for a hotel room at 6am.'
+- slug: desk-sprint
+  name: Desk Sprint
+  format: tabata
+  level: 2
+  focus: standing
+  exercises:
+  - jumping_jacks
+  - lunge
+  - tricep_dip
+  - high_knees
+  - lateral_lunge
+  - standing_knee_crunch
+  - sumo_squat
+  about: Seven moves, all standing, repeated twice. Cardio and legs alternate with
+    one chair dip and one standing core move for variety.
+- slug: tiny-steps
+  name: Tiny Steps
+  format: tabata
+  level: 1
+  focus: full
+  exercises:
+  - jumping_jacks
+  - sumo_squat
+  - knee_push_up
+  - plank
+  - step_up
+  - calf_raise
+  - bird_dog
+  about: 'The friendliest 20-second intervals: simple moves, and the last move is
+    a gentle back and core one so the round restarts smoothly.'
+- slug: red-hot-seven
+  name: Red Hot Seven
+  format: tabata
+  level: 3
+  focus: cardio
+  exercises:
+  - burpees
+  - lateral_lunge
+  - push_up_rotation
+  - bicycle_crunch
+  - squat_jumps
+  - lunge
+  - pike_push_up
+  about: Burpees and jumps with demanding strength moves between them. The hardest
+    tabata in the catalog; expect to be breathless.
+- slug: lightning-legs
+  name: Lightning Legs
+  format: tabata
+  level: 2
+  focus: lower
+  exercises:
+  - squat_jumps
+  - squat
+  - skater_hops
+  - lateral_lunge
+  - high_knees
+  - sumo_squat
+  - plank
+  about: Jumps and leg work alternate for fast, burning intervals. The final plank
+    gives your legs a break before the second round starts.
+- slug: pushing-sparks
+  name: Pushing Sparks
+  format: tabata
+  level: 3
+  focus: upper
+  exercises:
+  - push_up
+  - jumping_jacks
+  - push_up_rotation
+  - squat
+  - pike_push_up
+  - bicycle_crunch
+  - high_knees
+  about: Three pressing moves separated by cardio, legs and core. The gaps let your
+    shoulders recover between presses.
+- slug: core-spark
+  name: Core Spark
+  format: tabata
+  level: 2
+  focus: core
+  exercises:
+  - plank
+  - jumping_jacks
+  - bicycle_crunch
+  - squat
+  - side_plank
+  - push_up
+  - high_knees
+  about: Three core moves, each followed by cardio or strength. It ends on a cardio
+    move so the plank that opens round two starts fresh.
+- slug: cardio-crush
+  name: Cardio Crush
+  format: tabata
+  level: 2
+  focus: cardio
+  exercises:
+  - jumping_jacks
+  - squat
+  - high_knees
+  - push_up
+  - skater_hops
+  - crunch
+  - lunge
+  about: Three cardio bursts in seven slots, the most you can fit without two cardio
+    moves touching. Strength moves in between keep the effort sustainable.
+- slug: rear-guard
+  name: Rear Guard
+  format: tabata
+  level: 1
+  focus: lower
+  exercises:
+  - glute_bridge
+  - superman
+  - calf_raise
+  - bird_dog
+  - inchworm
+  - sumo_squat
+  - dead_bug
+  about: Hamstrings, glutes and back muscles that do the work when you stand and sit
+    all day. Light on the heart, kind to the joints.
+- slug: zigzag
+  name: Zigzag
+  format: tabata
+  level: 2
+  focus: full
+  exercises:
+  - skater_hops
+  - lateral_lunge
+  - shoulder_taps
+  - side_plank
+  - jumping_jacks
+  - lunge
+  - inchworm
+  about: Sideways, forward and diagonal moves. Changing direction every interval keeps
+    your coordination busy as well as your lungs.
+- slug: hard-out-the-gate
+  name: Hard Out the Gate
+  format: tabata
+  level: 3
+  focus: full
+  exercises:
+  - burpees
+  - push_up_rotation
+  - lateral_lunge
+  - side_plank
+  - high_knees
+  - squat
+  - tricep_dip
+  about: The toughest move comes first while you are fresh, and each lap starts again
+    with it. The later moves are simpler and safer when tired.
+- slug: midnight-whisper
+  name: Midnight Whisper
+  format: tabata
+  level: 2
+  focus: quiet
+  exercises:
+  - glute_bridge
+  - knee_push_up
+  - dead_bug
+  - sumo_squat
+  - shoulder_taps
+  - bird_dog
+  - step_up
+  about: 'No jumping or bouncing: a late-evening tabata that will not upset the flat
+    below. Moves alternate so no muscle works twice in a row.'
+- slug: kneebend-cardio
+  name: Kneebend Cardio
+  format: tabata
+  level: 1
+  focus: lower
+  exercises:
+  - shadow_boxing
+  - squat
+  - step_up
+  - lateral_lunge
+  - mountain_climbers
+  - wall_sit
+  - crunch
+  about: Low-impact cardio and leg moves, repeated twice. It raises your heart rate
+    without any jumping.
+- slug: the-original-long
+  name: The Original, Long Form
+  format: fifty_ten
+  level: 2
+  focus: full
+  exercises:
+  - jumping_jacks
+  - wall_sit
+  - push_up
+  - crunch
+  - step_up
+  - squat
+  - tricep_dip
+  - plank
+  about: The first eight moves from the Klika & Jordan circuit, each held for 50 seconds.
+    Fewer changes and more time on each move; the order still rotates muscle groups.
+- slug: quiet-fifty
+  name: Quiet Fifty
+  format: fifty_ten
+  level: 1
+  focus: quiet
+  exercises:
+  - shadow_boxing
+  - squat
+  - knee_push_up
+  - dead_bug
+  - mountain_climbers
+  - glute_bridge
+  - tricep_dip
+  - bird_dog
+  about: Eight low-impact moves with long 50-second intervals. No jumping, so nothing
+    for the neighbours to hear.
+- slug: hotel-fifty
+  name: Hotel Fifty
+  format: fifty_ten
+  level: 2
+  focus: full
+  exercises:
+  - jumping_jacks
+  - squat
+  - push_up
+  - bicycle_crunch
+  - high_knees
+  - lateral_lunge
+  - shoulder_taps
+  - plank
+  about: Eight moves, no equipment, only floor space. Long efforts reward steady pacing
+    more than all-out speed.
+- slug: fifty-on-your-feet
+  name: Fifty on Your Feet
+  format: fifty_ten
+  level: 1
+  focus: standing
+  exercises:
+  - jumping_jacks
+  - squat
+  - tricep_dip
+  - standing_knee_crunch
+  - high_knees
+  - lateral_lunge
+  - step_up
+  - sumo_squat
+  about: No floor, no mat. Legs and cardio take turns, with a chair dip and a standing
+    core move in the middle.
+- slug: fifty-for-beginners
+  name: Fifty for Beginners
+  format: fifty_ten
+  level: 1
+  focus: full
+  exercises:
+  - step_up
+  - squat
+  - knee_push_up
+  - crunch
+  - shadow_boxing
+  - sumo_squat
+  - tricep_dip
+  - dead_bug
+  about: 'Easy versions of everything, held for a long 50 seconds. Go slowly: the
+    whole point is to find your pace.'
+- slug: plyo-fifty
+  name: Plyo Fifty
+  format: fifty_ten
+  level: 3
+  focus: cardio
+  exercises:
+  - burpees
+  - lateral_lunge
+  - push_up_rotation
+  - side_plank
+  - squat_jumps
+  - lunge
+  - pike_push_up
+  - bicycle_crunch
+  about: Burpees and jumps in 50-second blocks. Hard on the legs and lungs, so only
+    do it when you are properly warm.
+- slug: quad-quest
+  name: Quad Quest
+  format: fifty_ten
+  level: 2
+  focus: lower
+  exercises:
+  - squat_jumps
+  - squat
+  - skater_hops
+  - lunge
+  - high_knees
+  - lateral_lunge
+  - shadow_boxing
+  - sumo_squat
+  about: Four cardio moves, four leg moves, alternating. The cardio keeps your heart
+    rate up while the leg moves are the real work.
+- slug: press-and-pull-back
+  name: Press and Rest
+  format: fifty_ten
+  level: 3
+  focus: upper
+  exercises:
+  - push_up
+  - squat
+  - push_up_rotation
+  - jumping_jacks
+  - pike_push_up
+  - bicycle_crunch
+  - shoulder_taps
+  - lunge
+  about: Pressing moves every other station, with legs, cardio and core in the gaps.
+    The 50-second work time works best with strict form.
+- slug: trunk-circuit
+  name: Trunk Circuit
+  format: fifty_ten
+  level: 2
+  focus: core
+  exercises:
+  - plank
+  - high_knees
+  - bicycle_crunch
+  - squat
+  - side_plank
+  - jumping_jacks
+  - dead_bug
+  - lunge
+  about: Planks, side planks and twisting work, each separated by cardio or legs.
+    Long intervals test endurance rather than power.
+- slug: breathless-fifty
+  name: Breathless Fifty
+  format: fifty_ten
+  level: 2
+  focus: cardio
+  exercises:
+  - jumping_jacks
+  - squat
+  - high_knees
+  - push_up
+  - squat_jumps
+  - crunch
+  - skater_hops
+  - lunge
+  about: Four cardio moves at a steady pace, interleaved with strength. The 50-second
+    intervals reward settling in rather than sprinting.
+- slug: arms-abs-fifty
+  name: Arms & Abs Fifty
+  format: fifty_ten
+  level: 2
+  focus: upper
+  exercises:
+  - push_up
+  - plank
+  - tricep_dip
+  - bicycle_crunch
+  - shoulder_taps
+  - side_plank
+  - push_up_rotation
+  - dead_bug
+  about: Pushing and trunk moves alternate for a legs-free session on days when your
+    thighs are sore.
+- slug: legs-lungs-fifty
+  name: Legs & Lungs Fifty
+  format: fifty_ten
+  level: 2
+  focus: lower
+  exercises:
+  - jumping_jacks
+  - squat
+  - high_knees
+  - lunge
+  - skater_hops
+  - lateral_lunge
+  - mountain_climbers
+  - sumo_squat
+  about: Cardio and leg moves swap places all the way through. Good for runners who
+    want leg endurance without extra mileage.
+- slug: lower-and-core-fifty
+  name: Lower & Core Fifty
+  format: fifty_ten
+  level: 2
+  focus: lower
+  exercises:
+  - squat
+  - plank
+  - lunge
+  - bicycle_crunch
+  - glute_bridge
+  - side_plank
+  - lateral_lunge
+  - crunch
+  about: Legs and core only, for days when your shoulders and chest need a break.
+    The plank can be done on forearms.
+- slug: back-line-fifty
+  name: Back Line Fifty
+  format: fifty_ten
+  level: 1
+  focus: lower
+  exercises:
+  - glute_bridge
+  - superman
+  - sumo_squat
+  - bird_dog
+  - calf_raise
+  - inchworm
+  - lunge
+  - dead_bug
+  about: Glutes, hamstrings and back muscles worked in long, slow blocks. A good partner
+    to a sitting-heavy day.
+- slug: balance-fifty
+  name: Balance Fifty
+  format: fifty_ten
+  level: 2
+  focus: full
+  exercises:
+  - step_up
+  - lunge
+  - shoulder_taps
+  - side_plank
+  - skater_hops
+  - lateral_lunge
+  - push_up_rotation
+  - bird_dog
+  about: One-leg and one-arm moves that test balance. The 50-second intervals give
+    you time to find a rhythm on each side.
+- slug: front-loaded-fifty
+  name: Front-Loaded Fifty
+  format: fifty_ten
+  level: 3
+  focus: full
+  exercises:
+  - push_up_rotation
+  - lateral_lunge
+  - burpees
+  - side_plank
+  - pike_push_up
+  - lunge
+  - high_knees
+  - bicycle_crunch
+  about: The most technical moves are first, while your form is fresh. The long intervals
+    go easier on your technique at the end.
+- slug: long-quiet
+  name: Long Quiet
+  format: fifty_ten
+  level: 2
+  focus: quiet
+  exercises:
+  - wall_sit
+  - knee_push_up
+  - calf_raise
+  - superman
+  - lateral_lunge
+  - push_up
+  - glute_bridge
+  - plank
+  about: Slow, quiet strength with no cardio. Each move is held for 50 seconds, so
+    the pace is deliberate.
+- slug: slow-sunrise
+  name: Slow Sunrise
+  format: fifty_ten
+  level: 1
+  focus: quiet
+  exercises:
+  - shadow_boxing
+  - glute_bridge
+  - knee_push_up
+  - bird_dog
+  - step_up
+  - squat
+  - tricep_dip
+  - dead_bug
+  about: 'A morning routine with no noise: loose cardio first, then slow strength.
+    Gentle on stiff joints.'
+- slug: the-original-sevens
+  name: The Original, Sevens
+  format: forty_twenty
+  level: 2
+  focus: full
+  exercises:
+  - jumping_jacks
+  - wall_sit
+  - push_up
+  - crunch
+  - step_up
+  - squat
+  - tricep_dip
+  about: The first seven moves from Klika & Jordan with a longer rest. 40 seconds
+    on and 20 off give you time to keep your form tidy.
+- slug: quiet-forty
+  name: Quiet Forty
+  format: forty_twenty
+  level: 1
+  focus: quiet
+  exercises:
+  - step_up
+  - squat
+  - knee_push_up
+  - dead_bug
+  - shadow_boxing
+  - glute_bridge
+  - tricep_dip
+  about: Seven low-impact moves with a generous 20-second rest. Quiet enough for a
+    flat at any hour.
+- slug: hotel-forty
+  name: Hotel Forty
+  format: forty_twenty
+  level: 2
+  focus: full
+  exercises:
+  - high_knees
+  - squat
+  - push_up
+  - bicycle_crunch
+  - jumping_jacks
+  - lateral_lunge
+  - shoulder_taps
+  about: Seven moves for a hotel room. Just floor space; 20 seconds of rest is enough
+    to reset for the next move.
+- slug: forty-standing
+  name: Forty Standing
+  format: forty_twenty
+  level: 2
+  focus: standing
+  exercises:
+  - jumping_jacks
+  - lunge
+  - tricep_dip
+  - standing_knee_crunch
+  - high_knees
+  - lateral_lunge
+  - shadow_boxing
+  about: All standing, with a chair for the dips. Good for an office, living room
+    or hallway.
+- slug: forty-for-beginners
+  name: Forty for Beginners
+  format: forty_twenty
+  level: 1
+  focus: full
+  exercises:
+  - shadow_boxing
+  - sumo_squat
+  - knee_push_up
+  - crunch
+  - step_up
+  - squat
+  - bird_dog
+  about: Easy moves and a slow pace. 20 seconds of rest per move is plenty to catch
+    your breath.
+- slug: forty-peak
+  name: Forty Peak
+  format: forty_twenty
+  level: 3
+  focus: full
+  exercises:
+  - burpees
+  - lateral_lunge
+  - push_up_rotation
+  - bicycle_crunch
+  - squat_jumps
+  - lunge
+  - pike_push_up
+  about: 'The advanced seven: burpees, jumps, rotating push-ups and pike push-ups.
+    Long rests let you hold form on the hardest moves.'
+- slug: forty-cardio
+  name: Forty Cardio
+  format: forty_twenty
+  level: 2
+  focus: cardio
+  exercises:
+  - jumping_jacks
+  - squat
+  - high_knees
+  - push_up
+  - skater_hops
+  - crunch
+  - mountain_climbers
+  about: Four cardio moves with strength between them. The 20-second rest helps you
+    sustain the cardio through the whole set.
+- slug: forty-legs
+  name: Forty Legs
+  format: forty_twenty
+  level: 2
+  focus: lower
+  exercises:
+  - high_knees
+  - sumo_squat
+  - mountain_climbers
+  - lunge
+  - squat_jumps
+  - wall_sit
+  - bicycle_crunch
+  about: Cardio and legs alternate, with one core finisher. The lower body does most
+    of the work.
+- slug: forty-upper
+  name: Forty Upper
+  format: forty_twenty
+  level: 3
+  focus: upper
+  exercises:
+  - push_up
+  - jumping_jacks
+  - push_up_rotation
+  - squat
+  - pike_push_up
+  - plank
+  - shoulder_taps
+  about: Pushing moves in every other slot. Legs, cardio and core fill the gaps so
+    your arms recover.
+- slug: forty-core
+  name: Forty Core
+  format: forty_twenty
+  level: 2
+  focus: core
+  exercises:
+  - plank
+  - mountain_climbers
+  - bicycle_crunch
+  - lunge
+  - side_plank
+  - push_up
+  - dead_bug
+  about: Four core moves, each separated by cardio, legs or arms. Your trunk works
+    hard while the rest of you gets a breather.
+- slug: forty-arms-abs
+  name: Forty Arms & Abs
+  format: forty_twenty
+  level: 2
+  focus: upper
+  exercises:
+  - push_up
+  - plank
+  - tricep_dip
+  - bicycle_crunch
+  - push_up_rotation
+  - side_plank
+  - knee_push_up
+  about: 'Arms and trunk alternate: no legs, ideal for sore-leg days.'
+- slug: forty-lower-core
+  name: Forty Lower & Core
+  format: forty_twenty
+  level: 2
+  focus: lower
+  exercises:
+  - squat
+  - plank
+  - lunge
+  - bicycle_crunch
+  - glute_bridge
+  - side_plank
+  - lateral_lunge
+  about: Legs and core alternate, so sore arms and shoulders can rest.
+- slug: forty-posterior
+  name: Forty Posterior
+  format: forty_twenty
+  level: 1
+  focus: lower
+  exercises:
+  - glute_bridge
+  - superman
+  - calf_raise
+  - bird_dog
+  - sumo_squat
+  - inchworm
+  - lunge
+  about: Back-of-body moves that counter sitting. Low impact and joint friendly.
+- slug: forty-hard-first
+  name: Forty Hard First
+  format: forty_twenty
+  level: 3
+  focus: full
+  exercises:
+  - burpees
+  - push_up_rotation
+  - lateral_lunge
+  - side_plank
+  - high_knees
+  - squat
+  - tricep_dip
+  about: Technical moves first, simpler ones last. The 20-second rest helps you hold
+    form on the early hard moves.
+- slug: forty-agility
+  name: Forty Agility
+  format: forty_twenty
+  level: 2
+  focus: full
+  exercises:
+  - skater_hops
+  - lateral_lunge
+  - shoulder_taps
+  - side_plank
+  - jumping_jacks
+  - lunge
+  - inchworm
+  about: Hops and changes of direction. Forty seconds is long enough to find a rhythm,
+    and the rest keeps the landings controlled.
+- slug: gentle-start
+  name: Gentle Start
+  format: easy
+  level: 1
+  focus: quiet
+  exercises:
+  - shadow_boxing
+  - glute_bridge
+  - knee_push_up
+  - bird_dog
+  - step_up
+  - sumo_squat
+  - tricep_dip
+  about: 'A soft start to your morning: no jumping, equal work and rest, and a pace
+    you can talk through.'
+- slug: recovery-roll
+  name: Recovery Roll
+  format: easy
+  level: 1
+  focus: quiet
+  exercises:
+  - glute_bridge
+  - bird_dog
+  - calf_raise
+  - superman
+  - sumo_squat
+  - dead_bug
+  - squat
+  about: For the day after a hard workout. Slow, low-impact moves for the glutes,
+    back and trunk, with as much rest as work.
+- slug: lights-out
+  name: Lights Out
+  format: easy
+  level: 1
+  focus: quiet
+  exercises:
+  - squat
+  - knee_push_up
+  - glute_bridge
+  - dead_bug
+  - calf_raise
+  - tricep_dip
+  - bird_dog
+  about: Slow and silent. Seven calm moves before bed, with a break for each to let
+    your heart rate settle.
+- slug: desk-unwind
+  name: Desk Unwind
+  format: easy
+  level: 1
+  focus: standing
+  exercises:
+  - step_up
+  - squat
+  - tricep_dip
+  - standing_knee_crunch
+  - shadow_boxing
+  - calf_raise
+  - jumping_jacks
+  about: A standing break from your chair. No floor, and a long rest between moves,
+    so you will not need to shower afterward.
+- slug: hotel-warm-up
+  name: Hotel Warm-Up
+  format: easy
+  level: 1
+  focus: full
+  exercises:
+  - jumping_jacks
+  - squat
+  - knee_push_up
+  - crunch
+  - shadow_boxing
+  - sumo_squat
+  - bird_dog
+  about: A light, equipment-free routine to get moving after a flight or a long drive.
+    Half the time is rest.
+- slug: first-week
+  name: First Week
+  format: easy
+  level: 1
+  focus: full
+  exercises:
+  - step_up
+  - squat
+  - knee_push_up
+  - dead_bug
+  - jumping_jacks
+  - glute_bridge
+  - tricep_dip
+  about: The very first workout to try. Easy versions of each move, and as much rest
+    as work.
+- slug: easy-arms-abs
+  name: Easy Arms & Abs
+  format: easy
+  level: 1
+  focus: upper
+  exercises:
+  - knee_push_up
+  - dead_bug
+  - tricep_dip
+  - bird_dog
+  - inchworm
+  - plank
+  - push_up
+  about: A gentle upper-body and trunk session with no legs. The knee push-up and
+    dead bug keep the intensity down.
+- slug: gentle-legs-core
+  name: Gentle Legs & Core
+  format: easy
+  level: 1
+  focus: lower
+  exercises:
+  - squat
+  - dead_bug
+  - sumo_squat
+  - bird_dog
+  - glute_bridge
+  - plank
+  - lateral_lunge
+  about: Easy legs and trunk work for sore arms. The equal rest lets your heart rate
+    fall between each move.
+- slug: stand-tall
+  name: Stand Tall
+  format: easy
+  level: 1
+  focus: standing
+  exercises:
+  - shadow_boxing
+  - squat
+  - jumping_jacks
+  - sumo_squat
+  - step_up
+  - calf_raise
+  - standing_knee_crunch
+  about: Entirely on your feet, with a chair for the step-ups. A gentle option for
+    days when the floor is out of the question.
+- slug: slow-burn
+  name: Slow Burn
+  format: easy
+  level: 2
+  focus: full
+  exercises:
+  - mountain_climbers
+  - lunge
+  - push_up
+  - bicycle_crunch
+  - high_knees
+  - wall_sit
+  - tricep_dip
+  about: Stronger moves with a long rest after each. Meant to build your base, not
+    leave you breathless.
+- slug: steady-heart
+  name: Steady Heart
+  format: easy
+  level: 1
+  focus: cardio
+  exercises:
+  - shadow_boxing
+  - squat
+  - step_up
+  - knee_push_up
+  - jumping_jacks
+  - dead_bug
+  - mountain_climbers
+  about: 'A gentle cardio session: four low-effort cardio moves with strength between
+    them. Half the time is rest.'
+- slug: back-line-easy
+  name: Back Line Easy
+  format: easy
+  level: 1
+  focus: lower
+  exercises:
+  - glute_bridge
+  - superman
+  - calf_raise
+  - bird_dog
+  - sumo_squat
+  - inchworm
+  - lunge
+  about: Slow glute and back moves. A kind counter to sitting that you can do in a
+    short time.
+- slug: the-original-double
+  name: The Original, Double
+  format: double
+  level: 2
+  focus: full
+  exercises:
+  - jumping_jacks
+  - wall_sit
+  - push_up
+  - crunch
+  - step_up
+  - squat
+  - tricep_dip
+  - plank
+  - high_knees
+  - lunge
+  - push_up_rotation
+  - side_plank
+  about: The Klika & Jordan 12 done twice with a 60-second breather in between. The
+    authors suggest repeating the circuit two or three times for more training effect.
+- slug: twice-as-quiet
+  name: Twice as Quiet
+  format: double
+  level: 2
+  focus: quiet
+  exercises:
+  - mountain_climbers
+  - squat
+  - push_up
+  - bicycle_crunch
+  - shadow_boxing
+  - lateral_lunge
+  - shoulder_taps
+  - dead_bug
+  - step_up
+  - glute_bridge
+  - tricep_dip
+  - side_plank
+  about: Two quiet rounds with no jumping. The 60-second break in the middle gives
+    you time to drink some water and reset.
+- slug: double-standing
+  name: Double Standing
+  format: double
+  level: 2
+  focus: standing
+  exercises:
+  - jumping_jacks
+  - lateral_lunge
+  - shadow_boxing
+  - squat
+  - high_knees
+  - calf_raise
+  - tricep_dip
+  - lunge
+  - skater_hops
+  - standing_knee_crunch
+  - squat_jumps
+  - wall_sit
+  about: Two rounds without touching the floor. The long break in the middle lets
+    your heart rate fall before you go again.
+- slug: twin-steps
+  name: Twin Steps
+  format: double
+  level: 1
+  focus: full
+  exercises:
+  - step_up
+  - squat
+  - knee_push_up
+  - crunch
+  - shadow_boxing
+  - sumo_squat
+  - tricep_dip
+  - dead_bug
+  - jumping_jacks
+  - glute_bridge
+  - shoulder_taps
+  - plank
+  about: A gentle circuit done twice. The easy versions let you finish the second
+    round with good form.
+- slug: double-plyo
+  name: Double Plyo
+  format: double
+  level: 3
+  focus: cardio
+  exercises:
+  - skater_hops
+  - sumo_squat
+  - push_up_rotation
+  - plank
+  - burpees
+  - lateral_lunge
+  - push_up
+  - bicycle_crunch
+  - squat_jumps
+  - lunge
+  - pike_push_up
+  - side_plank
+  about: Two rounds of hard jumping moves. Rest in the middle for a full minute before
+    going again.
+- slug: double-arms-abs
+  name: Double Arms & Abs
+  format: double
+  level: 2
+  focus: upper
+  exercises:
+  - push_up
+  - bicycle_crunch
+  - tricep_dip
+  - plank
+  - pike_push_up
+  - side_plank
+  - shoulder_taps
+  - dead_bug
+  - push_up_rotation
+  - crunch
+  - inchworm
+  - bird_dog
+  about: Pushing and trunk work, twice through. No leg moves, so it is a good pick
+    when your legs are sore.
+- slug: back-line-double
+  name: Back Line Double
+  format: double
+  level: 1
+  focus: lower
+  exercises:
+  - glute_bridge
+  - superman
+  - calf_raise
+  - bird_dog
+  - sumo_squat
+  - inchworm
+  - lunge
+  - dead_bug
+  - squat
+  - knee_push_up
+  - wall_sit
+  - plank
+  about: Two rounds of the muscles you use least when sitting. The glutes and back
+    get most of the work.
+- slug: burpee-and-squat
+  name: Burpee & Squat
+  format: sprint
+  level: 3
+  focus: full
+  exercises:
+  - burpees
+  - squat
+  - burpees
+  - squat
+  - burpees
+  - squat
+  - burpees
+  - squat
+  about: 'The classic Tabata pair: burpees and squats four times each. Tabata et al.
+    (1996) used 20 seconds on, 10 off for eight rounds.'
+- slug: jack-and-push
+  name: Jack & Push
+  format: sprint
+  level: 2
+  focus: full
+  exercises:
+  - jumping_jacks
+  - push_up
+  - jumping_jacks
+  - push_up
+  - jumping_jacks
+  - push_up
+  - jumping_jacks
+  - push_up
+  about: Jumping jacks and push-ups, alternating four times. The legs rest during
+    the push-ups and the arms rest during the jacks.
+- slug: climb-and-lunge
+  name: Climb & Lunge
+  format: sprint
+  level: 2
+  focus: full
+  exercises:
+  - mountain_climbers
+  - lunge
+  - mountain_climbers
+  - lunge
+  - mountain_climbers
+  - lunge
+  - mountain_climbers
+  - lunge
+  about: Mountain climbers and lunges. A fast pair that tires your core and legs without
+    any jumping.
+- slug: plank-and-skater
+  name: Plank & Skater
+  format: sprint
+  level: 2
+  focus: full
+  exercises:
+  - plank
+  - skater_hops
+  - plank
+  - skater_hops
+  - plank
+  - skater_hops
+  - plank
+  - skater_hops
+  about: Planks alternating with skater hops. Core and legs share the load, in the
+    classic Tabata pattern.
+- slug: eight-all-out
+  name: Eight All-Out
+  format: sprint
+  level: 3
+  focus: full
+  exercises:
+  - burpees
+  - lateral_lunge
+  - push_up_rotation
+  - side_plank
+  - skater_hops
+  - lunge
+  - pike_push_up
+  - bicycle_crunch
+  about: Eight different hard moves in 4 minutes, in the Tabata 20/10 pattern. Each
+    one works a different muscle group from the move before.
+- slug: quiet-sprint
+  name: Quiet Sprint
+  format: sprint
+  level: 2
+  focus: quiet
+  exercises:
+  - mountain_climbers
+  - squat
+  - push_up
+  - plank
+  - shadow_boxing
+  - lateral_lunge
+  - shoulder_taps
+  - bicycle_crunch
+  about: Eight low-impact moves done as an all-out four minutes. Hard on you, quiet
+    for the neighbours.
+- slug: standing-sprint
+  name: Standing Sprint
+  format: sprint
+  level: 2
+  focus: standing
+  exercises:
+  - jumping_jacks
+  - squat
+  - tricep_dip
+  - high_knees
+  - lateral_lunge
+  - standing_knee_crunch
+  - skater_hops
+  - sumo_squat
+  about: Four minutes on your feet. Eight different moves, no floor.
+- slug: beginner-sprint
+  name: Beginner Sprint
+  format: sprint
+  level: 1
+  focus: full
+  exercises:
+  - step_up
+  - squat
+  - knee_push_up
+  - crunch
+  - jumping_jacks
+  - sumo_squat
+  - tricep_dip
+  - dead_bug
+  about: Eight easy moves done in the Tabata pattern. The easiest way to meet the
+    20/10 format.
