@@ -5,7 +5,7 @@ built on morning calisthenics. Each of the 30 exercises has an animated 3D manne
 science-backed circuits across 7 timing formats. The app reminds you to work out, logs every
 session, and shows you how you're doing.
 
-Live (soon): https://shichimi.moab.jp
+Live: https://shichimi.moab.jp
 
 ## What's in it
 - **30 exercises** in 4 categories (cardio, lower, upper, core). Each has a procedural three.js mannequin
