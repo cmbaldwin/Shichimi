@@ -1,0 +1,59 @@
+<% f = @workout.workout_format %>
+<% content_for :title, "#{@workout.name} · Shichimi" %>
+<% motions = @exercises.uniq.to_h { [ it.slug, it.motion ] } %>
+<article class="wo-show" data-controller="preview" data-preview-motions-value="<%= motions.to_json %>" data-preview-slug-value="<%= @exercises.first.slug %>">
+  <header class="stack">
+    <p class="muted"><%= link_to "Workouts", workouts_path %> /</p>
+    <h1><%= @workout.name %></h1>
+    <div class="row">
+      <span class="chip"><%= f.spice %> <span class="ja"><%= f.ja %></span></span>
+      <span class="heat" title="Heat <%= f.heat %> of 5"><%= "🌶" * f.heat %></span>
+      <span class="muted"><%= f.work %>s work · <%= f.rest %>s rest<%= " · #{f.rounds} rounds" if f.rounds > 1 %></span>
+    </div>
+    <div class="row wo-facts">
+      <span class="num wo-total"><%= @workout.total_seconds / 60 %>:<%= format("%02d", @workout.total_seconds % 60) %></span>
+      <span class="chip">Level <%= @workout.level %></span>
+      <span class="chip"><%= @workout.focus.titleize %></span>
+      <% if @workout.low_impact %><span class="chip">Low impact</span><% end %>
+      <% unless @workout.needs_floor %><span class="chip">No floor</span><% end %>
+      <% @workout.equipment.to_s.split.each do |eq| %><span class="chip"><%= eq.humanize %></span><% end %>
+    </div>
+    <% if @workout.about.present? %><p><%= @workout.about %></p><% end %>
+    <% if @neighbours.any? %>
+      <p class="wo-note" role="note"><strong>Balance check.</strong>
+        Neighbouring moves <%= @neighbours.map { |a, b| "#{a + 1} and #{b + 1}" }.to_sentence %> train the same muscle group back to back.
+        Alternating categories lets one muscle group recover while another works.</p>
+    <% end %>
+  </header>
+
+  <div class="wo-actions">
+    <%= link_to "Start", play_workout_path(@workout), class: "btn btn-primary wo-start" %>
+    <% if current_user.routine_items.exists?(workout_id: @workout.id) %>
+      <span class="chip">In your routine</span>
+    <% else %>
+      <%= button_to "Add to routine", routine_items_path(workout_id: @workout.id), class: "btn" %>
+    <% end %>
+    <% if @workout.user_id == current_user.id %>
+      <%= link_to "Edit", edit_workout_path(@workout), class: "btn" %>
+      <%= button_to "Delete", workout_path(@workout), method: :delete, class: "btn btn-danger",
+            form: { data: { turbo_confirm: "Delete this workout?" } } %>
+    <% end %>
+  </div>
+
+  <div class="wo-body">
+    <div class="card wo-figure"><canvas data-preview-target="canvas" width="480" height="480" aria-label="Exercise preview"></canvas>
+      <p class="muted wo-figure-name" data-preview-target="name"></p></div>
+    <ol class="wo-list">
+      <% @exercises.each_with_index do |ex, i| %>
+        <li>
+          <button type="button" class="wo-ex" data-action="preview#show" data-preview-slug-param="<%= ex.slug %>" data-slug="<%= ex.slug %>" data-name="<%= ex.name %>">
+            <span class="num muted"><%= i + 1 %></span>
+            <img alt="" width="56" height="56" data-controller="thumb" data-thumb-motion-value="<%= ex.motion.to_json %>" data-thumb-key-value="0">
+            <span class="wo-ex-name"><%= ex.name %></span>
+            <span class="chip" data-category="<%= ex.category %>"><%= ex.category %></span>
+          </button>
+        </li>
+      <% end %>
+    </ol>
+  </div>
+</article>

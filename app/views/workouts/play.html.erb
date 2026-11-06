@@ -1,0 +1,61 @@
+<% content_for :bare, true %>
+<% content_for :body_class, "player-page" %>
+<% content_for :title, "#{@workout.name} · Shichimi" %>
+<% dev = Rails.env.development? %>
+<%= tag.div class: "player", data: {
+      controller: "player",
+      player_timeline_value: @workout.timeline.to_json,
+      player_exercises_value: @exercises.to_h { [ it.slug, it.to_player ] }.to_json,
+      player_voice_value: current_user.voice_enabled.to_json,
+      player_name_value: @workout.name,
+      player_autostart_value: (dev && params[:autostart].present?).to_json,
+      player_seek_value: (dev ? params[:seek].to_i : 0)
+    } do %>
+
+  <%= form_with url: workout_logs_path, class: "player-form", data: { player_target: "form" } do |f| %>
+    <%= f.hidden_field :workout_id, value: @workout.id %>
+    <%= f.hidden_field :duration_seconds, value: 0, data: { player_target: "duration" } %>
+    <%= f.hidden_field :started_at, value: "", data: { player_target: "startedAt" } %>
+    <span data-player-target="slugs"></span>
+  <% end %>
+
+  <header class="p-top">
+    <span class="p-station num" data-player-target="station">station 1/1 · round 1/1</span>
+    <button type="button" class="p-btn p-end" data-action="player#end" aria-label="End workout">End</button>
+  </header>
+
+  <div class="p-step">
+    <div class="p-kind" data-player-target="kind">GET READY</div>
+    <div class="p-name" data-player-target="name"><%= @workout.name %></div>
+  </div>
+
+  <div class="p-stage"><canvas data-player-target="canvas" width="640" height="640" aria-hidden="true"></canvas></div>
+
+  <div class="p-ring">
+    <svg viewBox="0 0 120 120" aria-hidden="true">
+      <circle class="p-ring-bg" cx="60" cy="60" r="54" pathLength="1"/>
+      <circle class="p-ring-fg" cx="60" cy="60" r="54" pathLength="1" data-player-target="ring"/>
+    </svg>
+    <div class="p-count num" data-player-target="count" role="timer" aria-live="off">0</div>
+  </div>
+
+  <div class="p-next"><span class="muted">Next up</span> <strong data-player-target="next">&nbsp;</strong></div>
+
+  <div class="p-overall">
+    <div class="p-bar"><div data-player-target="bar"></div></div>
+    <div class="p-times num"><span data-player-target="elapsed">0:00</span><span data-player-target="remaining">-0:00</span></div>
+  </div>
+
+  <div class="p-controls">
+    <button type="button" class="p-btn" data-action="player#back" aria-label="Previous step">&#9198;</button>
+    <button type="button" class="p-btn p-main" data-action="player#toggle" data-player-target="toggle" aria-label="Pause">Pause</button>
+    <button type="button" class="p-btn" data-action="player#skip" aria-label="Next step">&#9197;</button>
+  </div>
+
+  <div class="p-ready" data-player-target="ready">
+    <h1><%= @workout.name %></h1>
+    <p class="muted"><%= @workout.total_seconds / 60 %>:<%= format("%02d", @workout.total_seconds % 60) %> · <%= @workout.exercise_slugs.size %> exercises</p>
+    <button type="button" class="p-btn p-go" data-action="player#start">Start</button>
+    <%= link_to "Discard", workout_path(@workout), class: "p-discard" %>
+  </div>
+<% end %>

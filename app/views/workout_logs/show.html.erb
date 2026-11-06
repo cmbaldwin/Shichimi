@@ -1,0 +1,56 @@
+<% content_for :title, "#{@log.workout_name} · Shichimi" %>
+<% rpe_labels = { 1 => "Very easy", 2 => "Easy", 3 => "Moderate", 4 => "Somewhat hard", 5 => "Hard", 6 => "Hard+", 7 => "Very hard", 8 => "Very hard+", 9 => "Near max", 10 => "Maximal" } %>
+<article class="wo-summary stack">
+  <header>
+    <p class="muted"><%= link_to "History", workout_logs_path %> /</p>
+    <h1>Nice work</h1>
+    <p class="muted"><%= @log.workout_name %> · <%= l(@log.performed_at, format: :long) %></p>
+  </header>
+
+  <div class="wo-stats">
+    <div class="card"><div class="num wo-big"><%= @log.duration_seconds / 60 %>:<%= format("%02d", @log.duration_seconds % 60) %></div><span class="muted">time</span></div>
+    <div class="card"><div class="num wo-big"><%= @log.completed_slugs.size %></div><span class="muted">intervals done</span></div>
+    <% if (kcal = @log.kcal) %>
+      <div class="card"><div class="num wo-big">~<%= kcal %></div><span class="muted">est. kcal</span></div>
+    <% end %>
+  </div>
+
+  <section class="card stack">
+    <h2>Completed</h2>
+    <% if @log.exercises.any? %>
+      <ol class="wo-done">
+        <% @log.exercises.each do |ex| %>
+          <li><span><%= ex.name %></span> <span class="chip" data-category="<%= ex.category %>"><%= ex.category %></span></li>
+        <% end %>
+      </ol>
+    <% else %>
+      <p class="muted">No full intervals this time.</p>
+    <% end %>
+  </section>
+
+  <section class="card stack">
+    <h2>How hard was it?</h2>
+    <p class="muted">Borg CR10 effort scale<%= ", currently #{@log.rpe} (#{rpe_labels[@log.rpe]})" if @log.rpe %>.</p>
+    <div class="wo-rpe">
+      <% rpe_labels.each do |n, label| %>
+        <%= button_to workout_log_path(@log), method: :patch, params: { workout_log: { rpe: n } },
+              class: [ "btn", ("btn-primary" if @log.rpe == n) ], title: label, "aria-pressed": (@log.rpe == n) do %>
+          <span class="num"><%= n %></span><small><%= label %></small>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="card">
+    <%= form_with model: @log, class: "stack" do |f| %>
+      <%= f.label :notes %>
+      <%= f.text_area :notes, placeholder: "How did it feel?" %>
+      <div><%= f.submit "Save notes", class: "btn btn-primary" %></div>
+    <% end %>
+  </section>
+
+  <div class="row">
+    <%= link_to "Done", root_path, class: "btn btn-primary" %>
+    <% if @log.workout %><%= link_to "Again", workout_path(@log.workout), class: "btn" %><% end %>
+  </div>
+</article>
