@@ -1,0 +1,17 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "9c9d6608d27cc2ef9a5e4ec4575b8415cebfb07ab73ef2471729241ea314a616",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/exercises_controller.rb",
+      "line": 11,
+      "code": "Exercise.find_by(params[:id])",
+      "confidence": "Medium",
+      "note": "False positive: Exercise is a YAML-backed PORO; find_by is a Hash lookup by slug, no SQL."
+    }
+  ],
+  "brakeman_version": "8.1.0"
+}
