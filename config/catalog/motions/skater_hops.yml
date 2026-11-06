@@ -1,0 +1,7 @@
+# Skater hop: bound sideways off one foot, land on the other with a soft knee, trailing leg swept behind, arms swing across. mirror adds the other side.
+tempo: 2.0
+yaw: 15
+mirror: true
+keys:
+  - { shift: [0.3, 0], root: [18, 0, -8], spine: [8, 0, 0], lhip: [40, 0, 0], lkn: 55, rhip: [-30, -12, 0], rkn: 75, lsh: [-20, 10], rsh: [60, -10], lel: 40, rel: 70 }
+  - { shift: [0, 0], root: [10, 0, 0], lhip: [20, 0, 0], lkn: 30, rhip: [-15, 0, 0], rkn: 50, lsh: [20, 20], rsh: [20, 20], lel: 30, rel: 30, lan: 30, ran: 30, air: 0.12 }

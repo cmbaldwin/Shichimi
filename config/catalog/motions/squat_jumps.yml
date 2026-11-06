@@ -1,0 +1,7 @@
+# Squat jump: sit back to parallel, explode straight up with arms swinging overhead, land soft into the next squat.
+tempo: 1.8
+yaw: 40
+keys:
+  - { root: [30, 0, 0], spine: [5, 0, 0], head: -10, lhip: [105, 10, 0], rhip: [105, 10, 0], lkn: 105, rkn: 105, lsh: [-20, 5], rsh: [-20, 5] }
+  - { lsh: [170, 5], rsh: [170, 5], lel: 8, rel: 8, lan: 45, ran: 45, air: 0.3 }
+  - { root: [22, 0, 0], spine: [5, 0, 0], lhip: [70, 8, 0], rhip: [70, 8, 0], lkn: 75, rkn: 75, lsh: [60, 5], rsh: [60, 5], lel: 10, rel: 10 }

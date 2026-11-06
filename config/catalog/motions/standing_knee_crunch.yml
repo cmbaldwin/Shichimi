@@ -1,0 +1,7 @@
+# Standing knee crunch: reach tall with both arms, then pull elbows down to meet the lifted knee, belly braced. mirror alternates knees.
+tempo: 3.2
+yaw: 50
+mirror: true
+keys:
+  - { lsh: [172, 8], rsh: [172, 8], lel: 5, rel: 5 }
+  - { spine: [28, 0, 0], head: 10, lhip: [105, 4, 0], lkn: 115, lsh: [75, 8], rsh: [75, 8], lel: 110, rel: 110, ran: 10 }

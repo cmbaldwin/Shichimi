@@ -1,0 +1,9 @@
+# Burpee: squat, hands down, feet back to a plank, feet in, explode up with a jump.
+tempo: 3.6
+yaw: 60
+keys:
+  - { lsh: [0, 6], rsh: [0, 6] }
+  - { root: [50, 0, 0], spine: [10, 0, 0], head: -20, lhip: [125, 10, 0], rhip: [125, 10, 0], lkn: 125, rkn: 125, lsh: [75, 8], rsh: [75, 8] }
+  - { root: [68, 0, 0], head: -15, lsh: [68, 8], rsh: [68, 8] }
+  - { root: [50, 0, 0], spine: [10, 0, 0], head: -20, lhip: [125, 10, 0], rhip: [125, 10, 0], lkn: 125, rkn: 125, lsh: [75, 8], rsh: [75, 8] }
+  - { lsh: [175, 8], rsh: [175, 8], lel: 8, rel: 8, lan: 45, ran: 45, air: 0.28, head: 5 }

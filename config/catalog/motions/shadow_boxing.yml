@@ -1,0 +1,8 @@
+# Shadow boxing: bouncy guard stance, jab with the lead hand, cross with the rear hand rotating hips and shoulders.
+tempo: 2.4
+yaw: 65
+keys:
+  - { root: [6, -15, 0], spine: [3, 0, 0], head: [8, 0, 0], lhip: [25, 3, 0], lkn: 35, rhip: [-5, 6, 0], rkn: 25, lsh: [70, 12], rsh: [60, 12], lel: 115, rel: 120, air: 0.02 }
+  - { root: [6, -25, 0], spine: [3, -10, 0], head: [8, 0, 0], lhip: [25, 3, 0], lkn: 35, rhip: [-5, 6, 0], rkn: 25, lsh: [90, 8], rsh: [60, 12], lel: 5, rel: 120 }
+  - { root: [6, -15, 0], spine: [3, 0, 0], head: [8, 0, 0], lhip: [25, 3, 0], lkn: 35, rhip: [-5, 6, 0], rkn: 25, lsh: [70, 12], rsh: [60, 12], lel: 115, rel: 120, air: 0.02 }
+  - { root: [6, 5, 0], spine: [3, 18, 0], head: [8, 0, 0], lhip: [25, 3, 0], lkn: 35, rhip: [-5, 6, 0], rkn: 25, lsh: [70, 12], rsh: [92, 5], lel: 115, rel: 5, lan: 10, ran: 15 }

@@ -1,0 +1,7 @@
+# High knees: run in place, each knee to hip height, opposite arm pumps, quick light bounce. mirror adds the other knee.
+tempo: 1.5
+yaw: 55
+mirror: true
+keys:
+  - { lhip: [92, 3, 0], lkn: 100, rsh: [65, 5], rel: 90, lsh: [-30, 5], lel: 90, ran: 10, air: 0.05, spine: [-3, 0, 0] }
+  - { lhip: [12, 3, 0], lkn: 20, rhip: [-8, 3, 0], rkn: 40, rsh: [-25, 5], rel: 90, lsh: [50, 5], lel: 90, lan: 20, ran: 20 }
