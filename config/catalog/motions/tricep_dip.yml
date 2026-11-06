@@ -1,0 +1,9 @@
+# Triceps dip: hands on the chair seat behind, hips just off the edge, elbows bend straight back.
+tempo: 2.8
+yaw: 70
+prop: chair
+prop_at: [0, -0.42]
+anchor: { parts: [lhand, rhand], y: 0.45 }
+keys:
+  - { lsh: [-28, 4], rsh: [-28, 4], lhip: [55, 4], rhip: [55, 4], lkn: 5, rkn: 5, head: -5 }
+  - { lsh: [-85, 4], rsh: [-85, 4], lel: 90, rel: 90, lhip: [70, 4], rhip: [70, 4], lkn: 5, rkn: 5, head: -5 }

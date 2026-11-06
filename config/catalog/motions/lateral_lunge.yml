@@ -1,0 +1,7 @@
+# Lateral lunge: step wide to the side, sit back into that hip with the other leg straight, push back. mirror adds the other side.
+tempo: 5
+yaw: 35
+mirror: true
+keys:
+  - { lsh: [0, 8], rsh: [0, 8] }
+  - { shift: [0.3, 0], root: [4, 0, 0], spine: [18, 0, 0], lhip: [70, 25, 0], lkn: 90, rhip: [0, 50, 0], lsh: [70, 5], rsh: [70, 5], lel: 60, rel: 60 }

@@ -1,0 +1,7 @@
+# Glute bridge: on the back, knees bent, feet flat; lift hips into a straight line shoulders to knees, lower slowly.
+tempo: 3.6
+yaw: 70
+keys:
+  - { root: [-90, 0, 0], lhip: [60, 6], rhip: [60, 6], lkn: 110, rkn: 110, lsh: [0, 20], rsh: [0, 20] }
+  - { root: [-110, 0, 0], lhip: [-10, 6], rhip: [-10, 6], lkn: 108, rkn: 108, lsh: [0, 20], rsh: [0, 20] }
+  - { root: [-110, 0, 0], lhip: [-10, 6], rhip: [-10, 6], lkn: 108, rkn: 108, lsh: [0, 20], rsh: [0, 20] }

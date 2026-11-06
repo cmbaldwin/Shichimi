@@ -1,0 +1,7 @@
+# Calf raise: rise slowly onto the toes, pause, lower for three.
+tempo: 4
+yaw: 80
+keys:
+  - { lsh: [0, 6], rsh: [0, 6] }
+  - { lan: 70, ran: 70, lsh: [0, 6], rsh: [0, 6] }
+  - { lan: 70, ran: 70, lsh: [0, 6], rsh: [0, 6] }

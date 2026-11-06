@@ -1,0 +1,8 @@
+# Wall sit (hold): back flat on the wall, thighs parallel, shins vertical, slow breathing.
+tempo: 5
+yaw: 70
+prop: wall
+prop_at: [0, -0.14]
+keys:
+  - { lhip: [90, 3], rhip: [90, 3], lkn: 90, rkn: 90, lsh: [50, 10], rsh: [50, 10], lel: 15, rel: 15 }
+  - { spine: [-1, 0, 0], lhip: [90, 3], rhip: [90, 3], lkn: 90, rkn: 90, lsh: [54, 10], rsh: [54, 10], lel: 15, rel: 15 }

@@ -1,0 +1,6 @@
+# Knee push-up: knees down, body one straight slope from knees to head, chest lowers with control.
+tempo: 2.6
+yaw: 65
+keys:
+  - { root: [58, 0, 0], lsh: [58, 12], rsh: [58, 12], lkn: 65, rkn: 65, head: -10 }
+  - { root: [75, 0, 0], lsh: [20, 25], rsh: [20, 25], lel: 80, rel: 80, lkn: 65, rkn: 65, head: -15 }
