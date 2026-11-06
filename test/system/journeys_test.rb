@@ -110,6 +110,9 @@ class JourneysTest < ApplicationSystemTestCase
     visit science_path
     assert_selector "h1"
     assert_no_js_errors
+    visit install_path
+    assert_text "Add to Home Screen"
+    assert_no_js_errors
     visit exercise_path(Exercise.all.first)
     assert_selector "canvas.ex-figure"
     sleep 1 # let the WebGL figure render a few frames

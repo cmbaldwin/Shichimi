@@ -7,4 +7,11 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     assert_select "h1", "Why it works"
     assert_select "article.science-format", WorkoutFormat.all.size
   end
+
+  test "install guide is public" do
+    get install_path
+    assert_response :success
+    assert_select "h2", /iPhone/
+    assert_select "h2", /Android/
+  end
 end

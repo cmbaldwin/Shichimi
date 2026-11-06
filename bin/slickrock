@@ -25,6 +25,7 @@ page = Capybara::Session.new(:slickrock)
 # Walks: public pages, then the signed-in app (dev demo user).
 WALKS = {
   "public" => "/science",
+  "public/install" => "/install",
   "signed-in" => "/dev/login?to=/",
   "signed-in/stats+history" => "/dev/login?to=/stats"
 }.freeze

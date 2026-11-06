@@ -1,5 +1,7 @@
 class PagesController < ApplicationController
-  allow_unauthenticated_access only: :science
+  allow_unauthenticated_access only: %i[science install]
+
+  def install; end
 
   def science
     @formats = WorkoutFormat.all

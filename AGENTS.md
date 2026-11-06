@@ -90,6 +90,8 @@ keys:                 # poses, eased key0→key1→…→key0. {} = standing res
 |---|---|
 | Catalog | `config/catalog/exercises.yml` content fields, `config/catalog/workouts.yml`, `test/models/catalog_test.rb`, `test/models/workout_test.rb` |
 | Science | `config/catalog/formats.yml` `science` text, `config/catalog/references.yml`, `app/views/pages/science.html.erb`, `PagesController` |
+| Install guide | `app/views/pages/install.html.erb` (CSS mockups in `install.css`, not real screenshots), `install_controller.js` (`beforeinstallprompt` button, standalone detection) |
+| Player sounds | `player_controller.js` `SFX` table + `bell()` (Web Audio synth, no audio files). Ticks fire on the last 3 s of every step longer than 4 s |
 | 3D rig | `app/javascript/mannequin.js`, `figure_controller.js`, `thumb_controller.js`, `ExercisesController` + `app/views/exercises/*`, `exercises.css` |
 | Motions | `config/catalog/motions/*.yml` |
 | Player | `WorkoutsController#show #play`, `app/views/workouts/show + play`, `player_controller.js`, `WorkoutLogsController#create #show #update`, `app/views/workout_logs/show`, `player.css` |
@@ -109,7 +111,7 @@ writes only their actions. The other agent adds theirs with a small Edit. Never 
 - Mobile-first. It must work at 375px wide. Use the CSS tokens and primitives in `application.css`
   (`.card .btn .btn-primary .chip[data-category] .grid .stack .row .spread .muted .num`). Put feature CSS in its own file.
 - Prefer native forms, links and `button_to` with Turbo over fetch. Use Stimulus only for real client behavior.
-- Public pages: exercises index/show, sign in/up, science. Everything else requires login.
+- Public pages: exercises index/show, sign in/up, science, install. Everything else requires login.
 - Times are shown in the user's zone (`ApplicationController` wraps every request in `Time.use_zone`).
 
 ## Dev and verification

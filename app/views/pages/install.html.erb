@@ -1,0 +1,88 @@
+<% content_for :title, "Install · Shichimi" %>
+<div class="stack install" data-controller="install">
+  <header>
+    <h1>Put Shichimi on your home screen</h1>
+    <p class="muted">Installed, it opens full-screen like an app, keeps the screen awake during a workout, and can send your daily reminder. There is nothing to download from a store.</p>
+  </header>
+
+  <p data-install-target="installed" hidden class="card">✅ You're already using the installed app.</p>
+  <p data-install-target="offer" hidden>
+    <button class="btn btn-primary" data-action="install#prompt">Install Shichimi</button>
+  </p>
+
+  <section class="card stack" aria-labelledby="h-ios">
+    <h2 id="h-ios">iPhone &amp; iPad</h2>
+    <p class="muted">Works in Safari and in Chrome (iOS 16.4 or later). Reminders only work from the home-screen app on iPhone.</p>
+    <div class="install-steps">
+      <figure class="phone">
+        <div class="phone-screen">
+          <div class="mock-page"></div>
+          <div class="mock-bar"><span>‹</span><span>›</span><span class="hl">⬆︎</span><span>📖</span><span>⧉</span></div>
+        </div>
+        <figcaption><b>1.</b> Tap <b>Share</b> <span aria-hidden="true">⬆︎</span>. Safari: bottom toolbar. Chrome: right end of the address bar.</figcaption>
+      </figure>
+      <figure class="phone">
+        <div class="phone-screen">
+          <div class="mock-sheet">
+            <div class="mock-row">Copy</div>
+            <div class="mock-row">Add to Reading List</div>
+            <div class="mock-row">Add Bookmark</div>
+            <div class="mock-row hl">Add to Home Screen <span>⊞</span></div>
+          </div>
+        </div>
+        <figcaption><b>2.</b> Scroll the sheet and tap <b>Add to Home Screen</b>. Can't see it? Tap <b>Edit Actions</b> at the bottom to add it.</figcaption>
+      </figure>
+      <figure class="phone">
+        <div class="phone-screen">
+          <div class="mock-sheet">
+            <div class="mock-head"><span>Cancel</span><b>Add to Home Screen</b><span class="hl">Add</span></div>
+            <div class="mock-row"><span class="mock-icon">七</span> Shichimi</div>
+            <div class="mock-row">☑︎ Open as Web App</div>
+          </div>
+        </div>
+        <figcaption><b>3.</b> Leave <b>Open as Web App</b> on and tap <b>Add</b>.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="card stack" aria-labelledby="h-android">
+    <h2 id="h-android">Android (Chrome)</h2>
+    <p class="muted">Chrome may offer “Install app” on its own. If not:</p>
+    <div class="install-steps">
+      <figure class="phone">
+        <div class="phone-screen">
+          <div class="mock-url"><span>shichimi.moab.jp</span><span class="hl">⋮</span></div>
+          <div class="mock-page"></div>
+        </div>
+        <figcaption><b>1.</b> Tap the <b>⋮</b> menu at the top right.</figcaption>
+      </figure>
+      <figure class="phone">
+        <div class="phone-screen">
+          <div class="mock-menu">
+            <div class="mock-row">New tab</div>
+            <div class="mock-row">History</div>
+            <div class="mock-row">Share…</div>
+            <div class="mock-row hl">Add to Home screen</div>
+            <div class="mock-row">Desktop site</div>
+          </div>
+        </div>
+        <figcaption><b>2.</b> Tap <b>Add to Home screen</b>. Some versions call it <b>Install app</b>.</figcaption>
+      </figure>
+      <figure class="phone">
+        <div class="phone-screen">
+          <div class="mock-dialog">
+            <b>Install app?</b>
+            <div class="mock-row"><span class="mock-icon">七</span> Shichimi</div>
+            <div class="mock-actions"><span>Cancel</span><span class="hl">Install</span></div>
+          </div>
+        </div>
+        <figcaption><b>3.</b> Tap <b>Install</b>. Shichimi appears in your app drawer and on the home screen.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="card stack" aria-labelledby="h-next">
+    <h2 id="h-next">Then</h2>
+    <p>Open Shichimi from the new icon, sign in, and turn on reminders in <%= link_to "Settings", settings_path %>. Use <b>Send test notification</b> to check it works.</p>
+  </section>
+</div>

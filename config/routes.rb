@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   end
   delete "push_subscriptions" => "push_subscriptions#destroy" # by params[:endpoint]
   get "science" => "pages#science"
+  get "install" => "pages#install"
 
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker

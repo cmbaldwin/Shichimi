@@ -143,10 +143,10 @@ export default class extends Controller {
     this.stationTarget.textContent = `station ${Math.min(upcoming, this.stations)}/${this.stations} · round ${s.round}/${this.rounds}`
     if (silent || !this.started) return
     if (s.kind === "work") {
-      this.beep(880, 0.6)
+      this.sfx("go")
       if (this.stepIsLast(i)) this.say("Last one")
     } else {
-      if (s.kind === "rest") this.beep(660, 0.12)
+      if (s.kind === "rest") this.sfx("rest")
       this.say(s.kind === "prep" ? `Get ready: ${ex.name}` : `Rest. Next: ${ex.name}`)
     }
   }
@@ -157,18 +157,20 @@ export default class extends Controller {
     const s = this.steps[this.idx]
     const inStep = this.elapsed - s.start
     const left = Math.ceil((s.end - this.elapsed) / 1000)
-    // 3-2-1 countdown beeps before the next work step
-    if (s.kind !== "work" && this.steps[this.idx + 1]?.kind === "work" && left <= 3 && left >= 1 && this.lastBeep !== left) {
+    // dink-dink-dink on the last 3 seconds of every step (work and rest)
+    if (left <= 3 && left >= 1 && this.lastBeep !== left && s.end - s.start > 4000) {
       this.lastBeep = left
-      this.beep(660, 0.12)
+      this.sfx("tick")
     }
     if (s.kind === "work" && s.switch_at && !this.sideDone && inStep >= s.switch_at * 1000) {
       this.sideDone = true
       this.mannequin.setMotion(this.exercises(s.slug).motion, { mirrored: true })
+      this.sfx("switch")
       this.say("Switch sides")
     }
     if (s.kind === "work" && inStep > 5000 && this.elapsed >= this.total / 2 && !this.said.has("half")) {
       this.said.add("half")
+      this.sfx("half")
       this.say("Halfway")
     }
   }
@@ -190,7 +192,7 @@ export default class extends Controller {
     clearInterval(this.timer)
     this.releaseWake()
     if (natural && this.steps[this.idx]?.kind === "work") this.done.add(this.idx)
-    if (!early) { this.say("Done"); this.beep(880, 0.6) }
+    if (!early) { this.sfx("done"); this.say("Done") }
     const slugs = [...this.done].sort((a, b) => a - b).map(n => this.steps[n].slug)
     this.slugsTarget.replaceChildren(...slugs.map(v => {
       const el = document.createElement("input")
@@ -210,20 +212,40 @@ export default class extends Controller {
     try {
       this.audio = new (window.AudioContext || window.webkitAudioContext)()
       this.audio.resume().catch(() => {})
-      this.beep(440, 0.03, 0.001) // silent-ish blip to fully unlock iOS
+      this.bell(440, 0.03, 0.001) // silent-ish blip to fully unlock iOS
     } catch { /* no audio */ }
   }
 
-  beep(freq, dur, gain = 0.25) {
+  // Cue palette: [frequency Hz, delay s, decay s] per note. ponytail: synthesized, no audio files to ship.
+  static SFX = {
+    tick:   [[1568, 0, 0.18]],                                   // dink (G6)
+    go:     [[2093, 0, 0.7], [1047, 0, 0.7]],                    // bright C7 + C6 on GO
+    rest:   [[1319, 0, 0.35], [988, 0.14, 0.5]],                 // falling E6-B5
+    switch: [[1568, 0, 0.2], [1568, 0.12, 0.3]],                 // double dink
+    half:   [[1175, 0, 0.3], [1568, 0.12, 0.4]],                 // rising D6-G6
+    done:   [[1047, 0, 0.4], [1319, 0.12, 0.4], [1568, 0.24, 0.4], [2093, 0.36, 1.2]] // C-E-G-C arpeggio
+  }
+
+  sfx(name) { for (const [f, at, d] of this.constructor.SFX[name]) this.bell(f, d, 0.22, at) }
+
+  // Small bell: sine fundamental + inharmonic partial, fast attack, exponential decay.
+  bell(freq, dur, gain = 0.22, at = 0) {
     const a = this.audio
     if (!a) return
-    const o = a.createOscillator(), g = a.createGain()
-    o.frequency.value = freq
-    g.gain.setValueAtTime(gain, a.currentTime)
-    g.gain.exponentialRampToValueAtTime(0.0001, a.currentTime + dur)
-    o.connect(g).connect(a.destination)
-    o.start()
-    o.stop(a.currentTime + dur + 0.02)
+    const t = a.currentTime + at
+    const g = a.createGain()
+    g.gain.setValueAtTime(0.0001, t)
+    g.gain.exponentialRampToValueAtTime(gain, t + 0.004)
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur)
+    g.connect(a.destination)
+    for (const [mult, level] of [[1, 1], [2.76, 0.25]]) {
+      const o = a.createOscillator(), og = a.createGain()
+      o.frequency.value = freq * mult
+      og.gain.value = level
+      o.connect(og).connect(g)
+      o.start(t)
+      o.stop(t + dur + 0.05)
+    }
   }
 
   say(text) {

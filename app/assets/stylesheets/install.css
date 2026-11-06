@@ -1,0 +1,29 @@
+/* /install: CSS-drawn phone mockups of the browser menus. */
+.install-steps { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); }
+.phone figcaption { text-align: center; max-width: 280px; margin-inline: auto; }
+.phone { margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.phone-screen {
+  width: min(100%, 200px); aspect-ratio: 9 / 13; margin-inline: auto; border: 6px solid var(--ink); border-radius: 26px; background: var(--paper);
+  overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; font-size: .8rem;
+}
+.phone figcaption { font-size: .9rem; }
+.mock-page { flex: 1; margin: 10px; border-radius: 10px;
+  background: repeating-linear-gradient(var(--line) 0 8px, transparent 8px 20px); opacity: .6; }
+.mock-bar, .mock-url { display: flex; justify-content: space-around; align-items: center; padding: 10px 6px;
+  background: var(--card); border-top: 1px solid var(--line); font-size: 1rem; }
+.mock-url { order: -1; justify-content: space-between; border-top: 0; border-bottom: 1px solid var(--line);
+  font-size: .8rem; padding: 10px 12px; margin-bottom: auto; }
+.mock-sheet, .mock-menu, .mock-dialog { background: var(--card); border-top: 1px solid var(--line);
+  border-radius: 14px 14px 0 0; padding: 6px 0; }
+.mock-menu { margin: 0 6px auto auto; width: 75%; border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); }
+.mock-dialog { margin: auto 10px; border: 1px solid var(--line); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 6px; }
+.mock-row { padding: 8px 12px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.mock-row:last-child { border-bottom: 0; }
+.mock-head, .mock-actions { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; gap: 6px; }
+.mock-head { font-size: .68rem; white-space: nowrap; }
+.mock-actions { justify-content: flex-end; gap: 16px; }
+.mock-icon { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 7px;
+  background: var(--accent); color: var(--accent-ink); }
+.mock-row:has(.mock-icon) { justify-content: flex-start; }
+.phone .hl { color: var(--accent); font-weight: 700; outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+.mock-row.hl { outline-offset: -3px; }
