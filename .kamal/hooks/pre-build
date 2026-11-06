@@ -1,0 +1,33 @@
+#!/bin/bash
+# Deploy gate (same shape as akotacos): runs before the image build.
+#   1. HEAD is main and equals origin/main (Kamal builds a clean clone of HEAD)
+#   2. no uncommitted changes to tracked files
+#   3. RuboCop, Brakeman and the test suite pass
+# ALLOW_UNPUSHED=1 skips 1–2 deliberately (hotfix/rollback). Never --skip-hooks:
+# that also disables the TLS guard in pre-deploy.
+set -euo pipefail
+
+fail() { printf '\n\033[31mpre-build: %s\033[0m\n\n' "$1" >&2; exit 1; }
+
+echo "七味 Shichimi — deploy gate"
+
+if [ "${ALLOW_UNPUSHED:-}" != "1" ]; then
+  branch=$(git rev-parse --abbrev-ref HEAD)
+  [ "$branch" = "main" ] || fail "on branch '$branch', not main."
+  git diff --quiet HEAD -- || fail "uncommitted changes to tracked files (they would NOT be in the image). Commit or stash."
+  git fetch --quiet origin main || fail "cannot reach GitHub to verify HEAD is pushed (ALLOW_UNPUSHED=1 to override)."
+  head_sha=$(git rev-parse HEAD); main_sha=$(git rev-parse origin/main)
+  [ "$head_sha" = "$main_sha" ] || fail "HEAD ${head_sha:0:12} != origin/main ${main_sha:0:12}. Push or pull first."
+  echo "→ main @ ${head_sha:0:12}, matches origin/main, tree clean"
+else
+  echo "→ version check SKIPPED (ALLOW_UNPUSHED=1)"
+fi
+
+if command -v rbenv &> /dev/null; then eval "$(rbenv init -)"; fi
+bundle check || bundle install
+
+echo "→ RuboCop";  bin/rubocop
+echo "→ Brakeman"; bin/brakeman --quiet --no-pager
+echo "→ Tests";    RAILS_ENV=test bin/rails db:test:prepare test
+
+echo "✅ deploy gate passed"

@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+# Refuse to deploy with a malformed TLS origin certificate.
+#
+# WHY THIS EXISTS
+# A Cloudflare Origin Certificate whose newlines have been flattened (stored
+# single-line in a password manager, or mangled by a dotenv parser) renders
+# unusable in deploy.yml's proxy.ssl.certificate_pem. Kamal does not fail on
+# that — it silently falls back to plain `--tls`, kamal-proxy then attempts
+# ACME, and ACME cannot complete while Cloudflare proxies the hostname. The
+# origin serves 525 and Let's Encrypt rate-limits the host at five failed
+# authorizations per hour, which makes each retry worse.
+#
+# This has recurred repeatedly. A comment in CLAUDE.md does not prevent it;
+# a non-zero exit here does.
+set -uo pipefail
+
+# Only guard deploys that actually terminate TLS at kamal-proxy.
+grep -q 'certificate_pem' config/deploy.yml 2>/dev/null || exit 0
+
+# Kamal exports the secrets from .kamal/secrets before running hooks, so they
+# are already in the environment here. Deliberately NOT sourcing that file as a
+# fallback: Kamal parses it with its own dotenv parser, not bash, and the two
+# disagree about quoting — chasing that difference is how this guard once
+# produced false alarms. If the values are absent we are not inside a real
+# deploy, so say so plainly rather than guess.
+if [ -z "${CLOUDFLARE_SSL_CERT_PEM:-}" ] && [ -z "${CLOUDFLARE_SSL_KEY_PEM:-}" ]; then
+  echo "pre-deploy: TLS check skipped — secrets not in env (run via 'kamal deploy')."
+  exit 0
+fi
+
+fail() { printf '\n\033[31mpre-deploy: %s\033[0m\n\n' "$1" >&2; exit 1; }
+
+check() { # name value openssl-cmd
+  local name="$1" value="$2" verify="$3"
+  [ -n "$value" ] || fail "$name is empty. deploy.yml would render an empty certificate_pem and Kamal would fall back to plain --tls (ACME -> 525)."
+  case "$value" in
+    *"-----BEGIN"*) ;;
+    *) fail "$name does not look like a PEM." ;;
+  esac
+  # The actual bug: a PEM must be multi-line.
+  if [ "$(printf '%s' "$value" | tr -cd '\n' | wc -c | tr -d ' ')" -lt 2 ]; then
+    fail "$name has no line breaks — it has been flattened.
+  A single-line PEM renders unusable, Kamal silently falls back to plain --tls,
+  kamal-proxy attempts ACME, and Cloudflare serves 525.
+  Fix the source (local config/ssl/*.pem is the pattern that does not break),
+  then re-run. Do NOT deploy past this: each attempt burns a Let's Encrypt
+  authorization and extends the rate-limit lockout."
+  fi
+  printf '%s' "$value" | $verify >/dev/null 2>&1 \
+    || fail "$name is not parseable by openssl."
+}
+
+check CLOUDFLARE_SSL_CERT_PEM "${CLOUDFLARE_SSL_CERT_PEM:-}" "openssl x509 -noout"
+check CLOUDFLARE_SSL_KEY_PEM  "${CLOUDFLARE_SSL_KEY_PEM:-}"  "openssl pkey -noout"
+
+# Cert and key must actually belong together.
+c=$(printf '%s' "$CLOUDFLARE_SSL_CERT_PEM" | openssl x509 -noout -pubkey 2>/dev/null)
+k=$(printf '%s' "$CLOUDFLARE_SSL_KEY_PEM"  | openssl pkey -pubout 2>/dev/null)
+[ -n "$c" ] && [ "$c" = "$k" ] || fail "certificate and private key do not match."
+
+if printf '%s' "$CLOUDFLARE_SSL_CERT_PEM" | openssl x509 -noout -checkend 2592000 >/dev/null 2>&1; then :; else
+  printf '\033[33mpre-deploy: WARNING — origin certificate expires within 30 days.\033[0m\n' >&2
+fi
+
+echo "pre-deploy: TLS origin certificate OK (multi-line, parses, key matches)."

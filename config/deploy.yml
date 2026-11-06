@@ -1,119 +1,83 @@
-# Name of your application. Used to uniquely configure containers.
+# Production server: 5.223.44.132 ("moab"). All apps are consolidated onto this
+# single Hetzner box. 5.223.48.42, 5.223.51.74 and 5.223.54.207 are DECOMMISSIONED
+# — an SSH host-key warning for any of them is expected, not a compromise.
+
 service: shichimi
+image: moab/shichimi
 
-# Name of the container image (use your-user/app-name on external registries).
-image: shichimi
+ssh:
+  user: root
 
-# Deploy to these servers.
+# One container. Solid Queue runs inside Puma; SQLite (WAL) lives on the
+# shichimi_storage volume, so there are no accessories and no DB port.
 servers:
   web:
-    - 192.168.0.1
-  # job:
-  #   hosts:
-  #     - 192.168.0.1
-  #   cmd: bin/jobs
+    - 5.223.44.132
 
-# Enable SSL auto certification via Let's Encrypt and allow for multiple apps on a single web server.
-# If used with Cloudflare, set encryption mode in SSL/TLS setting to "Full" to enable CF-to-app encryption.
-#
-# Using an SSL proxy like this requires turning on config.assume_ssl and config.force_ssl in production.rb!
-#
-# Don't use this when deploying to multiple web servers (then you have to terminate SSL at your load balancer).
-#
-# proxy:
-#   ssl: true
-#   host: app.example.com
+# Shared moab.jp Cloudflare Origin CA cert (SAN *.moab.jp) terminated at
+# kamal-proxy, passed by secret name. Cloudflare SSL/TLS mode must be "Full".
+# shichimi.moab.jp is already an orange-cloud A record → 5.223.44.132.
+proxy:
+  ssl:
+    certificate_pem: CLOUDFLARE_SSL_CERT_PEM
+    private_key_pem: CLOUDFLARE_SSL_KEY_PEM
+  host: shichimi.moab.jp
+  forward_headers: true
+  healthcheck:
+    path: /up
+    interval: 10
+    timeout: 30
 
-# Where you keep your container images.
+# Self-hosted registry on escalante, Tailscale-only, HTTP (see /Users/cody/Dev/AGENTS.md).
 registry:
-  # Alternatives: hub.docker.com / registry.digitalocean.com / ghcr.io / ...
-  server: localhost:5555
+  server: escalante.tailabd61f.ts.net:5555
+  username: kamal
+  password:
+    - KAMAL_REGISTRY_PASSWORD
 
-  # Needed for authenticated registries.
-  # username: your-user
-
-  # Always use an access token rather than real password when possible.
-  # password:
-  #   - KAMAL_REGISTRY_PASSWORD
-
-# Inject ENV variables into containers (secrets come from .kamal/secrets).
+# Kamal secrets only — no Rails credentials, no RAILS_MASTER_KEY.
 env:
   secret:
-    - RAILS_MASTER_KEY
+    - SECRET_KEY_BASE
+    # Listed here (not only under proxy.ssl) so Kamal exports them to hooks,
+    # which lets .kamal/hooks/pre-deploy validate the PEMs before a deploy.
+    - CLOUDFLARE_SSL_CERT_PEM
+    - CLOUDFLARE_SSL_KEY_PEM
+    # Web Push
+    - VAPID_PUBLIC_KEY
+    - VAPID_PRIVATE_KEY
+    - VAPID_SUBJECT
+    # Uchujin (in-process error tracker at /uchujin) + alert mail via SES
+    - UCHUJIN_DEPLOY_TOKEN
+    - UCHUJIN_MCP_TOKEN
+    - AWS_SES_SMTP_USERNAME
+    - AWS_SES_SMTP_PASSWORD
   clear:
-    # Run the Solid Queue Supervisor inside the web server's Puma process to do jobs.
-    # When you start using multiple servers, you should split out job processing to a dedicated machine.
+    # Solid Queue inside Puma. Do not add a job role — that starts a second supervisor.
     SOLID_QUEUE_IN_PUMA: true
+    JOB_CONCURRENCY: 1
+    WEB_CONCURRENCY: 0
+    # Must stay >= config/queue.yml worker threads (3) + 2, or the Solid Queue
+    # supervisor fails its pool check on boot and takes Puma down with it.
+    RAILS_MAX_THREADS: 5
+    RAILS_LOG_LEVEL: info
 
-    # Set number of processes dedicated to Solid Queue (default: 1)
-    # JOB_CONCURRENCY: 3
-
-    # Set number of cores available to the application on each server (default: 1).
-    # WEB_CONCURRENCY: 2
-
-    # Match this to any external database server to configure Active Record correctly
-    # Use shichimi-db for a db accessory server on same machine via local kamal docker network.
-    # DB_HOST: 192.168.0.2
-
-    # Log everything from Rails
-    # RAILS_LOG_LEVEL: debug
-
-# Aliases are triggered with "bin/kamal <alias>". You can overwrite arguments on invocation:
-# "bin/kamal logs -r job" will tail logs from the first server in the job section.
 aliases:
   console: app exec --interactive --reuse "bin/rails console"
   shell: app exec --interactive --reuse "bash"
   logs: app logs -f
-  dbc: app exec --interactive --reuse "bin/rails dbconsole --include-password"
+  dbc: app exec --interactive --reuse "bin/rails dbconsole"
 
-# Use a persistent storage volume for sqlite database files and local Active Storage files.
-# Recommended to change this to a mounted volume path that is backed up off server.
+# storage/ holds the three SQLite files; never copy production.sqlite3 alone
+# (take a .backup snapshot first).
 volumes:
   - "shichimi_storage:/rails/storage"
 
-# Bridge fingerprinted assets, like JS and CSS, between versions to avoid
-# hitting 404 on in-flight requests. Combines all files from new and old
-# version inside the asset_path.
 asset_path: /rails/public/assets
 
-# Configure the image builder.
+# Builds run locally (arm64 laptop → amd64 server via buildx emulation).
 builder:
   arch: amd64
-
-  # # Build image via remote server (useful for faster amd64 builds on arm64 computers)
-  # remote: ssh://docker@docker-builder-server
-  #
-  # # Pass arguments and secrets to the Docker build process
-  # args:
-  #   RUBY_VERSION: 4.0.9
-  # secrets:
-  #   - GITHUB_TOKEN
-  #   - RAILS_MASTER_KEY
-
-# Use a different ssh user than root
-# ssh:
-#   user: app
-
-# Use accessory services (secrets come from .kamal/secrets).
-# accessories:
-#   db:
-#     image: mysql:8.0
-#     host: 192.168.0.2
-#     # Change to 3306 to expose port to the world instead of just local network.
-#     port: "127.0.0.1:3306:3306"
-#     env:
-#       clear:
-#         MYSQL_ROOT_HOST: '%'
-#       secret:
-#         - MYSQL_ROOT_PASSWORD
-#     files:
-#       - config/mysql/production.cnf:/etc/mysql/my.cnf
-#       - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
-#     directories:
-#       - data:/var/lib/mysql
-#   redis:
-#     image: valkey/valkey:8
-#     host: 192.168.0.2
-#     port: 6379
-#     directories:
-#       - data:/data
+  # LOAD BEARING: the escalante registry 403s on provenance/SBOM attestation blobs.
+  provenance: false
+  sbom: false

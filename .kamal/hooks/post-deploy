@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Record deploy in Uchujin (in-process error tracker).
+# Requires UCHUJIN_DEPLOY_TOKEN in the environment (from .kamal/secrets / 1Password).
+# Kamal does NOT pass .kamal/secrets to hooks — export the token in the
+# deploying shell first, or the marker is skipped (non-fatal by design):
+#   source .kamal/secrets && export UCHUJIN_DEPLOY_TOKEN
+# NEVER `set -a` / export the whole file: CLOUDFLARE_SSL_*_PEM are multiline
+# and deploy.yml's ERB inlines them from ENV, breaking its YAML parse.
+set -euo pipefail
+
+TOKEN="${UCHUJIN_DEPLOY_TOKEN:-}"
+if [ -z "$TOKEN" ]; then
+  echo "[post-deploy] UCHUJIN_DEPLOY_TOKEN unset — skipping Uchujin deploy marker"
+  exit 0
+fi
+
+HOST="${UCHUJIN_APP_HOST:-https://shichimi.moab.jp}"
+SHA="${KAMAL_VERSION:-unknown}"
+USER="${KAMAL_PERFORMER:-kamal}"
+
+echo "[post-deploy] Recording deploy $SHA in Uchujin…"
+curl -fsS --max-time 10 -X POST "${HOST}/uchujin/api/deployments" \
+  -H "Authorization: Bearer ${TOKEN}" \
+  -H "Content-Type: application/json" \
+  -d "{\"sha\":\"${SHA}\",\"environment\":\"production\",\"user\":\"${USER}\"}" \
+  || echo "[post-deploy] Uchujin deploy marker failed (non-fatal)"
+
+exit 0
