@@ -69,6 +69,21 @@ keys:                 # poses, eased key0→key1→…→key0. {} = standing res
   - { root: [pitch, yaw, roll], spine: [flex, twist, side], lhip: [flex, abd, twist], lkn: 90, air: 0.1 }
 ```
 
+## Secrets and TLS (user policy)
+- **Kamal secrets only. No Rails encrypted credentials** (no `config/credentials.yml.enc` reads, no `RAILS_MASTER_KEY`).
+  Every secret is an ENV var injected by `.kamal/secrets`, fetched with `kamal secrets fetch --adapter 1password`
+  from the **moab app's shared `Production` vault** (same as `/Users/cody/Dev/moab/.kamal/secrets`). `SECRET_KEY_BASE` too.
+- In dev, secrets come from a gitignored `.env` (or a dev-only fallback). Never commit keys.
+- TLS: `shichimi.moab.jp` is already an orange-cloud A record to 5.223.44.132. Use the same Cloudflare Origin CA
+  setup as akotacos and moab (`CLOUDFLARE_SSL_CERT_PEM` / `CLOUDFLARE_SSL_KEY_PEM` passed by secret name), not ACME.
+
+## Product themes (from the user's naming shortlist; the name stays Shichimi)
+- **Shichimi 七味**: seven spices, seven formats (`formats.yml` `spice`/`ja`/`heat`).
+- **Nanairo 七色**: one color per format. Set `data-format="<key>"` and use `var(--format)` (see application.css).
+- **Shichifuku 七福**: the Seven Lucky Gods unlock at streak/total milestones (`Stats#lucky_gods`, partial `stats/_lucky_gods`).
+- **Nanakorobi yaoki 七転び八起き**: "Fall seven times, get up eight." Shown on Today after a missed day.
+- **NanaFun 七分** (nana-fun = seven minutes) and **cup ramen** ("shorter than two cup ramens and change"): landing and marketing copy.
+
 ## File ownership (parallel agents: stay in your lane)
 
 | Area | Owns |

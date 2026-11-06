@@ -138,3 +138,17 @@ textarea { min-height: 88px; }
 .flash { max-width: 1040px; margin: 0 auto 12px; padding: 10px 16px; border-radius: 10px; }
 .flash-notice { background: color-mix(in srgb, var(--ok) 15%, var(--card)); }
 .flash-alert { background: color-mix(in srgb, var(--accent) 15%, var(--card)); }
+
+/* Nanairo (七色): one color per format/spice. Set data-format="<key>" on any element, then use var(--format). */
+[data-format="sprint"]       { --format: #d1382b; } /* tōgarashi */
+[data-format="classic"]      { --format: #e08a1e; } /* chinpi */
+[data-format="fifty_ten"]    { --format: #c99a16; } /* shōga */
+[data-format="tabata"]       { --format: #8a9a2b; } /* sansho */
+[data-format="forty_twenty"] { --format: #2f7a64; } /* aonori */
+[data-format="double"]       { --format: #8a5a3c; } /* asa no mi */
+[data-format="easy"]         { --format: #4b4540; } /* goma (black sesame) */
+@media (prefers-color-scheme: dark) {
+  [data-format="easy"]   { --format: #b8aea2; }
+  [data-format="double"] { --format: #c08a66; }
+}
+.chip[data-format] { color: var(--format); border-color: color-mix(in srgb, var(--format) 40%, transparent); }

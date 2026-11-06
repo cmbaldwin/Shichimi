@@ -1,24 +1,54 @@
-# README
+# Shichimi · 七味
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+**Seven minutes. Seven spices.** A home-screen web app (PWA) for guided body-weight workouts,
+built on morning calisthenics. Each of the 30 exercises has an animated 3D mannequin, and there are 100
+science-backed circuits across 7 timing formats. The app reminds you to work out, logs every
+session, and shows you how you're doing.
 
-Things you may want to cover:
+Live (soon): https://shichimi.moab.jp
 
-* Ruby version
+## What's in it
+- **30 exercises** in 4 categories (cardio, lower, upper, core). Each has a procedural three.js mannequin
+  animation, coaching cues, regressions and progressions, and MET values.
+- **7 formats**, each named after a spice in shichimi tōgarashi:
 
-* System dependencies
+  | Format | Spice | Timing | Total |
+  |---|---|---|---|
+  | Classic 12 | Chinpi 陳皮 | 12 × 30 s on / 10 s rest | 7:50 |
+  | Tōgarashi Sprint | Tōgarashi 唐辛子 | 8 × 20 / 10 (Tabata protocol) | 3:50 |
+  | Sansho Seven | Sansho 山椒 | 7 moves × 2 rounds of 20 / 10 | 6:50 |
+  | Shōga Fifty | Shōga 生姜 | 8 × 50 / 10 | 7:50 |
+  | Nori Forty | Aonori 青のり | 7 × 40 / 20 | 6:40 |
+  | Goma Easy | Goma 胡麻 | 7 × 30 / 30 | 6:30 |
+  | Asa no Mi Double | Asa no mi 麻の実 | Classic 12 twice, 60 s break | 16:40 |
 
-* Configuration
+- **100 catalog workouts.** No two adjacent moves share a muscle group (Klika & Jordan 2013). There are themes for
+  quiet apartment mornings, standing desk breaks, hotel rooms, sore-leg days and more. You can also build your own.
+- **Player** with a drift-free timer, voice cues, beeps, a screen wake lock, and side switching for side planks.
+- **Routine and history.** Rotate through your saved workouts, rate each one with Borg CR10 RPE, and add notes.
+- **Stats.** Streaks, a heatmap, weekly minutes, WHO weekly targets, category balance, and the Seven Lucky Gods
+  (七福) milestones.
+- **Reminders** via Web Push at your chosen time and days, sent only if you haven't trained yet that day.
+- See `/science` in the app for the references.
 
-* Database creation
+## Stack
+Ruby 4.0.9 · Rails 8.1 · SQLite · Hotwire (Turbo and Stimulus) · importmaps with **vendored** JS (three.js r170 in
+`vendor/javascript`, no CDN) · Propshaft · plain CSS · Solid Queue in Puma · Minitest and Capybara system tests ·
+[Uchujin](https://github.com/cmbaldwin/Uchujin) error tracking · [Slickrock](https://github.com/cmbaldwin/slickrock)
+UI walks · Kamal on the moab box.
 
-* Database initialization
+## Develop
+```bash
+bundle install
+bin/rails db:prepare db:seed      # seeds the catalog and the demo user demo@shichimi.test / shichimi-demo
+bin/rails dev:sample_logs         # optional: 6 months of fake history for the demo user
+bin/rails server
+bin/rails test                    # unit and integration
+bin/rails test:system             # end-to-end in headless Chrome
+```
 
-* How to run the test suite
+## Deploy
+Kamal to the moab box (5.223.44.132) behind Cloudflare. Secrets come only from 1Password through `.kamal/secrets`
+(no Rails credentials). See `AGENTS.md`.
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Contributors and coding agents should start with [`AGENTS.md`](AGENTS.md).
