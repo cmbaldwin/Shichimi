@@ -1,0 +1,6 @@
+# Forearm plank (hold): elbows under shoulders, body in one line, slow breathing.
+tempo: 6
+yaw: 65
+keys:
+  - { root: [77, 0, 0], lsh: [77, 8], rsh: [77, 8], lel: 90, rel: 90, head: -12 }
+  - { root: [76, 0, 0], spine: [-2, 0, 0], lsh: [76, 8], rsh: [76, 8], lel: 90, rel: 90, head: -10 }

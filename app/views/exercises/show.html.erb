@@ -1,0 +1,49 @@
+<% ex = @exercise %>
+<% content_for :title, "#{ex.name} · Shichimi" %>
+<div class="ex-show">
+  <canvas class="ex-figure" data-controller="figure" data-figure-motion-value="<%= motion_json(ex) %>"
+          aria-label="Animated figure doing <%= ex.name %> (drag to rotate)" role="img"></canvas>
+  <div class="stack">
+    <div>
+      <h1><%= ex.name %></h1>
+      <% if ex.ja.present? %><p class="ja"><%= ex.ja %></p><% end %>
+      <div class="row">
+        <%= link_to ex.category, exercises_path(category: ex.category), class: "chip", data: { category: ex.category } %>
+        <%= render "flags", exercise: ex %>
+      </div>
+    </div>
+    <% if ex.muscles.present? %>
+      <section><h2>Muscles</h2><p><%= Array(ex.muscles).join(", ") %></p></section>
+    <% end %>
+    <% if ex.cues.present? %>
+      <section><h2>Cues</h2><ul class="ex-cues"><% Array(ex.cues).each do |c| %><li><%= c %></li><% end %></ul></section>
+    <% end %>
+    <% if ex.easier.present? || ex.harder.present? %>
+      <section class="ex-variants">
+        <% if ex.easier.present? %><div class="card"><h3>Easier</h3><p><%= ex.easier %></p></div><% end %>
+        <% if ex.harder.present? %><div class="card"><h3>Harder</h3><p><%= ex.harder %></p></div><% end %>
+      </section>
+    <% end %>
+  </div>
+</div>
+
+<section class="stack ex-section">
+  <h2>Key frames</h2>
+  <div class="ex-strip">
+    <% ((Array(ex.motion["keys"]).presence || [ {} ]).size * (ex.motion["mirror"] ? 2 : 1)).times do |i| %>
+      <%= thumb_tag ex, key: i, size: 200, alt: "Key frame #{i + 1}" %>
+    <% end %>
+  </div>
+</section>
+
+<% if @workouts.any? %>
+  <section class="stack ex-section">
+    <h2>In workouts</h2>
+    <ul class="ex-workouts">
+      <% @workouts.each do |w| %>
+        <li><%= link_to w.name, workout_path(w) %> <span class="muted"><%= w.workout_format.name rescue w.format %></span></li>
+      <% end %>
+    </ul>
+  </section>
+<% end %>
+<p><%= link_to "← All exercises", exercises_path %></p>

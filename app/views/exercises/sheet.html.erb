@@ -1,0 +1,13 @@
+<% content_for :title, "Pose sheet · Shichimi" %>
+<%# Contact sheet: every key of every exercise. For checking motions in one screenshot. %>
+<div class="sheet">
+  <% @exercises.each do |ex| %>
+    <% n = (Array(ex.motion["keys"]).presence || [ {} ]).size * (ex.motion["mirror"] ? 2 : 1) %>
+    <% n.times do |i| %>
+      <figure class="sheet-cell">
+        <%= thumb_tag ex, key: i, size: 360, alt: "#{ex.name} key #{i}" %>
+        <figcaption><%= ex.slug %> <b>#<%= i %></b></figcaption>
+      </figure>
+    <% end %>
+  <% end %>
+</div>

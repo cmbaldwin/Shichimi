@@ -1,0 +1,6 @@
+# Push-up: straight-body plank on hands, chest lowers to just above the floor.
+tempo: 2.2
+yaw: 65
+keys:
+  - { root: [66, 0, 0], lsh: [66, 12], rsh: [66, 12], head: -10 }
+  - { root: [84, 0, 0], lsh: [28, 25], rsh: [28, 25], lel: 70, rel: 70, head: -15 }

@@ -1,0 +1,26 @@
+<% content_for :title, "Exercises · Shichimi" %>
+<div class="stack">
+  <div class="spread">
+    <h1>Exercises</h1>
+    <%= link_to "All poses", exercises_path(sheet: 1), class: "btn btn-small" %>
+  </div>
+  <nav class="row ex-filter" aria-label="Category">
+    <%= link_to "All", exercises_path, class: "chip", aria: { current: (@category.nil? ? "page" : nil) } %>
+    <% Exercise.categories.each do |c| %>
+      <%= link_to c.capitalize, exercises_path(category: c), class: "chip", data: { category: c }, aria: { current: (@category == c ? "page" : nil) } %>
+    <% end %>
+  </nav>
+  <div class="ex-grid">
+    <% @exercises.each do |ex| %>
+      <%= link_to exercise_path(ex), class: "card ex-card" do %>
+        <%= thumb_tag ex, size: 320, alt: "" %>
+        <div class="stack ex-meta">
+          <strong><%= ex.name %></strong>
+          <% if ex.ja.present? %><span class="ja"><%= ex.ja %></span><% end %>
+          <div class="row"><span class="chip" data-category="<%= ex.category %>"><%= ex.category %></span></div>
+          <%= render "flags", exercise: ex %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

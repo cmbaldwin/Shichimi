@@ -1,0 +1,7 @@
+<span class="ex-flags muted">
+  Lv <%= exercise.level %>
+  · <%= exercise.low_impact? ? "low impact" : "high impact" %>
+  <% if exercise.floor %>· floor<% end %>
+  <% if exercise.equipment.present? %>· <%= exercise.equipment %><% end %>
+  <% if exercise.sides %>· both sides<% end %>
+</span>

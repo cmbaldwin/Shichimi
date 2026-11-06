@@ -21,5 +21,5 @@ Exercise = Data.define(:slug, :name, :ja, :category, :impact, :level, :equipment
 
   def to_param = slug
   def low_impact? = impact == "low"
-  def to_player = { slug:, name:, category:, sides: !!sides, cues: Array(cues), motion: }
+  def to_player = { slug:, name:, category:, sides: !!sides, cues: Array(cues), motion: motion.merge("category" => category) }
 end

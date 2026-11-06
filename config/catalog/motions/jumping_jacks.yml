@@ -1,0 +1,8 @@
+# Jumping jacks: hop out to a wide stance with arms overhead, hop back in.
+tempo: 1.2
+yaw: 15
+keys:
+  - { lsh: [0, 8], rsh: [0, 8], lhip: [0, 2], rhip: [0, 2] }
+  - { lsh: [0, 95], rsh: [0, 95], lel: 10, rel: 10, lhip: [0, 9], rhip: [0, 9], lan: 25, ran: 25, air: 0.08 }
+  - { lsh: [0, 170], rsh: [0, 170], lel: 10, rel: 10, lhip: [0, 17], rhip: [0, 17], lkn: 8, rkn: 8 }
+  - { lsh: [0, 95], rsh: [0, 95], lel: 10, rel: 10, lhip: [0, 9], rhip: [0, 9], lan: 25, ran: 25, air: 0.08 }
