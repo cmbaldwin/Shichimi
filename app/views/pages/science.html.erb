@@ -1,0 +1,63 @@
+<% content_for :title, "Why it works · Shichimi" %>
+<div class="stack science">
+  <header>
+    <h1>Why it works</h1>
+    <p class="muted">Seven timing formats, one per spice in shichimi tōgarashi. Each rests on a published protocol, adapted to body-weight moves. Where we changed a protocol, we say so.</p>
+  </header>
+
+  <section class="stack" aria-labelledby="h-formats">
+    <h2 id="h-formats">The 7 formats</h2>
+    <div class="grid">
+      <% @formats.each do |f| %>
+        <article class="card stack science-format">
+          <div class="spread">
+            <h3><%= f.name %></h3>
+            <%= heat_marks f.heat %>
+          </div>
+          <p class="muted"><%= f.spice %> <span class="ja"><%= f.ja %></span></p>
+          <p class="num science-timing">
+            <%= f.work %>s on / <%= f.rest %>s off
+            <% if f.rounds > 1 %> · <%= f.rounds %> rounds, <%= f.round_rest %>s between<% end %>
+          </p>
+          <p class="muted"><%= f.stations %> stations · <span class="num"><%= mmss f.total_seconds(f.stations) %></span> total</p>
+          <p><%= f.science %></p>
+        </article>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="card stack" aria-labelledby="h-order">
+    <h2 id="h-order">How workouts are ordered</h2>
+    <p>Every exercise is tagged <span class="chip" data-category="cardio">cardio</span> <span class="chip" data-category="lower">lower</span> <span class="chip" data-category="upper">upper</span> or <span class="chip" data-category="core">core</span>. No two neighbouring exercises share a category, including from the last move back to the first when rounds run back to back.</p>
+    <p>That way one muscle group rests while another works, the idea behind the circuit in Klika &amp; Jordan (2013). It lets you keep the effort high without any one area giving out early.</p>
+  </section>
+
+  <section class="card stack" aria-labelledby="h-stats">
+    <h2 id="h-stats">How your stats are computed</h2>
+    <ul class="science-list">
+      <li><strong>Weekly targets.</strong> The WHO suggests 150-300 minutes of moderate or 75-150 minutes of vigorous aerobic activity a week, plus muscle-strengthening on 2 or more days. Shichimi tracks the vigorous target (75 min) using your interval work time, which is assumed to be hard effort, and counts a day toward strengthening when you did at least one lower- or upper-body move.</li>
+      <li><strong>Calories.</strong> An estimate: MET &times; body weight (kg) &times; hours of work time. METs come from the 2024 Adult Compendium. Rest and prep time are not counted, and real burn varies by person, so treat it as a rough guide.</li>
+      <li><strong>Effort (RPE).</strong> After each workout you rate how hard it felt from 1 to 10 on the Borg CR10 scale. One rating per session is a recognised way to track training load.</li>
+    </ul>
+  </section>
+
+  <section class="stack" aria-labelledby="h-refs">
+    <h2 id="h-refs">References</h2>
+    <ol class="stack science-refs">
+      <% @references.each do |r| %>
+        <li id="<%= r["key"] %>" class="card stack">
+          <p class="science-cite">
+            <% if r["doi_or_url"].present? %>
+              <%= link_to r["citation"], r["doi_or_url"], target: "_blank", rel: "noopener" %>
+            <% else %>
+              <%= r["citation"] %>
+            <% end %>
+          </p>
+          <p><%= r["finding"] %></p>
+          <p class="muted">Used for: <%= r["used_for"] %></p>
+          <p class="muted science-verified"><%= r["verified"] %></p>
+        </li>
+      <% end %>
+    </ol>
+  </section>
+</div>

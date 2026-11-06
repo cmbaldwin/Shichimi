@@ -1,0 +1,45 @@
+#!/usr/bin/env ruby
+# Random-walk the UI in headless Chrome; plain-Ruby oracles flag breakage.
+# Usage: bin/rails s -p 3106 &  then  bin/slickrock [steps]   (SLICKROCK_SEED=n to replay)
+# Localhost only. Dev server only: signed-in walks log in via /dev/login (demo user).
+require "bundler/setup"
+require "capybara"
+require "selenium-webdriver"
+require "slickrock"
+
+BASE = ENV.fetch("SLICKROCK_HOST", "http://127.0.0.1:3106")
+abort "slickrock: refusing non-localhost #{BASE}" unless BASE.match?(%r{\Ahttps?://(127\.0\.0\.1|localhost|\[::1\])(:|/|\z)})
+
+STEPS = Integer(ARGV[0] || ENV.fetch("SLICKROCK_STEPS", "25"))
+SEED = Integer(ENV.fetch("SLICKROCK_SEED", Random.new_seed))
+AVOID = [ /log ?out|sign ?out/i, /delete|destroy|remove/i, /allow notifications|enable reminders/i ].freeze
+
+Capybara.register_driver(:slickrock) do |app|
+  opts = Selenium::WebDriver::Chrome::Options.new
+  opts.add_argument("--headless=new")
+  opts.add_argument("--window-size=390,844") # PWA: phone viewport
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: opts)
+end
+page = Capybara::Session.new(:slickrock)
+
+# Walks: public pages, then the signed-in app (dev demo user).
+WALKS = {
+  "public" => "/science",
+  "signed-in" => "/dev/login?to=/",
+  "signed-in/stats+history" => "/dev/login?to=/stats"
+}.freeze
+
+failed = false
+WALKS.each do |name, path|
+  page.driver.browser.manage.delete_all_cookies if page.driver.browser.respond_to?(:manage) && page.current_url.start_with?("http")
+  result = Slickrock.walk(
+    start: BASE + path, driver: Slickrock::Drivers::Capybara.new(page),
+    steps: STEPS, seed: SEED, avoid: AVOID, oracle: Slickrock::Oracle.defaults
+  )
+  puts "== #{name}: #{result.ok? ? 'ok' : 'VIOLATION'} (seed #{SEED}, #{result.steps_taken} steps)"
+  puts "   pages: #{result.journey.map(&:url).uniq.join(' ')}"
+  puts result.violation.message.gsub(/^/, "   ") unless result.ok?
+  failed ||= !result.ok?
+end
+page.quit
+exit(failed ? 1 : 0)

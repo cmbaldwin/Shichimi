@@ -1,0 +1,67 @@
+# Verified against PubMed / publisher abstracts (2026-11). `verified` says how far.
+- key: klika_jordan_2013
+  citation: "Klika, B., & Jordan, C. (2013). High-intensity circuit training using body weight: Maximum results with minimal investment. ACSM's Health & Fitness Journal, 17(3), 8-13."
+  doi_or_url: https://doi.org/10.1249/FIT.0b013e31828cb1e8
+  finding: Describes a 12-exercise body-weight circuit (30 s work, 10 s transition, alternating upper, lower and core) that can be repeated 2-3 times.
+  used_for: Classic 12 and Asa no Mi Double formats; alternating-category exercise order.
+  verified: "Journal, volume, pages and DOI confirmed. Protocol (12 x 30 s / 10 s, 2-3 repeats) confirmed from several secondary summaries (AMSSM, ACE), not from the full text."
+- key: tabata_1996
+  citation: "Tabata, I., Nishimura, K., Kouzaki, M., Hirai, Y., Ogita, F., Miyachi, M., & Yamamoto, K. (1996). Effects of moderate-intensity endurance and high-intensity intermittent training on anaerobic capacity and VO2max. Medicine & Science in Sports & Exercise, 28(10), 1327-1330."
+  doi_or_url: https://doi.org/10.1097/00005768-199610000-00018
+  finding: Seven or eight 20 s cycle sprints at about 170% of VO2max with 10 s rests, 5 days a week for 6 weeks, raised VO2max by 7 ml/kg/min and anaerobic capacity by 28% in 7 subjects.
+  used_for: Tōgarashi Sprint and Sansho Seven formats (20 s / 10 s timing).
+  verified: Abstract read on PubMed.
+- key: mcrae_2012
+  citation: "McRae, G., Payne, A., Zelt, J. G. E., Scribbans, T. D., Jung, M. E., Little, J. P., & Gurd, B. J. (2012). Extremely low volume, whole-body aerobic-resistance training improves aerobic fitness and muscular endurance in females. Applied Physiology, Nutrition, and Metabolism, 37(6), 1124-1131."
+  doi_or_url: https://doi.org/10.1139/h2012-093
+  finding: In 22 active women, 4 weeks of 8 x 20 s / 10 s of one whole-body exercise per session raised VO2peak about 8% (treadmill running about 7%) and improved muscle endurance.
+  used_for: Sansho Seven format.
+  verified: Abstract read on PubMed.
+- key: archila_2021
+  citation: "Archila, L. R., Bostad, W., Joyner, M. J., & Gibala, M. J. (2021). Simple bodyweight training improves cardiorespiratory fitness with minimal time commitment: A contemporary application of the 5BX approach. International Journal of Exercise Science, 14(3), 93-100."
+  doi_or_url: https://doi.org/10.70252/WEQD2681
+  finding: Five 60 s vigorous body-weight bouts with walking recovery (11 min), 3 times a week for 6 weeks, raised VO2peak about 7% in inactive young adults versus controls.
+  used_for: Shōga Fifty format (long bouts).
+  verified: Full text read on PubMed Central. Small trial (9 trained, 10 control).
+- key: gillen_2016
+  citation: "Gillen, J. B., Martin, B. J., MacInnis, M. J., Skelly, L. E., Tarnopolsky, M. A., & Gibala, M. J. (2016). Twelve weeks of sprint interval training improves indices of cardiometabolic health similar to traditional endurance training despite a five-fold lower exercise volume and time commitment. PLoS ONE, 11(4), e0154075."
+  doi_or_url: https://doi.org/10.1371/journal.pone.0154075
+  finding: Three 20 s all-out cycle sprints (1 min of hard work in a 10 min session) matched 45 min of continuous cycling for VO2peak (+19%) and insulin sensitivity in sedentary men over 12 weeks.
+  used_for: Why very short, hard sessions are worth doing.
+  verified: Abstract read on PubMed. Cycle sprints in 25 men, not body-weight moves.
+- key: stamatakis_2022
+  citation: "Stamatakis, E., Ahmadi, M. N., Gill, J. M. R., Thogersen-Ntoumani, C., Gibala, M. J., Doherty, A., & Hamer, M. (2022). Association of wearable device-measured vigorous intermittent lifestyle physical activity with mortality. Nature Medicine, 28(12), 2521-2529."
+  doi_or_url: https://doi.org/10.1038/s41591-022-02100-x
+  finding: In 25,241 non-exercisers, about 4.4 min a day of vigorous bursts was associated with 26-30% lower all-cause mortality risk (an observational association).
+  used_for: Why a few vigorous minutes a day count.
+  verified: Abstract read on PubMed. Observational, not causal.
+- key: edwards_2023
+  citation: "Edwards, J. J., Deenmamode, A. H. P., Griffiths, M., Arnold, O., Cooper, N. J., Wiles, J. D., & O'Driscoll, J. M. (2023). Exercise training and resting blood pressure: A large-scale pairwise and network meta-analysis of randomised controlled trials. British Journal of Sports Medicine, 57(20), 1317-1326."
+  doi_or_url: https://doi.org/10.1136/bjsports-2022-106503
+  finding: Across 270 trials, isometric training (including the wall squat) lowered resting blood pressure the most (-8.24/-4.00 mm Hg).
+  used_for: Wall sit and plank holds.
+  verified: Abstract read on PubMed. It is a meta-analysis of resting BP; it does not test Shichimi's holds. Klika & Jordan advise against isometrics for people with hypertension or heart disease.
+- key: herrmann_2024
+  citation: "Herrmann, S. D., Willis, E. A., Ainsworth, B. E., Barreira, T. V., Hastert, M., Kracht, C. L., Schuna, J. M., Cai, Z., Quan, M., Tudor-Locke, C., Whitt-Glover, M. C., & Jacobs, D. R. (2024). 2024 Adult Compendium of Physical Activities: A third update of the energy costs of human activities. Journal of Sport and Health Science, 13(1), 6-12."
+  doi_or_url: https://doi.org/10.1016/j.jshs.2023.10.010
+  finding: Lists measured or estimated MET values for 1,114 activities in adults aged 19-59.
+  used_for: The MET values behind the kcal estimate.
+  verified: Abstract read on PubMed. The specific MET per exercise in exercises.yml was not checked against the Compendium.
+- key: foster_2001
+  citation: "Foster, C., Florhaug, J. A., Franklin, J., Gottschall, L., Hrovatin, L. A., Parker, S., Doleshal, P., & Dodge, C. (2001). A new approach to monitoring exercise training. Journal of Strength and Conditioning Research, 15(1), 109-115."
+  doi_or_url: https://pubmed.ncbi.nlm.nih.gov/11708692/
+  finding: A single rating of perceived exertion for the whole session tracked a heart-rate-based measure of training across interval and steady exercise.
+  used_for: Logging one RPE per finished workout.
+  verified: Abstract read on PubMed. No DOI listed there. The abstract does not name the scale; Foster's method is usually paired with a 0-10 Borg-type scale (unverified here).
+- key: borg_cr10
+  citation: "Borg, G. (1998). Borg's perceived exertion and pain scales. Human Kinetics."
+  doi_or_url: ""
+  finding: Defines the category-ratio CR10 scale for rating perceived exertion.
+  used_for: The 1-10 RPE we log after each workout.
+  verified: "NOT VERIFIED. Book, not checked directly; cited from memory of the standard reference."
+- key: who_2020
+  citation: "Bull, F. C., Al-Ansari, S. S., Biddle, S., et al. (2020). World Health Organization 2020 guidelines on physical activity and sedentary behaviour. British Journal of Sports Medicine, 54(24), 1451-1462."
+  doi_or_url: https://doi.org/10.1136/bjsports-2020-102955
+  finding: Adults should do 150-300 min of moderate or 75-150 min of vigorous aerobic activity a week, plus muscle-strengthening on 2 or more days a week.
+  used_for: Weekly targets on the stats page.
+  verified: Full text read on PubMed Central.

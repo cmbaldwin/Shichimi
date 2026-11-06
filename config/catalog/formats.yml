@@ -12,7 +12,7 @@
   round_rest: 10
   stations: 12
   summary: The original high-intensity circuit. 12 stations, 30 seconds on, 10 seconds to switch.
-  science: Klika & Jordan (2013), ACSM's Health & Fitness Journal 17(3). 12 body-weight exercises ordered so that muscle groups alternate, letting one rest while the next works.
+  science: "Klika & Jordan (2013), ACSM's Health & Fitness Journal 17(3):8-13, describe 12 body-weight exercises done for 30 s each with 10 s transitions, ordered so upper, lower and core work alternate and one region rests while another works. They suggest repeating the circuit 2-3 times."
 - key: sprint
   name: Tōgarashi Sprint
   spice: Tōgarashi
@@ -24,7 +24,7 @@
   round_rest: 10
   stations: 8
   summary: The original Tabata protocol. Eight 20-second all-out efforts with 10 seconds of rest, done in 4 minutes.
-  science: Tabata et al. (1996), Medicine & Science in Sports & Exercise 28(10). 8 × 20 s / 10 s intervals improved both aerobic and anaerobic capacity. Body-weight moves make it Tabata-style rather than the cycle-ergometer original.
+  science: "Tabata et al. (1996), Medicine & Science in Sports & Exercise 28(10):1327-1330: seven to eight 20 s cycle-ergometer sprints at about 170% of VO2max with 10 s rest, 5 days a week for 6 weeks, raised VO2max and anaerobic capacity (+28%) in 7 men. Body-weight moves make this Tabata-style, not the original cycle protocol."
 - key: tabata
   name: Sansho Seven
   spice: Sansho
@@ -36,7 +36,7 @@
   round_rest: 10
   stations: 7
   summary: Tabata-style 20/10 intervals across 7 moves, done twice through for 14 intervals in 7 minutes.
-  science: McRae et al. (2012), Applied Physiology, Nutrition, and Metabolism 37(6). Whole-body 20 s / 10 s calisthenics (burpees, jumping jacks, mountain climbers) raised VO2peak about as much as 30 minutes of treadmill running.
+  science: "McRae et al. (2012), Applied Physiology, Nutrition, and Metabolism 37(6):1124-1131: in 22 active women, 4 weeks (4 days/week) of 8 x 20 s / 10 s of a single whole-body exercise per session (burpees, jumping jacks, mountain climbers or squat thrusts) raised VO2peak about 8%, versus about 7% for 30 min of treadmill running, and improved muscle endurance. This format mixes seven moves, so it is an adaptation of that protocol."
 - key: fifty_ten
   name: Shōga Fifty
   spice: Shōga
@@ -48,7 +48,7 @@
   round_rest: 10
   stations: 8
   summary: Long 50-second efforts with quick 10-second switches across 8 moves. More time under tension, fewer transitions.
-  science: Archila et al. (2021), International Journal of Exercise Science 14(3). A body-weight circuit of 1-minute bouts done 3×/week raised VO2peak in 6 weeks.
+  science: "Archila et al. (2021), International Journal of Exercise Science 14(3):93-100: five 60 s vigorous body-weight bouts with walking recovery (an 11 min session), 3 times a week for 6 weeks, raised VO2peak about 7% in inactive young adults (n = 9, vs 10 controls). The 50 s / 10 s split here is our variation, not that protocol."
 - key: forty_twenty
   name: Nori Forty
   spice: Aonori
@@ -60,7 +60,7 @@
   round_rest: 20
   stations: 7
   summary: A 2:1 work-to-rest ratio across 7 moves. Enough rest to keep form crisp, enough work to stay breathless.
-  science: A 2:1 work-to-rest ratio is the most common interval structure in HIIT research. The longer rest keeps power output and technique high across the set.
+  science: "A 2:1 ratio is what Tabata et al. (1996) used (20 s on, 10 s off); we found no source showing it is the most common or best ratio. The 40 s / 20 s version is a longer-bout adaptation, so treat it as a middle setting."
 - key: easy
   name: Goma Easy
   spice: Goma
@@ -72,7 +72,7 @@
   round_rest: 30
   stations: 7
   summary: Equal work and rest across 7 moves. For beginners, recovery days and slow mornings.
-  science: WHO 2020 physical activity guidelines. Every move counts, and short bouts of any intensity add to weekly totals. 1:1 intervals let your heart rate come down between efforts.
+  science: "Bull et al. (2020), WHO guidelines, British Journal of Sports Medicine 54(24):1451-1462: adults should do 150-300 min of moderate or 75-150 min of vigorous aerobic activity per week, plus muscle-strengthening on 2 or more days. They set no interval ratio, so the 1:1 split is a gentler pacing choice, not a tested protocol."
 - key: double
   name: Asa no Mi Double
   spice: Asa no mi
@@ -84,4 +84,4 @@
   round_rest: 60
   stations: 12
   summary: The Classic 12 circuit done twice, with a 60-second breather in between. About 16 minutes.
-  science: Klika & Jordan (2013) suggest repeating the 7-minute circuit 2–3 times for a bigger training effect.
+  science: "Klika & Jordan (2013) suggest repeating their 12-exercise circuit 2-3 times; this format does it twice. The 60 s breather between rounds is our addition, not from the paper."

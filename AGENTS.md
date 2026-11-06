@@ -126,3 +126,9 @@ Headless screenshots, no shared browser (WebGL via SwiftShader):
   --screenshot=/path/out.png "http://localhost:<port>/dev/login?to=/stats"
 ```
 `/dev/login?to=<path>` (development only) signs in as the demo user and redirects.
+
+## Observability
+
+- **Uchujin** (error tracker, own tables in the primary DB, capture in `production` only): dashboard at `/uchujin`, gated by `users.admin` (the dev demo user is seeded admin). Config: `config/initializers/uchujin.rb`. Make a prod admin with `kamal app exec "bin/rails runner 'User.find_by(email_address: %q(you@x)).update!(admin: true)'"`.
+- **Slickrock** (Jev-steered random walk, oracles on 500s/JS errors/Turbo frame misses): `bin/rails s -p 3106` then `bin/slickrock [steps]` (localhost only, headless Chrome, `SLICKROCK_SEED=n` replays). Walks the public pages, then the signed-in ones through `/dev/login`. Walk list and avoid-list are at the top of `bin/slickrock`; add a path when you add a page. Optional `TYPESAFE_API_KEY` (or `jev auth set`) for steering; without one it is keyless/best-effort.
+- **Prod env (Kamal secrets only, no Rails credentials):** `UCHUJIN_DEPLOY_TOKEN`, `UCHUJIN_MCP_TOKEN`, `AWS_SES_SMTP_USERNAME`, `AWS_SES_SMTP_PASSWORD` (alert mail via SES); `GIT_REVISION` or `KAMAL_VERSION` is optional. Add them to `env.secret` in `config/deploy.yml` and `.kamal/secrets`.
