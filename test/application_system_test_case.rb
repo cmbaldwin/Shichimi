@@ -4,10 +4,15 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   Capybara.register_driver(:shichimi_chrome) do |app|
     opts = Selenium::WebDriver::Chrome::Options.new
     %w[--headless=new --no-sandbox --disable-dev-shm-usage --use-angle=swiftshader --enable-unsafe-swiftshader].each { opts.add_argument(it) }
-    opts.add_emulation(device_metrics: { width: 390, height: 844, pixelRatio: 3, touch: true },
+    # pixelRatio 1: SwiftShader renders the WebGL player in software; at 3x it starves WebDriver.
+    opts.add_emulation(device_metrics: { width: 390, height: 844, pixelRatio: 1, touch: true },
                        user_agent: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1")
     opts.add_option("goog:loggingPrefs", { browser: "ALL" })
-    Capybara::Selenium::Driver.new(app, browser: :chrome, options: opts)
+    # eager: Turbo frame navigations with turbo_action "advance" can leave chromedriver waiting on a
+    # load that never settles. The read timeout turns any remaining hang into a failure.
+    opts.page_load_strategy = :eager
+    Capybara::Selenium::Driver.new(app, browser: :chrome, options: opts,
+                                        http_client: Selenium::WebDriver::Remote::Http::Default.new(read_timeout: 60))
   end
 
   driven_by :shichimi_chrome

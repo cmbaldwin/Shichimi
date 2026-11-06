@@ -127,6 +127,12 @@ Headless screenshots, no shared browser (WebGL via SwiftShader):
 ```
 `/dev/login?to=<path>` (development only) signs in as the demo user and redirects.
 
+System tests (`bin/rails test:system`) emulate a 390px iPhone at pixelRatio 1 (SwiftShader is too slow at 3x).
+Don't `select_option` on an auto-submitting `<select>` under touch emulation: Chrome's native picker wedges
+WebDriver. Set it with `execute_script` and dispatch `change` (see `journeys_test.rb`). A killed run can leave
+a process holding the test SQLite lock: `pkill -9 -f "rails test"` before re-running.
+Brakeman's one ignored warning (`config/brakeman.ignore`) is `Exercise.find_by`, a Hash lookup, not SQL.
+
 ## Observability
 
 - **Uchujin** (error tracker, own tables in the primary DB, capture in `production` only): dashboard at `/uchujin`, gated by `users.admin` (the dev demo user is seeded admin). Config: `config/initializers/uchujin.rb`. Make a prod admin with `kamal app exec "bin/rails runner 'User.find_by(email_address: %q(you@x)).update!(admin: true)'"`.

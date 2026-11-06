@@ -19,7 +19,8 @@ class JourneysTest < ApplicationSystemTestCase
     visit workouts_path
     total = all(".wcard").size
     assert_operator total, :>, 5
-    find("select#fmt").all("option")[3].select_option # auto-submits into the turbo-frame
+    # Set via JS: clicking an <option> under touch emulation opens Chrome's native picker, which wedges WebDriver.
+    execute_script("const s = document.querySelector('select#fmt'); s.selectedIndex = 3; s.dispatchEvent(new Event('change', { bubbles: true }))")
     assert_selector "turbo-frame#results"
     assert_no_selector ".wcard", count: total
     assert_operator all(".wcard").size, :>, 0
