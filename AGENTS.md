@@ -132,3 +132,15 @@ Headless screenshots, no shared browser (WebGL via SwiftShader):
 - **Uchujin** (error tracker, own tables in the primary DB, capture in `production` only): dashboard at `/uchujin`, gated by `users.admin` (the dev demo user is seeded admin). Config: `config/initializers/uchujin.rb`. Make a prod admin with `kamal app exec "bin/rails runner 'User.find_by(email_address: %q(you@x)).update!(admin: true)'"`.
 - **Slickrock** (Jev-steered random walk, oracles on 500s/JS errors/Turbo frame misses): `bin/rails s -p 3106` then `bin/slickrock [steps]` (localhost only, headless Chrome, `SLICKROCK_SEED=n` replays). Walks the public pages, then the signed-in ones through `/dev/login`. Walk list and avoid-list are at the top of `bin/slickrock`; add a path when you add a page. Optional `TYPESAFE_API_KEY` (or `jev auth set`) for steering; without one it is keyless/best-effort.
 - **Prod env (Kamal secrets only, no Rails credentials):** `UCHUJIN_DEPLOY_TOKEN`, `UCHUJIN_MCP_TOKEN`, `AWS_SES_SMTP_USERNAME`, `AWS_SES_SMTP_PASSWORD` (alert mail via SES); `GIT_REVISION` or `KAMAL_VERSION` is optional. Add them to `env.secret` in `config/deploy.yml` and `.kamal/secrets`.
+
+## Push / PWA (deploy notes)
+- Manifest `/manifest.json`, service worker `/service-worker` (push only, no offline caching). Icons in `public/`.
+- VAPID keys are read from **ENV only** (`PushService`; no Rails credentials). Dev: gitignored `.env` (loaded by
+  `config/initializers/dotenv.rb`) holds a dev-only pair. Never reuse it in production.
+- **Deploy agent must:** generate a prod pair (`bundle exec ruby -e 'require "web-push"; k = WebPush.generate_key; puts k.public_key, k.private_key'`),
+  add fields `VAPID_PUBLIC_KEY` and `VAPID_PRIVATE_KEY` to the 1Password item the app's `.kamal/secrets` fetches from
+  (moab's pattern: `kamal secrets fetch --adapter 1password --account CNCYFLWUMZHE7MBS5AAOOSTLTI --from "MOAB/Production" ...`,
+  then `VAPID_PUBLIC_KEY=$(kamal secrets extract VAPID_PUBLIC_KEY ${SECRETS})`, same for private),
+  list both under `env.secret` in `config/deploy.yml`, and put `VAPID_SUBJECT: mailto:cody@moab.jp` under `env.clear`
+  (optional, that is also the default). Changing the pair later invalidates every existing subscription.
+- `ReminderJob` runs every 5 minutes via `config/recurring.yml` (Solid Queue in Puma). The settings page renders `push_subscriptions/_toggle`.

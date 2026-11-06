@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount Uchujin::Engine => "/uchujin"
   resource :session
   resources :passwords, param: :token
   resource :registration, only: %i[new create]
@@ -13,7 +14,9 @@ Rails.application.routes.draw do
   end
   resource :settings, only: %i[show update]
   resource :stats, only: :show
-  resources :push_subscriptions, only: %i[create]
+  resources :push_subscriptions, only: %i[create] do
+    post :test, on: :collection
+  end
   delete "push_subscriptions" => "push_subscriptions#destroy" # by params[:endpoint]
   get "science" => "pages#science"
 

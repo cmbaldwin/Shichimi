@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_05_235321) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_06_010000) do
   create_table "push_subscriptions", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "endpoint", null: false
@@ -42,6 +42,111 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_05_235321) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
+  create_table "uchujin_check_ins", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "expected_every_seconds"
+    t.datetime "last_seen_at"
+    t.integer "ping_count", default: 0, null: false
+    t.json "metadata", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_uchujin_check_ins_on_name", unique: true
+  end
+
+  create_table "uchujin_comments", force: :cascade do |t|
+    t.integer "fault_id", null: false
+    t.text "body", null: false
+    t.bigint "author_id"
+    t.string "author_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["fault_id"], name: "index_uchujin_comments_on_fault_id"
+  end
+
+  create_table "uchujin_deployments", force: :cascade do |t|
+    t.string "sha", null: false
+    t.string "environment", null: false
+    t.datetime "deployed_at", null: false
+    t.string "repository"
+    t.string "user"
+    t.json "metadata", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["environment", "deployed_at"], name: "index_uchujin_deployments_on_environment_and_deployed_at"
+  end
+
+  create_table "uchujin_faults", force: :cascade do |t|
+    t.string "fingerprint", null: false
+    t.string "class_name", null: false
+    t.text "message"
+    t.string "component", default: "web", null: false
+    t.string "environment", null: false
+    t.string "status", default: "unresolved", null: false
+    t.integer "occurrences_count", default: 0, null: false
+    t.datetime "first_seen_at"
+    t.datetime "last_seen_at"
+    t.datetime "resolved_at"
+    t.datetime "last_notified_at"
+    t.bigint "assignee_id"
+    t.string "revision"
+    t.json "tags", default: []
+    t.json "sample_context", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["class_name"], name: "index_uchujin_faults_on_class_name"
+    t.index ["component"], name: "index_uchujin_faults_on_component"
+    t.index ["environment"], name: "index_uchujin_faults_on_environment"
+    t.index ["fingerprint"], name: "index_uchujin_faults_on_fingerprint", unique: true
+    t.index ["last_seen_at"], name: "index_uchujin_faults_on_last_seen_at"
+    t.index ["status"], name: "index_uchujin_faults_on_status"
+  end
+
+  create_table "uchujin_notifications", force: :cascade do |t|
+    t.integer "fault_id"
+    t.string "channel", null: false
+    t.string "status", default: "sent"
+    t.json "payload", default: {}
+    t.datetime "sent_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["fault_id"], name: "index_uchujin_notifications_on_fault_id"
+  end
+
+  create_table "uchujin_occurrences", force: :cascade do |t|
+    t.integer "fault_id", null: false
+    t.datetime "occurred_at", null: false
+    t.text "message"
+    t.json "backtrace", default: []
+    t.json "backtrace_app", default: []
+    t.json "source_context_lines", default: []
+    t.json "cause"
+    t.json "context", default: {}
+    t.json "breadcrumbs", default: []
+    t.json "server_stats", default: {}
+    t.json "params", default: {}
+    t.json "request_metadata", default: {}
+    t.json "client_info", default: {}
+    t.string "component"
+    t.string "environment"
+    t.string "revision"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["fault_id"], name: "index_uchujin_occurrences_on_fault_id"
+    t.index ["occurred_at"], name: "index_uchujin_occurrences_on_occurred_at"
+  end
+
+  create_table "uchujin_uptime_checks", force: :cascade do |t|
+    t.string "url", null: false
+    t.string "status", default: "unknown", null: false
+    t.integer "response_time_ms"
+    t.integer "status_code"
+    t.text "error_message"
+    t.datetime "checked_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["url", "checked_at"], name: "index_uchujin_uptime_checks_on_url_and_checked_at"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email_address", null: false
     t.string "password_digest", null: false
@@ -56,6 +161,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_05_235321) do
     t.string "reminder_days", default: "0123456", null: false
     t.date "last_reminded_on"
     t.boolean "voice_enabled", default: true, null: false
+    t.boolean "admin", default: false, null: false
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
@@ -102,6 +208,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_05_235321) do
   add_foreign_key "routine_items", "users"
   add_foreign_key "routine_items", "workouts"
   add_foreign_key "sessions", "users"
+  add_foreign_key "uchujin_comments", "uchujin_faults", column: "fault_id"
+  add_foreign_key "uchujin_notifications", "uchujin_faults", column: "fault_id"
+  add_foreign_key "uchujin_occurrences", "uchujin_faults", column: "fault_id"
   add_foreign_key "workout_logs", "users"
   add_foreign_key "workout_logs", "workouts", on_delete: :nullify
   add_foreign_key "workouts", "users"

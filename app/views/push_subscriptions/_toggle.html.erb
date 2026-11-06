@@ -1,0 +1,18 @@
+<%# Push reminders toggle. Render with: render "push_subscriptions/toggle" (signed-in user). %>
+<div class="stack" data-controller="push"
+     data-push-key-value="<%= PushService.vapid_public_key %>"
+     data-push-url-value="<%= push_subscriptions_path %>"
+     data-push-test-url-value="<%= test_push_subscriptions_path %>">
+  <p class="muted" data-push-target="unsupported" hidden>This browser can't receive push notifications.</p>
+  <p class="muted" data-push-target="ios" hidden>On iPhone and iPad: tap Share, then "Add to Home Screen", and open Shichimi from the home screen to turn on reminders.</p>
+  <p class="muted" data-push-target="denied" hidden>Notifications are blocked for Shichimi. Allow them in your browser or system settings, then reload.</p>
+  <div data-push-target="off" hidden>
+    <button type="button" class="btn btn-primary" data-action="push#subscribe">Enable notifications on this device</button>
+  </div>
+  <div class="row" data-push-target="on" hidden>
+    <span class="muted">Notifications are on for this device.</span>
+    <button type="button" class="btn" data-action="push#test">Send test notification</button>
+    <button type="button" class="btn" data-action="push#unsubscribe">Turn off</button>
+  </div>
+  <p class="muted" data-push-target="message" role="status"></p>
+</div>

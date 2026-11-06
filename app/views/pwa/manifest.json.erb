@@ -1,22 +1,20 @@
 {
-  "name": "Shichimi",
-  "icons": [
-    {
-      "src": "/icon.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    },
-    {
-      "src": "/icon.png",
-      "type": "image/png",
-      "sizes": "512x512",
-      "purpose": "maskable"
-    }
-  ],
+  "name": "Shichimi · 七味",
+  "short_name": "Shichimi",
+  "description": "Guided 7-minute body-weight workouts with reminders.",
+  "id": "/",
   "start_url": "/",
-  "display": "standalone",
   "scope": "/",
-  "description": "Shichimi.",
-  "theme_color": "red",
-  "background_color": "red"
+  "display": "standalone",
+  "theme_color": "#d1382b",
+  "background_color": "#f7f2e9",
+  "icons": [
+    { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/icon.png", "type": "image/png", "sizes": "512x512" },
+    { "src": "/icon-maskable.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Today", "url": "/", "icons": [ { "src": "/icon-192.png", "sizes": "192x192" } ] },
+    { "name": "Workouts", "url": "/workouts", "icons": [ { "src": "/icon-192.png", "sizes": "192x192" } ] }
+  ]
 }

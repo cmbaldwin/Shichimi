@@ -5,5 +5,5 @@ if Rails.env.development?
   User.find_or_create_by!(email_address: "demo@shichimi.test") do |u|
     u.name = "Demo"
     u.password = "shichimi-demo"
-  end
+  end.update!(admin: true)
 end
