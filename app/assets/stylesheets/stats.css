@@ -79,3 +79,9 @@
   .heatmap { grid-template-rows: repeat(7, 16px); grid-auto-columns: 16px; gap: 4px; }
   .stats .grid { grid-template-columns: 1fr 1fr; }
 }
+/* Phones: fit all 26 heatmap weeks without scrolling; label every other week so "10/12" isn't clipped. */
+@media (max-width: 480px) {
+  .heatmap { grid-template-rows: repeat(7, 9px); grid-auto-columns: 9px; gap: 2px; }
+  .bars .lab { overflow: visible; }
+  .bars li:nth-last-child(even) .lab { visibility: hidden; }
+}

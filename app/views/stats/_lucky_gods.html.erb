@@ -8,7 +8,7 @@
           title="<%= g[:name] %>: <%= g[:blurb] %> <%= g[:unlocked] ? "Unlocked #{g[:unlocked_on]}." : "#{g[:progress]} of #{g[:goal]}." %>">
         <span class="medal" aria-hidden="true"><%= g[:ja].first %></span>
         <span class="gname"><%= g[:name] %></span>
-        <span class="gstate num"><%= g[:unlocked] ? "✓ unlocked" : "#{g[:progress]}/#{g[:goal]}" %></span>
+        <span class="gstate num"><%= g[:unlocked] ? "✓" : "#{g[:progress]}/#{g[:goal]}" %></span>
         <span class="visually-hidden"><%= g[:ja] %>. <%= g[:blurb] %> <%= g[:unlocked] ? "Unlocked on #{g[:unlocked_on]}." : "Locked, #{g[:progress]} of #{g[:goal]}." %></span>
       </li>
     <% end %>
