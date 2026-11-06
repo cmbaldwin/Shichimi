@@ -1,0 +1,6 @@
+# Side plank (hold, right side shown; the player mirrors halfway): forearm down under the shoulder, body in one line.
+tempo: 6
+yaw: 20
+keys:
+  - { root: [0, 0, 75], rsh: [0, 75], rel: 90, lsh: [0, 105], lhip: [0, 0], rhip: [0, 0] }
+  - { root: [0, 0, 75], rsh: [0, 75], rel: 90, lsh: [0, 105], lhip: [0, 0], rhip: [0, 0] }

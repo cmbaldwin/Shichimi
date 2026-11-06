@@ -1,0 +1,6 @@
+# Pike push-up: hips high in an inverted V, bend the elbows to lower the head between the hands.
+tempo: 2.8
+yaw: 65
+keys:
+  - { root: [130, 0, 0], lsh: [130, 12], rsh: [130, 12], lhip: [95, 3], rhip: [95, 3], head: 20 }
+  - { root: [150, 0, 0], lsh: [100, 28], rsh: [100, 28], lel: 90, rel: 90, lhip: [115, 3], rhip: [115, 3], head: 10 }

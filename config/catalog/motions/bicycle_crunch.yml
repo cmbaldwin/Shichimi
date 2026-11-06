@@ -1,0 +1,6 @@
+# Bicycle crunch: on the back, hands behind head, opposite elbow to knee while the other leg extends. mirror alternates.
+tempo: 4
+yaw: 65
+mirror: true
+keys:
+  - { root: [-90, 0, 0], spine: [32, 24, 0], head: 15, lsh: [150, 85], rsh: [150, 85], lel: 130, rel: 130, lhip: [105, 3], lkn: 100, rhip: [30, 3], rkn: 5 }

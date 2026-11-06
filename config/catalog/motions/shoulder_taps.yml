@@ -1,0 +1,7 @@
+# Plank shoulder taps: high plank, one hand taps the opposite shoulder, hips stay level. mirror: other hand.
+tempo: 4
+yaw: 55
+mirror: true
+keys:
+  - { root: [66, 0, 0], lsh: [66, 12], rsh: [66, 12], head: -10, lhip: [0, 8], rhip: [0, 8] }
+  - { root: [66, 0, -4], lsh: [66, 12], rsh: [95, -25], rel: 140, head: -10, lhip: [0, 8], rhip: [0, 8], shift: [0.02, 0] }

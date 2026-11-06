@@ -1,0 +1,7 @@
+# Superman: face down, arms forward, lift chest, arms and legs off the floor, squeeze, lower.
+tempo: 3.5
+yaw: 65
+feet: free
+keys:
+  - { root: [90, 0, 0], lsh: [175, 5], rsh: [175, 5], lan: 70, ran: 70, head: 5 }
+  - { root: [90, 0, 0], spine: [-28, 0, 0], head: -20, lsh: [190, 5], rsh: [190, 5], lhip: [-22, 3], rhip: [-22, 3], lan: 70, ran: 70 }

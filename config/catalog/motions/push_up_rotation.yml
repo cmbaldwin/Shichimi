@@ -1,0 +1,9 @@
+# Push-up, then rotate into a T (one arm to the ceiling, side plank on one hand). mirror: alternates sides.
+tempo: 9
+yaw: 55
+mirror: true
+keys:
+  - { root: [66, 0, 0], lsh: [66, 12], rsh: [66, 12], head: -10, lhip: [0, 3], rhip: [0, 3] }
+  - { root: [84, 0, 0], lsh: [28, 25], rsh: [28, 25], lel: 70, rel: 70, head: -15 }
+  - { root: [66, 0, 0], lsh: [66, 12], rsh: [66, 12], head: -10 }
+  - { root: [0, 0, 64], rsh: [0, 64], lsh: [0, 116], head: [0, -25, 0], lhip: [0, 3], rhip: [0, 0] }
