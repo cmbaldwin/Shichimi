@@ -366,14 +366,18 @@ export class Mannequin {
 }
 
 let shared // one offscreen renderer + stage for every thumbnail on the page
-export function renderThumbnail(motion, { key = 0, width = 240, height = 240, mirrored = false, accent } = {}) {
+// at: loop phase 0..1 (renders an in-between frame instead of a key); turn: extra view yaw in degrees.
+export function renderThumbnail(motion, { key = 0, at = null, turn = 0, width = 240, height = 240, mirrored = false, accent } = {}) {
   shared ||= { renderer: makeRenderer(document.createElement("canvas"), { preserveDrawingBuffer: true }), stage: new Stage() }
   const { renderer, stage } = shared
   renderer.setPixelRatio(1)
   renderer.setSize(width, height, false)
   stage.load(motion, { mirrored, accent })
-  stage.poseKey(key)
+  if (at == null) stage.poseKey(key); else stage.poseAt(at * stage.m.tempo)
+  const prevOffset = stage.yawOffset
+  stage.yawOffset = (prevOffset || 0) + turn * D
   stage.frame(width / height)
+  stage.yawOffset = prevOffset
   renderer.render(stage.scene, stage.camera)
   return renderer.domElement.toDataURL("image/png")
 }

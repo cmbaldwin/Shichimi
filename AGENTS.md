@@ -31,6 +31,7 @@ Don't add more without a strong reason.
 
 Exercise categories: `cardio lower upper core`. The colors are the CSS tokens `--cardio --lower --upper --core`.
 Exercise structural fields (slug, name, category, impact, level, equipment, floor, sides) are fixed in exercises.yml.
+Each exercise also has `reference: { video_url, video_title, video_channel, source_url, source_name }`: a YouTube demo (checked with YouTube's oEmbed endpoint) and an official written form guide (ACE first, then NASM, Mayo, NHS or Cleveland Clinic). It is shown as "See it done" on the exercise page and enforced by `catalog_test.rb`. Motions were reviewed against these references.
 
 ### `Workout#timeline` (player contract)
 Array of steps: `{ kind: "prep"|"work"|"rest", seconds:, slug:, round:, index:, switch_at: }`.
@@ -128,6 +129,7 @@ Headless screenshots, no shared browser (WebGL via SwiftShader):
   --screenshot=/path/out.png "http://localhost:<port>/dev/login?to=/stats"
 ```
 `/dev/login?to=<path>` (development only) signs in as the demo user and redirects.
+`/dev/motion/<slug>` (development only) is a motion contact sheet: 12 in-between frames from the view angle plus a +90° side row. It reloads the YAML on every request. Screenshot it at `--window-size=1400,1060`. Judge motions here, not from the small key thumbnails. Run each dev server with its own `-P tmp/pids/<port>.pid` so parallel servers don't collide.
 
 System tests (`bin/rails test:system`) emulate a 390px iPhone at pixelRatio 1 (SwiftShader is too slow at 3x).
 Don't `select_option` on an auto-submitting `<select>` under touch emulation: Chrome's native picker wedges

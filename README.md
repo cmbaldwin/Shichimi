@@ -25,6 +25,7 @@ Live: https://shichimi.moab.jp
 - **100 catalog workouts.** No two adjacent moves share a muscle group (Klika & Jordan 2013). There are themes for
   quiet apartment mornings, standing desk breaks, hotel rooms, sore-leg days and more. You can also build your own.
 - **Player** with a drift-free timer, voice cues, synthesized bell cues (dink-dink-dink on the last 3 s of every interval, GO chime, rest, switch-sides, halfway and finish arpeggio), a screen wake lock, and side switching for side planks.
+- **Exercise references**: each exercise page links a YouTube demo and an official form guide (ACE, NASM, Mayo Clinic, NHS or Cleveland Clinic).
 - **`/install`**: how to add the app to an iPhone or Android home screen, with drawn menu mockups and a one-tap Install button where Chrome supports it.
 - **Routine and history.** Rotate through your saved workouts, rate each one with Borg CR10 RPE, and add notes.
 - **Stats.** Streaks, a heatmap, weekly minutes, WHO weekly targets, category balance, and the Seven Lucky Gods

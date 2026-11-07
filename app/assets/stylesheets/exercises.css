@@ -26,3 +26,7 @@
 .ex-grid > *, .ex-show > *, .sheet > * { min-width: 0; }
 .ex-show { grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 760px) { .ex-show { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); } }
+
+/* "See it done" reference links (YouTube demo + official form guide) */
+.ex-ref ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.ex-ref a { font-weight: 600; }

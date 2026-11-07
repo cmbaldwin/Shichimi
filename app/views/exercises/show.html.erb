@@ -18,6 +18,20 @@
     <% if ex.cues.present? %>
       <section><h2>Cues</h2><ul class="ex-cues"><% Array(ex.cues).each do |c| %><li><%= c %></li><% end %></ul></section>
     <% end %>
+    <% if (ref = ex.reference).present? %>
+      <section class="ex-ref">
+        <h2>See it done</h2>
+        <ul>
+          <% if ref["video_url"].present? %>
+            <li>▶︎ <%= link_to ref["video_title"].presence || "Video demo", ref["video_url"], target: "_blank", rel: "noopener" %>
+              <span class="muted">(YouTube<%= ", #{ref["video_channel"]}" if ref["video_channel"].present? %>)</span></li>
+          <% end %>
+          <% if ref["source_url"].present? %>
+            <li>📖 <%= link_to "Form guide: #{ref["source_name"].presence || "reference"}", ref["source_url"], target: "_blank", rel: "noopener" %></li>
+          <% end %>
+        </ul>
+      </section>
+    <% end %>
     <% if ex.easier.present? || ex.harder.present? %>
       <section class="ex-variants">
         <% if ex.easier.present? %><div class="card"><h3>Easier</h3><p><%= ex.easier %></p></div><% end %>

@@ -1,6 +1,6 @@
-# Crunch: on the back, knees bent and feet flat, curl shoulders off the floor.
+# Crunch: on the back, knees bent and feet flat, hands lightly behind the head, curl shoulders off the floor.
 tempo: 2.4
 yaw: 65
 keys:
-  - { root: [-90, 0, 0], lhip: [60, 6], rhip: [60, 6], lkn: 110, rkn: 110, lsh: [15, 10], rsh: [15, 10] }
-  - { root: [-90, 0, 0], spine: [38, 0, 0], head: 18, lhip: [60, 6], rhip: [60, 6], lkn: 110, rkn: 110, lsh: [40, 10], rsh: [40, 10] }
+  - { root: [-90, 0, 0], lhip: [60, 6], rhip: [60, 6], lkn: 110, rkn: 110, lsh: [125, 60], rsh: [125, 60], lel: 145, rel: 145 }
+  - { root: [-90, 0, 0], spine: [38, 0, 0], head: 18, lhip: [60, 6], rhip: [60, 6], lkn: 110, rkn: 110, lsh: [125, 60], rsh: [125, 60], lel: 145, rel: 145 }

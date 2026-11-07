@@ -1,7 +1,7 @@
-# Calf raise: rise slowly onto the toes, pause, lower for three.
+# Calf raise: rise slowly onto the balls of the feet, pause, lower for three. 3/4 view so the heel lift reads; arms slightly forward for balance.
 tempo: 4
-yaw: 80
+yaw: 50
 keys:
-  - { lsh: [0, 6], rsh: [0, 6] }
-  - { lan: 70, ran: 70, lsh: [0, 6], rsh: [0, 6] }
-  - { lan: 70, ran: 70, lsh: [0, 6], rsh: [0, 6] }
+  - { lsh: [20, 12], rsh: [20, 12], lel: 10, rel: 10 }
+  - { lan: 70, ran: 70, lsh: [20, 12], rsh: [20, 12], lel: 10, rel: 10 }
+  - { lan: 70, ran: 70, lsh: [20, 12], rsh: [20, 12], lel: 10, rel: 10 }

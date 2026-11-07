@@ -31,6 +31,12 @@
   harder: Cross-over jacks (arms and legs cross in the middle) or add a squat at the
     wide point.
   met: 8.0
+  reference:
+    video_url: "https://www.youtube.com/watch?v=c4DAnQ6DtF8"
+    video_title: "Jumping Jacks"
+    video_channel: "FitnessBlender"
+    source_url: "https://www.nasm.org/resource-center/exercise-library/jumping-jacks"
+    source_name: "NASM"
 - slug: high_knees
   name: High Knees
   category: cardio
@@ -53,6 +59,12 @@
   easier: March in place with the same knee height, no jumping.
   harder: Sprint the pace, or drive each knee above hip height.
   met: 8.0
+  reference:
+    video_url: "https://www.youtube.com/watch?v=tx5rgpDAJRI"
+    video_title: "High Knees"
+    video_channel: "LivestrongWoman"
+    source_url: "https://www.nhs.uk/live-well/exercise/how-to-warm-up-before-exercising/"
+    source_name: "NHS (knee lifts, closest page)"
 - slug: mountain_climbers
   name: Mountain Climbers
   category: cardio
@@ -76,6 +88,12 @@
   easier: Slow the tempo, or put your hands on a chair seat or sturdy table.
   harder: Faster pace, or cross each knee toward the opposite elbow.
   met: 8.0
+  reference:
+    video_url: "https://www.youtube.com/watch?v=cnyTQDSE884"
+    video_title: "How to Do Mountain Climbers | The Right Way | Well+Good"
+    video_channel: "Well+Good"
+    source_url: "https://www.acefitness.org/resources/everyone/exercise-library/258/mountain-climbers/"
+    source_name: "ACE Fitness"
 - slug: burpees
   name: Burpees
   category: cardio
@@ -100,6 +118,12 @@
     Jumps).
   harder: Add a push-up at the bottom and a tuck jump at the top.
   met: 8.0
+  reference:
+    video_url: "https://www.youtube.com/watch?v=qLBImHhCXSw"
+    video_title: "How To Do A Burpee | The Right Way | Well+Good"
+    video_channel: "Well+Good"
+    source_url: "https://health.clevelandclinic.org/plyometrics"
+    source_name: "Cleveland Clinic (plyometrics)"
 - slug: squat_jumps
   name: Squat Jumps
   category: cardio
@@ -122,6 +146,12 @@
   easier: Plain Squats with a fast rise onto your toes.
   harder: Add a tuck at the top, or pause in the bottom for a second.
   met: 8.0
+  reference:
+    video_url: "https://www.youtube.com/watch?v=A-cFYWvaHr0"
+    video_title: "How To Do A Squat Jump | The Right Way | Well+Good"
+    video_channel: "Well+Good"
+    source_url: "https://health.clevelandclinic.org/plyometrics"
+    source_name: "Cleveland Clinic (plyometrics)"
 - slug: skater_hops
   name: Skater Hops
   category: cardio
@@ -145,6 +175,12 @@
   easier: Step wide side to side without hopping (or try Lateral Lunges).
   harder: Bigger leaps, or touch the floor on each landing.
   met: 8.0
+  reference:
+    video_url: "https://www.youtube.com/watch?v=dzVTuvRojzA"
+    video_title: "Skater Hop"
+    video_channel: "The Doctors of Physical Therapy"
+    source_url: "https://health.clevelandclinic.org/plyometrics"
+    source_name: "Cleveland Clinic (plyometrics)"
 - slug: step_up
   name: Step-ups
   category: cardio
@@ -167,6 +203,12 @@
   easier: Use a lower step, or a stair, and go slower.
   harder: Drive the back knee up at the top, or step faster.
   met: 5.0
+  reference:
+    video_url: "https://www.youtube.com/watch?v=vOiHvzj5XhA"
+    video_title: "Step Up Tutorial - Proper Form and Technique"
+    video_channel: "Runna"
+    source_url: "https://www.mayoclinic.org/healthy-lifestyle/fitness/multimedia/step-up/vid-20084661"
+    source_name: "Mayo Clinic"
 - slug: shadow_boxing
   name: Shadow Boxing
   category: cardio
@@ -189,6 +231,12 @@
   easier: Throw slower punches with feet planted.
   harder: Add quick footwork and fast combinations (or try High Knees).
   met: 5.0
+  reference:
+    video_url: "https://www.youtube.com/watch?v=fWfsbL2ulj8"
+    video_title: "How to Shadow Box 101 | Complete Shadowboxing Tutorial for Beginners"
+    video_channel: "Tony Jeffries"
+    source_url: "https://health.clevelandclinic.org/benefits-of-boxing"
+    source_name: "Cleveland Clinic"
 - slug: squat
   name: Squats
   category: lower
@@ -211,6 +259,12 @@
   easier: Squat to a chair and stand back up.
   harder: Slow the lowering to 3 seconds, or try Squat Jumps.
   met: 5.0
+  reference:
+    video_url: "https://www.youtube.com/watch?v=m0GcZ24pK6k"
+    video_title: "How to do a body weight squat | Bupa Health"
+    video_channel: "Bupa Health"
+    source_url: "https://www.acefitness.org/resources/everyone/exercise-library/135/bodyweight-squat/"
+    source_name: "ACE Fitness"
 - slug: wall_sit
   name: Wall Sit
   category: lower
@@ -233,6 +287,12 @@
   easier: Slide up so your knees bend less than a right angle.
   harder: Lift one foot for a few seconds at a time, alternating.
   met: 3.8
+  reference:
+    video_url: "https://www.youtube.com/watch?v=JaZNYM3zAP0"
+    video_title: "How To Do a Wall Sit | The Right Way | Well+Good"
+    video_channel: "Well+Good"
+    source_url: "https://health.clevelandclinic.org/wall-sits"
+    source_name: "Cleveland Clinic"
 - slug: lunge
   name: Alternating Lunges
   category: lower
@@ -255,6 +315,12 @@
   easier: Shallow lunges holding a wall for balance (or try Squats).
   harder: Take bigger steps and pause at the bottom, or add a hop (Squat Jumps).
   met: 5.0
+  reference:
+    video_url: "https://www.youtube.com/watch?v=ugW5I-a5A-Q"
+    video_title: "Lunges for Beginners // How to do a lunge"
+    video_channel: "WeShape"
+    source_url: "https://www.acefitness.org/resources/everyone/exercise-library/363/lunge/"
+    source_name: "ACE Fitness"
 - slug: lateral_lunge
   name: Lateral Lunges
   category: lower
@@ -277,6 +343,12 @@
   easier: Shorter side step, only a shallow bend (or try Sumo Squats).
   harder: Add a knee drive on return, or hop (Skater Hops).
   met: 4.5
+  reference:
+    video_url: "https://www.youtube.com/watch?v=4NlJdSzHeUg"
+    video_title: "Exercises with an Athletic Trainer: Lateral Lunge"
+    video_channel: "Children's Hospital Colorado"
+    source_url: "https://www.acefitness.org/resources/everyone/exercise-library/364/lateral-lunge/"
+    source_name: "ACE Fitness"
 - slug: glute_bridge
   name: Glute Bridge
   category: lower
@@ -299,6 +371,12 @@
   easier: Smaller lift range, pausing for a breath at the top.
   harder: Lift one foot off the floor and alternate legs.
   met: 3.0
+  reference:
+    video_url: "https://www.youtube.com/watch?v=wPM8icPu6H8"
+    video_title: "How To Do A Glute Bridge | The Right Way | Well+Good"
+    video_channel: "Well+Good"
+    source_url: "https://www.acefitness.org/resources/everyone/exercise-library/49/glute-bridge/"
+    source_name: "ACE Fitness"
 - slug: calf_raise
   name: Calf Raises
   category: lower
@@ -321,6 +399,12 @@
   easier: Hold a wall for support and use a smaller range.
   harder: Raise on one leg at a time, or stand on a stair edge.
   met: 3.0
+  reference:
+    video_url: "https://www.youtube.com/watch?v=gwLzBJYoWlI"
+    video_title: "How to Do Calf Raises"
+    video_channel: "LIVESTRONG"
+    source_url: "https://www.acefitness.org/resources/everyone/exercise-library/73/standing-calf-raises-wall/"
+    source_name: "ACE Fitness"
 - slug: sumo_squat
   name: Sumo Squats
   category: lower
@@ -343,6 +427,12 @@
   easier: Narrower stance with a shallow squat.
   harder: Lower slowly and add a calf raise at the top.
   met: 4.5
+  reference:
+    video_url: "https://www.youtube.com/watch?v=u2oXPmPH0hA"
+    video_title: "How to Do Sumo Squats: A Guide from Physical Therapists"
+    video_channel: "Hinge Health"
+    source_url: "https://www.acefitness.org/resources/everyone/exercise-library/129/sumo-rotational-squats/"
+    source_name: "ACE Fitness"
 - slug: push_up
   name: Push-ups
   category: upper
@@ -365,6 +455,12 @@
   easier: Knee Push-ups, or hands on a table or counter.
   harder: Slow the lowering, or try Push-up & Rotation.
   met: 5.0
+  reference:
+    video_url: "https://www.youtube.com/watch?v=WDIpL0pjun0"
+    video_title: "How to do a Push-Up | Proper Form & Technique | NASM"
+    video_channel: "National Academy of Sports Medicine (NASM)"
+    source_url: "https://www.acefitness.org/resources/everyone/exercise-library/41/push-up/"
+    source_name: "ACE Fitness"
 - slug: knee_push_up
   name: Knee Push-ups
   category: upper
@@ -387,6 +483,12 @@
   easier: Hands on a counter or wall, body upright.
   harder: Full Push-ups.
   met: 3.8
+  reference:
+    video_url: "https://www.youtube.com/watch?v=__71lgdtiB8"
+    video_title: "How To Properly Do A Modified Push-Up On Knees - Strength Exercises - Wellen"
+    video_channel: "Wellen"
+    source_url: "https://www.acefitness.org/resources/everyone/exercise-library/13/bent-knee-push-up/"
+    source_name: "ACE Fitness"
 - slug: tricep_dip
   name: Triceps Dips
   category: upper
@@ -408,6 +510,12 @@
   easier: Bend knees and keep a shallower dip.
   harder: Straighten legs and lift one foot.
   met: 4.0
+  reference:
+    video_url: "https://www.youtube.com/watch?v=0326dy_-CzM"
+    video_title: "How to Do Triceps Bench Dips"
+    video_channel: "LIVESTRONG"
+    source_url: "https://www.acefitness.org/certifiednewsarticle/3008/ace-study-identifies-best-triceps-exercises/"
+    source_name: "ACE Fitness"
 - slug: push_up_rotation
   name: Push-up & Rotation
   category: upper
@@ -431,6 +539,12 @@
   easier: Plain Push-ups, or Knee Push-ups with the rotation.
   harder: Hold a dumbbell or filled bottle in the top hand.
   met: 5.0
+  reference:
+    video_url: "https://www.youtube.com/watch?v=Plv5CIclPtQ"
+    video_title: "How to Do：PUSH-UP & ROTATION"
+    video_channel: "Leap Fitness"
+    source_url: "https://www.nasm.org/resource-center/blog/training/proper-push-up-form-and-technique-a-complete-guide"
+    source_name: "NASM (push-up base form)"
 - slug: pike_push_up
   name: Pike Push-ups
   category: upper
@@ -453,6 +567,12 @@
   easier: Shallower dip with hands wider, or Plank Shoulder Taps.
   harder: Elevate your feet on a chair.
   met: 5.0
+  reference:
+    video_url: "https://www.youtube.com/watch?v=x7_I5SUAd00"
+    video_title: "Pike Pushup"
+    video_channel: "LivestrongWoman"
+    source_url: "https://www.nasm.org/resource-center/exercise-library/pike-push-up"
+    source_name: "NASM"
 - slug: shoulder_taps
   name: Plank Shoulder Taps
   category: upper
@@ -475,6 +595,12 @@
   easier: Do it on your knees, or hands on a chair seat.
   harder: Feet closer together, or add a push-up between taps.
   met: 4.5
+  reference:
+    video_url: "https://www.youtube.com/watch?v=QOCn3_iOAro"
+    video_title: "Plank w/shoulder taps"
+    video_channel: "Northeastern"
+    source_url: "https://www.onepeloton.com/blog/shoulder-taps"
+    source_name: "Peloton (no ACE page)"
 - slug: inchworm
   name: Inchworms
   category: upper
@@ -497,6 +623,12 @@
   easier: Walk hands out a short way, bending knees freely.
   harder: Add a push-up at the plank each rep.
   met: 4.0
+  reference:
+    video_url: "https://www.youtube.com/watch?v=Z19gpqxQBwo"
+    video_title: "Dynamic Warmup Exercises | How to do Inch Worm"
+    video_channel: "Twin Cities Orthopedics"
+    source_url: "https://www.acefitness.org/resources/everyone/exercise-library/254/inchworms/"
+    source_name: "ACE Fitness"
 - slug: crunch
   name: Crunches
   category: core
@@ -518,6 +650,12 @@
   easier: Smaller lift range, hands behind your thighs.
   harder: Hold at the top for 2 seconds (or try Bicycle Crunches).
   met: 3.0
+  reference:
+    video_url: "https://www.youtube.com/watch?v=O0pIQ2UqeCY"
+    video_title: "Abdominal Crunch"
+    video_channel: "California Department of Public Health"
+    source_url: "https://www.acefitness.org/resources/everyone/exercise-library/52/crunch/"
+    source_name: "ACE Fitness"
 - slug: plank
   name: Plank
   category: core
@@ -540,6 +678,12 @@
   easier: Plank on your knees, or hands on a chair seat.
   harder: Lift one foot or arm, or try Side Plank.
   met: 3.3
+  reference:
+    video_url: "https://www.youtube.com/watch?v=LSd0aTrVWlg"
+    video_title: "How to Do a Plank: A Guide from Physical Therapists"
+    video_channel: "Hinge Health"
+    source_url: "https://www.acefitness.org/resources/everyone/exercise-library/32/front-plank/"
+    source_name: "ACE Fitness"
 - slug: side_plank
   name: Side Plank
   category: core
@@ -562,6 +706,12 @@
   easier: Bottom knee down, or plank on the forearms.
   harder: Raise the top leg, or reach the top arm under.
   met: 3.3
+  reference:
+    video_url: "https://www.youtube.com/watch?v=qbuqsJ9CuQA"
+    video_title: "How to do a Side Plank: A Guide from Physical Therapists"
+    video_channel: "Hinge Health"
+    source_url: "https://www.acefitness.org/resources/everyone/exercise-library/101/side-plank-with-straight-leg/"
+    source_name: "ACE Fitness"
 - slug: bicycle_crunch
   name: Bicycle Crunches
   category: core
@@ -583,6 +733,12 @@
   easier: Do it slowly with feet on the floor, or try Crunches.
   harder: Lower the straight leg closer to the floor.
   met: 3.8
+  reference:
+    video_url: "https://www.youtube.com/watch?v=VaL7XWK3MVE"
+    video_title: "How to Do a Bicycle Crunch Exercise | 30 Seconds | MedBridge"
+    video_channel: "Medbridge"
+    source_url: "https://www.acefitness.org/resources/everyone/exercise-library/241/supine-bicycle-crunches/"
+    source_name: "ACE Fitness"
 - slug: dead_bug
   name: Dead Bug
   category: core
@@ -604,6 +760,12 @@
   easier: Move only the legs, or only the arms.
   harder: Hold a light weight in your hands.
   met: 2.8
+  reference:
+    video_url: "https://www.youtube.com/watch?v=GbSC02oU3To"
+    video_title: "How to Do a Dead Bug: A Guide from Physical Therapists"
+    video_channel: "Hinge Health"
+    source_url: "https://www.acefitness.org/resources/everyone/exercise-library/147/supine-dead-bug/"
+    source_name: "ACE Fitness"
 - slug: bird_dog
   name: Bird Dog
   category: core
@@ -626,6 +788,12 @@
   easier: Lift just the leg, or just the arm.
   harder: Draw elbow to knee under your belly each rep.
   met: 2.8
+  reference:
+    video_url: "https://www.youtube.com/watch?v=xEDnlOxeJH4"
+    video_title: "How to Do the Bird Dog Exercise: A Guide from Physical Therapists"
+    video_channel: "Hinge Health"
+    source_url: "https://www.acefitness.org/resources/everyone/exercise-library/14/bird-dog/"
+    source_name: "ACE Fitness"
 - slug: superman
   name: Superman
   category: core
@@ -648,6 +816,12 @@
   easier: Lift only your arms, then only your legs (or Bird Dog).
   harder: Hold at the top for 3 seconds with arms in a T.
   met: 2.8
+  reference:
+    video_url: "https://www.youtube.com/watch?v=pCdIHNVENIE"
+    video_title: "Got Back Pain? Try ‘Superman’ and 3 More Exercises"
+    video_channel: "Cleveland Clinic"
+    source_url: "https://www.acefitness.org/resources/everyone/exercise-library/9/supermans/"
+    source_name: "ACE Fitness"
 - slug: standing_knee_crunch
   name: Standing Knee Crunch
   category: core
@@ -669,3 +843,9 @@
   easier: March in place with hands behind your head.
   harder: Crunch the opposite elbow to the knee, faster.
   met: 3.8
+  reference:
+    video_url: "https://www.youtube.com/watch?v=ohT0H_jkWSM"
+    video_title: "Standing Elbow to Knee - HASfit Abdominal Exercises - Ab Exercises - Abs Exercise"
+    video_channel: "HASfit"
+    source_url: "https://www.zing.coach/exercises/standing-elbow-to-knee-crunches"
+    source_name: "Zing Coach (no ACE page)"

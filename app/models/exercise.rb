@@ -1,6 +1,6 @@
 # Static catalog (config/catalog/exercises.yml + motions/<slug>.yml). Not a DB table.
 Exercise = Data.define(:slug, :name, :ja, :category, :impact, :level, :equipment, :floor, :sides,
-                       :muscles, :cues, :easier, :harder, :met, :motion) do
+                       :muscles, :cues, :easier, :harder, :met, :reference, :motion) do
   def self.categories = %w[cardio lower upper core]
 
   def self.all = @all ||= load_catalog

@@ -20,6 +20,15 @@ class CatalogTest < ActiveSupport::TestCase
     assert_equal COUNTS, CATALOG.group_by { it["format"] }.transform_values(&:size)
   end
 
+  test "every exercise links a YouTube demo and a written form guide" do
+    Exercise.all.each do |ex|
+      ref = ex.reference || {}
+      assert_match %r{\Ahttps://www\.youtube\.com/watch\?v=[\w-]{11}\z}, ref["video_url"].to_s, ex.slug
+      assert_match %r{\Ahttps://}, ref["source_url"].to_s, ex.slug
+      assert ref["source_name"].present? && ref["video_title"].present?, ex.slug
+    end
+  end
+
   test "names and slugs are unique" do
     assert_equal CATALOG.size, CATALOG.map { it["slug"] }.uniq.size
     assert_equal CATALOG.size, CATALOG.map { it["name"].downcase }.uniq.size

@@ -25,7 +25,10 @@ Rails.application.routes.draw do
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "up" => "rails/health#show", as: :rails_health_check
 
-  get "dev/login" => "dev#login" if Rails.env.development?
+  if Rails.env.development?
+    get "dev/login" => "dev#login"
+    get "dev/motion/:slug" => "dev#motion"
+  end
 
   root "home#show"
 end

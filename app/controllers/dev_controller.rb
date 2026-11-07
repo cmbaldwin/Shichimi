@@ -8,4 +8,11 @@ class DevController < ApplicationController
     start_new_session_for User.find_by!(email_address: "demo@shichimi.test")
     redirect_to params[:to].to_s.start_with?("/") ? params[:to] : root_path
   end
+
+  # GET /dev/motion/squat → contact sheet: 12 in-between frames from the front view and a side view.
+  def motion
+    Exercise.reload!
+    @exercise = Exercise.find(params[:slug])
+    render layout: false
+  end
 end
