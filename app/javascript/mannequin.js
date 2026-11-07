@@ -5,6 +5,8 @@
  *   tempo: 2.0          seconds per full loop through all keys (smoothstep key0→key1→…→key0)
  *   yaw: 30             view yaw of the whole figure (+ = turns toward its own left). Default 30.
  *   mirror: true        append L/R-mirrored copies of the keys (alternating moves: author one side only)
+ *   hands: fist         finger shape (default relaxed curl). Hands that are planted (forearm pointing down, palm at the
+ *                       floor or anchor height) are auto-flattened: wrist extended, palm down, fingers forward.
  *   feet: free          disable foot auto-leveling (default: keep soles flat to the floor, see ankles)
  *   prop: chair|wall    chair = 0.45 m seat box, wall = plane; prop_at: [x, z] m in figure space
  *                       (figure faces +Z, its left is +X). Defaults: chair [0, -0.45], wall [0, -0.3].
@@ -74,6 +76,7 @@ function prepare(motion, mirrored) {
     tempo: Number(m.tempo) || 2,
     yaw: (m.yaw ?? 30) * (mirrored ? -1 : 1),
     feetFree: m.feet === "free",
+    hands: m.hands === "fist" ? "fist" : "relaxed",
     prop: m.prop, propAt: m.prop_at, mirrored,
     category: m.category
   }
@@ -243,7 +246,51 @@ class Body {
     mark("head", "Head", 0.1, 0, 0.1, 0)
     mark("butt", "pelvis", 0.09, 0, -0.04, -0.04)
     mark("back", "spine_03", 0.11)
+    this.hands = ["l", "r"].map((s) => this.calibrateHand(s))
     parent?.add(rig.root)
+  }
+
+  // Bind-pose hand frame (finger direction + palm normal) and a curl axis in each finger bone's local space.
+  calibrateHand(s) {
+    const P = (n) => this.bone(`${n}_${s}`).getWorldPosition(new THREE.Vector3())
+    const dir = P("middle_02").sub(P("middle_01")).normalize()
+    const palm = new THREE.Vector3().crossVectors(dir, P("index_01").sub(P("pinky_01"))).normalize()
+    if (palm.y > 0) palm.negate() // the bind T-pose has palms facing down
+    const joint = (name, axisW) => {
+      const b = this.bone(name)
+      return { b, rest: b.quaternion.clone(), axis: axisW.clone().applyQuaternion(b.getWorldQuaternion(new THREE.Quaternion()).invert()).normalize() }
+    }
+    const curl = new THREE.Vector3().crossVectors(dir, palm).normalize() // +angle about it bends a finger toward the palm
+    const fingers = ["index", "middle", "ring", "pinky"].flatMap((f) => [1, 2, 3].map((j) => ({ ...joint(`${f}_0${j}_${s}`, curl), j })))
+    const tdir = P("thumb_03").sub(P("thumb_02")).normalize()
+    const tcurl = new THREE.Vector3().crossVectors(tdir, palm).normalize()
+    const thumbs = [2, 3].map((j) => ({ ...joint(`thumb_0${j}_${s}`, tcurl), j }))
+    const hand = this.bone("hand_" + s)
+    const basis = new THREE.Matrix4().makeBasis(dir, palm, new THREE.Vector3().crossVectors(dir, palm))
+    return { s, hand, fingers, thumbs, bindQ: hand.getWorldQuaternion(new THREE.Quaternion()), bindBasisInv: new THREE.Quaternion().setFromRotationMatrix(basis).invert() }
+  }
+
+  // Finger curl per joint (deg) for each shape; thumb gets its own pair.
+  static SHAPES = { relaxed: [[18, 28, 16], [12, 12]], fist: [[85, 100, 70], [30, 45]], flat: [[4, 6, 4], [0, 4]] }
+
+  shapeHand(h, shape) {
+    const [f, t] = Body.SHAPES[shape], q = new THREE.Quaternion()
+    for (const x of h.fingers) x.b.quaternion.copy(x.rest).multiply(q.setFromAxisAngle(x.axis, f[x.j - 1] * D))
+    for (const x of h.thumbs) x.b.quaternion.copy(x.rest).multiply(q.setFromAxisAngle(x.axis, t[x.j - 2] * D))
+  }
+
+  // Planted hand: palm down, fingers along the forearm's horizontal direction (else toward the head, else forward).
+  plant(h) {
+    const v = (o) => o.getWorldPosition(new THREE.Vector3())
+    const flat = (a) => { a.y = 0; return a.lengthSq() > 0.09 ? a.normalize() : null }
+    const rq = this.rig.root.getWorldQuaternion(new THREE.Quaternion())
+    const f = flat(v(h.hand).sub(v(this.bone("lowerarm_" + h.s))).normalize()) ||
+      flat(new THREE.Vector3(0, 1, 0).applyQuaternion(rq)) || flat(new THREE.Vector3(0, 0, 1).applyQuaternion(rq)) || new THREE.Vector3(0, 0, 1)
+    const n = new THREE.Vector3(0, -1, 0)
+    const target = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(f, n, new THREE.Vector3().crossVectors(f, n)))
+      .multiply(h.bindBasisInv).multiply(h.bindQ)
+    h.hand.quaternion.copy(h.hand.parent.getWorldQuaternion(new THREE.Quaternion()).invert().multiply(target))
+    h.hand.updateMatrixWorld(true)
   }
 
   source(a, b, t, out) {
@@ -285,6 +332,18 @@ class Body {
       d.bone.updateMatrixWorld(true)
     }
     ground(this.group, this.markers, k, m.anchor)
+    // hands: plant the ones bearing weight, curl the rest
+    let planted = false
+    for (const h of this.hands) {
+      const [mk, r] = this.markers[h.s + "hand"]
+      const level = m.anchor?.parts?.includes(h.s + "hand") ? Number(m.anchor.y || 0) : 0
+      const wrist = h.hand.getWorldPosition(new THREE.Vector3()), elbow = this.bone("lowerarm_" + h.s).getWorldPosition(new THREE.Vector3())
+      const down = elbow.y - wrist.y > 0.08
+      const tip = this.bone("middle_04_leaf_" + h.s).getWorldPosition(new THREE.Vector3()).y // fingertips aren't contact markers, so a reaching hand can dip into the floor
+      const low = Math.min(mk.getWorldPosition(new THREE.Vector3()).y - r, tip) <= level + k.air[0] + 0.06
+      if (down && low) { this.plant(h); this.shapeHand(h, "flat"); planted = true } else this.shapeHand(h, m.hands)
+    }
+    if (planted) ground(this.group, this.markers, k, m.anchor) // the flat palm sits lower than the straight hand did
   }
 }
 

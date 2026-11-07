@@ -80,6 +80,8 @@ keys:                 # poses, eased key0→key1→…→key0. {} = standing res
   - { root: [pitch, yaw, roll], spine: [flex, twist, side], lhip: [flex, abd, twist], lkn: 90, air: 0.1 }
 ```
 
+Hands (realistic model): fingers curl by `hands:` in the motion file (`relaxed` default, `fist`). A hand is auto-planted (wrist extended, palm flat, fingers forward) when its forearm points down and its fingertips or palm reach the floor or anchor height. If a weight-bearing hand floats on the contact sheet, flatten the body angle a little (planks need root pitch ≈ shoulder flex ≈ 70–75° for this model's arm length).
+
 ## Secrets and TLS (user policy)
 - **Kamal secrets only. No Rails encrypted credentials** (no `config/credentials.yml.enc` reads, no `RAILS_MASTER_KEY`).
   Every secret is an ENV var injected by `.kamal/secrets`, fetched with `kamal secrets fetch --adapter 1password`

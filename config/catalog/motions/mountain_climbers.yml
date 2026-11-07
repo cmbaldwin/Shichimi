@@ -3,4 +3,4 @@ tempo: 1.0
 yaw: 70
 mirror: true
 keys:
-  - { root: [68, 0, 0], head: -15, lsh: [68, 8], rsh: [68, 8], lhip: [92, 4, 0], lkn: 120, rhip: [-4, 4, 0] }
+  - { root: [74, 0, 0], head: -15, lsh: [74, 8], rsh: [74, 8], lhip: [92, 4, 0], lkn: 120, rhip: [-4, 4, 0] }
