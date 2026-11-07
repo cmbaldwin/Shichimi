@@ -2,5 +2,5 @@
 tempo: 2.6
 yaw: 65
 keys:
-  - { root: [58, 0, 0], lsh: [58, 12], rsh: [58, 12], lkn: 65, rkn: 65, head: -10 }
-  - { root: [75, 0, 0], lsh: [20, 25], rsh: [20, 25], lel: 80, rel: 80, lkn: 65, rkn: 65, head: -15 }
+  - { t: 1.3, hold: 0.06, root: [58, 0, 0], lsh: [58, 12], rsh: [58, 12], lkn: 65, rkn: 65, head: -10 }
+  - { t: 0.8, hold: 0.08, root: [75, 0, 0], lsh: [20, 25], rsh: [20, 25], lel: 80, rel: 80, lkn: 65, rkn: 65, head: -15 }

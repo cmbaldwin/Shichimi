@@ -2,10 +2,10 @@
 tempo: 4.2
 yaw: 60
 keys:
-  - { lsh: [0, 6], rsh: [0, 6] }
-  - { root: [38, 0, 0], spine: [5, 0, 0], head: -15, lhip: [75, 6, 0], rhip: [75, 6, 0], lkn: 60, rkn: 60, lsh: [45, 8], rsh: [45, 8] }
-  - { root: [72, 0, 0], spine: [8, 0, 0], head: -20, lhip: [125, 10, 0], rhip: [125, 10, 0], lkn: 125, rkn: 125, lsh: [70, 8], rsh: [70, 8] }
-  - { root: [70, 0, 0], head: -15, lsh: [70, 8], rsh: [70, 8] }
-  - { root: [72, 0, 0], spine: [8, 0, 0], head: -20, lhip: [125, 10, 0], rhip: [125, 10, 0], lkn: 125, rkn: 125, lsh: [70, 8], rsh: [70, 8] }
-  - { root: [18, 0, 0], spine: [5, 0, 0], lhip: [60, 6, 0], rhip: [60, 6, 0], lkn: 70, rkn: 70, lsh: [-25, 6], rsh: [-25, 6], lel: 10, rel: 10 }
-  - { lsh: [175, 8], rsh: [175, 8], lel: 8, rel: 8, lan: 45, ran: 45, air: 0.28, head: 5 }
+  - { t: 0.7, lsh: [0, 6], rsh: [0, 6] }
+  - { t: 0.6, root: [38, 0, 0], spine: [5, 0, 0], head: -15, lhip: [75, 6, 0], rhip: [75, 6, 0], lkn: 60, rkn: 60, lsh: [45, 8], rsh: [45, 8] }
+  - { t: 0.5, root: [72, 0, 0], spine: [8, 0, 0], head: -20, lhip: [125, 10, 0], rhip: [125, 10, 0], lkn: 125, rkn: 125, lsh: [70, 8], rsh: [70, 8] }
+  - { t: 0.8, hold: 0.15, root: [70, 0, 0], head: -15, lsh: [70, 8], rsh: [70, 8] }
+  - { t: 0.6, root: [72, 0, 0], spine: [8, 0, 0], head: -20, lhip: [125, 10, 0], rhip: [125, 10, 0], lkn: 125, rkn: 125, lsh: [70, 8], rsh: [70, 8] }
+  - { t: 0.5, root: [18, 0, 0], spine: [5, 0, 0], lhip: [60, 6, 0], rhip: [60, 6, 0], lkn: 70, rkn: 70, lsh: [-25, 6], rsh: [-25, 6], lel: 10, rel: 10 }
+  - { t: 0.8, lsh: [175, 8], rsh: [175, 8], lel: 8, rel: 8, lan: 45, ran: 45, air: 0.28, head: 5 }

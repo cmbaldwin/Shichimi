@@ -3,5 +3,5 @@ tempo: 4
 yaw: 60
 mirror: true
 keys:
-  - { lsh: [0, 6], rsh: [0, 6] }
-  - { lhip: [92, 4, 0], lkn: 92, rhip: [-12, 4, 0], rkn: 98, ran: 20, lsh: [0, 8], rsh: [0, 8], lel: 10, rel: 10 }
+  - { t: 1.2, hold: 0.06, lsh: [0, 6], rsh: [0, 6] }
+  - { t: 0.8, hold: 0.1, lhip: [92, 4, 0], lkn: 92, rhip: [-12, 4, 0], rkn: 98, ran: 20, lsh: [0, 8], rsh: [0, 8], lel: 10, rel: 10 }

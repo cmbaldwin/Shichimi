@@ -11,7 +11,12 @@
   <p class="muted small">Optional. Only used to estimate calories burned.</p>
   <%= f.label :weekly_goal, "Weekly goal (workout days)" %>
   <%= f.number_field :weekly_goal, min: 1, max: 14 %>
-  <label class="check"><%= f.check_box :voice_enabled %> Voice cues</label>
+  <fieldset class="row" data-controller="voice-preview"><legend>Voice cues</legend>
+    <% { "female" => "Female", "male" => "Male", "off" => "Off" }.each do |v, label| %>
+      <label class="check"><%= f.radio_button :voice, v, data: { voice_preview_target: "choice" } %> <%= label %></label>
+    <% end %>
+    <button type="button" class="btn" data-action="voice-preview#play">Preview</button>
+  </fieldset>
   <label class="check"><%= f.check_box :smart_reminders %> Remind me around my usual workout time</label>
   <p class="muted small">
     <% if (t = u.smart_reminder_time) %>You usually start around <%= u.usual_workout_minute.then { format("%d:%02d", it / 60, it % 60) } %>, so the nudge comes at <%= t %>.

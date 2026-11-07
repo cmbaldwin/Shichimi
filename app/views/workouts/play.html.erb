@@ -6,7 +6,7 @@
       controller: "player",
       player_timeline_value: @workout.timeline.to_json,
       player_exercises_value: @exercises.to_h { [ it.slug, it.to_player ] }.to_json,
-      player_voice_value: current_user.voice_enabled.to_json,
+      player_voice_value: current_user.voice,
       player_name_value: @workout.name,
       player_autostart_value: (dev && params[:autostart].present?).to_json,
       player_seek_value: (dev ? params[:seek].to_i : 0)

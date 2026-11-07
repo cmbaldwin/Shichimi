@@ -1,6 +1,6 @@
 # Bodyweight squat: hips back, thighs to parallel, arms forward for balance.
-tempo: 2.4
+tempo: 3.0
 yaw: 40
 keys:
-  - { lsh: [10, 5], rsh: [10, 5] }
-  - { root: [30, 0, 0], spine: [5, 0, 0], head: -10, lhip: [118, 12, 10], rhip: [118, 12, 10], lkn: [112], rkn: [112], lsh: [118, 5], rsh: [118, 5], lel: 10, rel: 10 }
+  - { t: 1.4, hold: 0.08, lsh: [10, 5], rsh: [10, 5] }
+  - { t: 0.8, hold: 0.1, root: [30, 0, 0], spine: [5, 0, 0], head: -10, lhip: [118, 12, 10], rhip: [118, 12, 10], lkn: [112], rkn: [112], lsh: [118, 5], rsh: [118, 5], lel: 10, rel: 10 }

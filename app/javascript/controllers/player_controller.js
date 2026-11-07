@@ -5,7 +5,7 @@ const mmss = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2
 
 export default class extends Controller {
   static targets = ["canvas", "form", "slugs", "duration", "startedAt", "station", "kind", "name", "count", "ring", "next", "bar", "elapsed", "remaining", "toggle", "ready"]
-  static values = { timeline: Array, exercises: Object, voice: Boolean, name: String, autostart: Boolean, seek: Number }
+  static values = { timeline: Array, exercises: Object, voice: String, name: String, autostart: Boolean, seek: Number }
 
   connect() {
     const steps = this.timelineValue
@@ -35,7 +35,7 @@ export default class extends Controller {
     document.removeEventListener("keydown", this.keys)
     document.removeEventListener("visibilitychange", this.vis)
     this.releaseWake()
-    speechSynthesis?.cancel()
+    this.hush()
     this.audio?.close().catch(() => {})
     this.mannequin?.dispose()
   }
@@ -60,7 +60,7 @@ export default class extends Controller {
     this.mannequin.pause()
     this.releaseWake()
     this.toggleTarget.textContent = "Resume"
-    speechSynthesis?.cancel()
+    this.hush()
   }
 
   resume() {
@@ -144,10 +144,11 @@ export default class extends Controller {
     if (silent || !this.started) return
     if (s.kind === "work") {
       this.sfx("go")
-      if (this.stepIsLast(i)) this.say("Last one")
+      if (this.stepIsLast(i)) this.say(["last_one"], "Last one")
     } else {
       if (s.kind === "rest") this.sfx("rest")
-      this.say(s.kind === "prep" ? `Get ready: ${ex.name}` : `Rest. Next: ${ex.name}`)
+      if (s.kind === "prep") this.say(["get_ready", s.slug], `Get ready: ${ex.name}`)
+      else this.say(["rest", "next", s.slug], `Rest. Next: ${ex.name}`)
     }
   }
 
@@ -166,12 +167,12 @@ export default class extends Controller {
       this.sideDone = true
       this.mannequin.setMotion(this.exercises(s.slug).motion, { mirrored: true })
       this.sfx("switch")
-      this.say("Switch sides")
+      this.say(["switch_sides"], "Switch sides")
     }
     if (s.kind === "work" && inStep > 5000 && this.elapsed >= this.total / 2 && !this.said.has("half")) {
       this.said.add("half")
       this.sfx("half")
-      this.say("Halfway")
+      this.say(["halfway"], "Halfway")
     }
   }
 
@@ -192,7 +193,7 @@ export default class extends Controller {
     clearInterval(this.timer)
     this.releaseWake()
     if (natural && this.steps[this.idx]?.kind === "work") this.done.add(this.idx)
-    if (!early) { this.sfx("done"); this.say("Done") }
+    if (!early) { this.sfx("done"); this.say(["done"], "Done") }
     const slugs = [...this.done].sort((a, b) => a - b).map(n => this.steps[n].slug)
     this.slugsTarget.replaceChildren(...slugs.map(v => {
       const el = document.createElement("input")
@@ -213,10 +214,39 @@ export default class extends Controller {
       this.audio = new (window.AudioContext || window.webkitAudioContext)()
       this.audio.resume().catch(() => {})
       this.bell(440, 0.03, 0.001) // silent-ish blip to fully unlock iOS
+      if (navigator.audioSession) navigator.audioSession.type = "playback" // play through the iOS silent switch
+      this.loadClips()
     } catch { /* no audio */ }
   }
 
-  // Cue palette: [frequency Hz, delay s, decay s] per note. ponytail: synthesized, no audio files to ship.
+  // Pre-rendered clips in public/audio (see script/voices). Anything missing falls back to bell()/speechSynthesis.
+  loadClips() {
+    this.clips = {}
+    const voice = this.voiceValue !== "off" && this.voiceValue
+    const urls = Object.keys(this.constructor.SFX).map(n => [`sfx/${n}`, `/audio/sfx/${n}.m4a`])
+    if (voice) {
+      const slugs = new Set(this.steps.map(s => s.slug))
+      for (const k of ["get_ready", "rest", "next", "last_one", "switch_sides", "halfway", "done", ...slugs])
+        urls.push([k, `/audio/voice/${voice}/${k}.m4a`])
+    }
+    for (const [key, url] of urls) {
+      fetch(url).then(r => r.ok ? r.arrayBuffer() : Promise.reject(r.status))
+        .then(b => this.audio.decodeAudioData(b))
+        .then(buf => { this.clips[key] = buf })
+        .catch(() => {})
+    }
+  }
+
+  playClip(buf, at = 0, gain = 1) {
+    const src = this.audio.createBufferSource(), g = this.audio.createGain()
+    src.buffer = buf
+    g.gain.value = gain
+    src.connect(g).connect(this.audio.destination)
+    src.start(this.audio.currentTime + at)
+    return src
+  }
+
+  // Fallback cue palette when public/audio/sfx/<name>.m4a hasn't loaded: [frequency Hz, delay s, decay s] per note.
   static SFX = {
     tick:   [[1568, 0, 0.18]],                                   // dink (G6)
     go:     [[2093, 0, 0.7], [1047, 0, 0.7]],                    // bright C7 + C6 on GO
@@ -226,7 +256,11 @@ export default class extends Controller {
     done:   [[1047, 0, 0.4], [1319, 0.12, 0.4], [1568, 0.24, 0.4], [2093, 0.36, 1.2]] // C-E-G-C arpeggio
   }
 
-  sfx(name) { for (const [f, at, d] of this.constructor.SFX[name]) this.bell(f, d, 0.22, at) }
+  sfx(name) {
+    const buf = this.clips?.[`sfx/${name}`]
+    if (buf) this.playClip(buf, 0, 0.6)
+    else for (const [f, at, d] of this.constructor.SFX[name]) this.bell(f, d, 0.22, at)
+  }
 
   // Small bell: sine fundamental + inharmonic partial, fast attack, exponential decay.
   bell(freq, dur, gain = 0.22, at = 0) {
@@ -248,10 +282,23 @@ export default class extends Controller {
     }
   }
 
-  say(text) {
-    if (!this.voiceValue || !("speechSynthesis" in window)) return
-    speechSynthesis.cancel()
-    speechSynthesis.speak(new SpeechSynthesisUtterance(text))
+  // Queue voice clips back to back ("Rest", "Next up:", "<exercise>"); speechSynthesis if any clip is missing.
+  say(keys, text) {
+    if (this.voiceValue === "off") return
+    this.hush()
+    const bufs = keys.map(k => this.clips?.[k])
+    if (this.audio && bufs.every(Boolean)) {
+      let at = 0.05
+      this.voices = bufs.map(b => { const src = this.playClip(b, at); at += b.duration + 0.08; return src })
+    } else if ("speechSynthesis" in window) {
+      speechSynthesis.speak(new SpeechSynthesisUtterance(text))
+    }
+  }
+
+  hush() {
+    for (const v of this.voices || []) try { v.stop() } catch { /* already done */ }
+    this.voices = []
+    if ("speechSynthesis" in window) speechSynthesis.cancel()
   }
 
   async acquireWake() {

@@ -2,7 +2,8 @@
  * Shichimi mannequin: one procedural wooden-artist figure (three.js), posed from motions/<slug>.yml.
  *
  * MOTION FORMAT (authoritative). All angles in DEGREES with anatomical meaning; missing = 0.
- *   tempo: 2.0          seconds per full loop through all keys (smoothstep key0→key1→…→key0)
+ *   tempo: 2.0          seconds per full loop through all keys (key0→key1→…→key0). Poses follow a cyclic monotone
+ *                       cubic spline: smooth through keys a joint moves past, a soft stop where it reverses, no overshoot.
  *   yaw: 30             view yaw of the whole figure (+ = turns toward its own left). Default 30.
  *   mirror: true        append L/R-mirrored copies of the keys (alternating moves: author one side only)
  *   hands: fist         finger shape (default relaxed curl). Hands that are planted (forearm pointing down, palm at the
@@ -13,6 +14,9 @@
  *   anchor: { parts: [lhand, rhand], y: 0.45 }  ground those parts at height y instead of the floor.
  *   keys: [ {...}, ... ]  {} = standing rest pose (arms hanging, feet under hips).
  * Key fields:
+ *   t:     relative duration of the segment LEAVING this key (default 1). Segments share `tempo` in proportion,
+ *          so adding t never changes the loop length. e.g. squat down t: 1.4, up t: 0.8.
+ *   hold:  0..0.9 fraction of that segment spent paused on this key before moving (rep top/bottom pause).
  *   root:  [pitch, yaw, roll]  whole body about the pelvis. pitch + = tip forward (90 = prone/face-down,
  *          -90 = supine/face-up); yaw + = turn to own left; roll + = lean to own right (90 = lying on right side).
  *          Applied yaw→pitch→roll, interpolated by quaternion slerp (no flips).
@@ -41,7 +45,6 @@ const D = Math.PI / 180
 const VEC = { root: 3, spine: 3, head: 3, lsh: 3, rsh: 3, lhip: 3, rhip: 3, lel: 1, rel: 1, lkn: 1, rkn: 1, lan: 1, ran: 1, shift: 2, air: 1 }
 const PAIRS = [["lsh", "rsh"], ["lhip", "rhip"], ["lel", "rel"], ["lkn", "rkn"], ["lan", "ran"]]
 const FALLBACK = { cardio: "#d1382b", lower: "#e08a1e", upper: "#4f7a3a", core: "#8a4a6b" }
-const smooth = (t) => t * t * (3 - 2 * t)
 const reducedMotion = () => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
 
 function normKey(k = {}) {
@@ -50,6 +53,8 @@ function normKey(k = {}) {
     const v = k[name] == null ? [] : [].concat(k[name])
     o[name] = Array.from({ length: n }, (_, i) => Number(v[i]) || 0)
   }
+  o.t = Math.max(0.05, Number(k.t) || 1)
+  o.hold = Math.min(0.9, Math.max(0, Number(k.hold) || 0))
   return o
 }
 
@@ -71,9 +76,14 @@ function prepare(motion, mirrored) {
   const swap = { lhand: "rhand", rhand: "lhand", lelbow: "relbow", relbow: "lelbow", lknee: "rknee", rknee: "lknee" }
   let anchor = m.anchor
   if (anchor && mirrored) anchor = { ...anchor, parts: anchor.parts.map((p) => swap[p] || p) }
+  const tempo = Number(m.tempo) || 2
+  // segment i (key i → i+1) lasts tempo * t_i / Σt; its first `hold` fraction stays on key i.
+  const sum = keys.reduce((a, k) => a + k.t, 0)
+  let at = 0
+  for (const k of keys) { k.start = at; k.dur = tempo * k.t / sum; k.move = k.dur * (1 - k.hold); at += k.dur }
+  tangents(keys)
   return {
-    keys, anchor,
-    tempo: Number(m.tempo) || 2,
+    keys, anchor, tempo,
     yaw: (m.yaw ?? 30) * (mirrored ? -1 : 1),
     feetFree: m.feet === "free",
     hands: m.hands === "fist" ? "fist" : "relaxed",
@@ -82,9 +92,32 @@ function prepare(motion, mirrored) {
   }
 }
 
-function lerpKey(a, b, t) {
+// Cyclic monotone cubic (Fritsch–Carlson, weighted by each segment's moving time): velocity is continuous
+// through keys a channel passes through, zero where it reverses (rep top/bottom) or the key holds, and it
+// never overshoots a key, so joints can't swing past authored limits or through the floor.
+function tangents(keys) {
+  const n = keys.length
+  keys.forEach((k, i) => {
+    const prev = keys[(i - 1 + n) % n], next = keys[(i + 1) % n]
+    k.m = {}
+    for (const name in VEC) {
+      k.m[name] = k[name].map((v, j) => {
+        if (n < 3 || k.hold > 0) return 0
+        const h0 = prev.move, h1 = k.move
+        const d0 = (v - prev[name][j]) / h0, d1 = (next[name][j] - v) / h1
+        if (d0 * d1 <= 0) return 0
+        return 3 * (h0 + h1) / ((2 * h1 + h0) / d0 + (h1 + 2 * h0) / d1)
+      })
+    }
+  })
+}
+
+function hermite(a, b, s) {
+  const h = a.move, s2 = s * s, s3 = s2 * s
+  const h00 = 2 * s3 - 3 * s2 + 1, h10 = s3 - 2 * s2 + s, h01 = 3 * s2 - 2 * s3, h11 = s3 - s2
   const o = {}
-  for (const name in VEC) o[name] = a[name].map((v, i) => v + (b[name][i] - v) * t)
+  for (const name in VEC) o[name] = a[name].map((v, i) => h00 * v + h10 * h * a.m[name][i] + h01 * b[name][i] + h11 * h * b.m[name][i])
+  for (const j of ["lel", "rel", "lkn", "rkn", "air"]) o[j][0] = Math.max(0, o[j][0])
   return o
 }
 
@@ -454,10 +487,16 @@ class Stage {
 
   poseAt(seconds) {
     const ks = this.m.keys, n = ks.length
-    const u = (seconds / (this.m.tempo / n)) % n
-    const i = Math.floor(u), t = smooth(u - i), a = ks[i], b = ks[(i + 1) % n]
-    const k = lerpKey(a, b, t)
-    k.q = a.q.clone().slerp(b.q, t)
+    const t = ((seconds % this.m.tempo) + this.m.tempo) % this.m.tempo
+    let i = n - 1
+    while (i > 0 && ks[i].start > t) i--
+    const a = ks[i], b = ks[(i + 1) % n]
+    const s = Math.max(0, (t - a.start - a.dur * a.hold) / a.move)
+    const k = hermite(a, b, Math.min(1, s))
+    // breathing: ~1° chest rise every 3.6 s, so holds never freeze into a statue
+    const br = Math.sin(seconds * 2 * Math.PI / 3.6)
+    k.spine[0] -= br * 0.9; k.lsh[1] += br * 0.6; k.rsh[1] += br * 0.6
+    k.q = rootQuat(k.root)
     this.pose(k)
   }
 
@@ -572,6 +611,8 @@ let shared // one offscreen renderer + stage for every thumbnail on the page
 const sharedStage = () => (shared ||= { renderer: makeRenderer(document.createElement("canvas"), { preserveDrawingBuffer: true }), stage: new Stage() })
 // Resolves (true = realistic model, false = procedural fallback) once thumbnails render the final figure.
 export const modelReady = () => sharedStage().stage.ready
+// Dev-only (/dev/export): the shared stage, for sampling poses into a glTF clip.
+export const sharedStageForExport = () => sharedStage().stage
 // at: loop phase 0..1 (renders an in-between frame instead of a key); turn: extra view yaw in degrees.
 export function renderThumbnail(motion, { key = 0, at = null, turn = 0, width = 240, height = 240, mirrored = false, accent } = {}) {
   const { renderer, stage } = sharedStage()

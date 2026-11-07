@@ -16,6 +16,8 @@ class PlayerTest < ActionDispatch::IntegrationTest
     [ @catalog, @mine ].each do |w|
       get workout_path(w)
       assert_response :success
+      assert_select "details.wo-ex-more a[href^='/exercises/']", w.exercise_slugs.size
+      assert_select "details.wo-ex-more a[href^='https://www.youtube.com/']", w.exercise_slugs.size
       get play_workout_path(w)
       assert_response :success
       assert_select "[data-controller=player]"

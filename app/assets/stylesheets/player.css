@@ -110,3 +110,10 @@ body.player-page { background: #0f0c09; color: #f3ece0; overscroll-behavior: non
   .p-btn { min-height: 48px; }
 }
 
+
+/* workout page: per-exercise cues + links (native <details>) */
+.wo-ex-more { margin: 2px 0 6px 40px; font-size: .9rem; }
+.wo-ex-more summary { cursor: pointer; color: var(--muted); }
+.wo-ex-more ul { margin: 6px 0; padding-left: 18px; }
+.wo-ex-more .row { gap: 6px 14px; margin: 4px 0 0; }
+.wo-ex-more a { font-weight: 600; }

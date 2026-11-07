@@ -5,7 +5,7 @@ prop: chair
 prop_at: [0, 0.42]
 mirror: true
 keys:
-  - { lsh: [0, 6], rsh: [0, 6] }
-  - { shift: [0, 0.08], root: [12, 0, 0], lhip: [90, 2, 0], lkn: 90, lsh: [-20, 6], rsh: [20, 6], lel: 20, rel: 20 }
-  - { shift: [0, 0.42], air: 0.45, rhip: [65, 2, 0], rkn: 85, lsh: [-20, 6], rsh: [20, 6], lel: 20, rel: 20 }
+  - { t: 0.8, lsh: [0, 6], rsh: [0, 6] }
+  - { t: 1.0, shift: [0, 0.08], root: [12, 0, 0], lhip: [90, 2, 0], lkn: 90, lsh: [-20, 6], rsh: [20, 6], lel: 20, rel: 20 }
+  - { t: 1.0, hold: 0.15, shift: [0, 0.42], air: 0.45, rhip: [65, 2, 0], rkn: 85, lsh: [-20, 6], rsh: [20, 6], lel: 20, rel: 20 }
   - { shift: [0, 0.08], root: [12, 0, 0], lhip: [90, 2, 0], lkn: 90, lsh: [-20, 6], rsh: [20, 6], lel: 20, rel: 20 }

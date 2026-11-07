@@ -1,6 +1,6 @@
 # Sumo squat: wide stance, toes out ~45 deg, sit straight down between the feet with knees tracking over the toes, hands clasped at the chest.
-tempo: 3
+tempo: 3.2
 yaw: 20
 keys:
-  - { lhip: [0, 22, 24], rhip: [0, 22, 24], lsh: [45, 0], rsh: [45, 0], lel: 80, rel: 80 }
-  - { root: [8, 0, 0], lhip: [68, 52, 24], rhip: [68, 52, 24], lkn: 105, rkn: 105, lsh: [50, 0], rsh: [50, 0], lel: 80, rel: 80 }
+  - { t: 1.4, hold: 0.08, lhip: [0, 22, 24], rhip: [0, 22, 24], lsh: [45, 0], rsh: [45, 0], lel: 80, rel: 80 }
+  - { t: 0.8, hold: 0.1, root: [8, 0, 0], lhip: [68, 52, 24], rhip: [68, 52, 24], lkn: 105, rkn: 105, lsh: [50, 0], rsh: [50, 0], lel: 80, rel: 80 }

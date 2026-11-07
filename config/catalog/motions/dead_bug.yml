@@ -4,4 +4,4 @@ yaw: 75
 mirror: true
 keys:
   - { root: [-90, 0, 0], lsh: [90, 5], rsh: [90, 5], lhip: [90, 3], rhip: [90, 3], lkn: 90, rkn: 90 }
-  - { root: [-90, 0, 0], rsh: [172, 5], lsh: [90, 5], lhip: [90, 3], rhip: [15, 3], lkn: 90, rkn: 5 }
+  - { hold: 0.3, root: [-90, 0, 0], rsh: [172, 5], lsh: [90, 5], lhip: [90, 3], rhip: [15, 3], lkn: 90, rkn: 5 }

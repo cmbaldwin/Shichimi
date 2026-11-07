@@ -27,7 +27,7 @@ Don't add more without a strong reason.
 | `RoutineItem` | DB | user's ordered rotation. `User#next_routine_workout` |
 | `WorkoutLog` | DB, routes at `/history` | one finished (or partly finished) workout: snapshot of name/format/timing, `completed_slugs`, `duration_seconds`, `performed_at`, `rpe` (Borg CR10 1–10), `notes`. `#kcal` |
 | `PushSubscription` | DB | endpoint, p256dh_key, auth_key |
-| `User` | DB | `time_zone` (IANA), `weight_kg` (optional, used for kcal), `weekly_goal`, `reminders_enabled`, `reminder_time` "HH:MM", `reminder_days` (wday digits "0123456", 0=Sun), `last_reminded_on`, `voice_enabled`. Helpers `zone`, `today`, `display_name` |
+| `User` | DB | `time_zone` (IANA), `weight_kg` (optional, used for kcal), `weekly_goal`, `reminders_enabled`, `reminder_time` "HH:MM", `reminder_days` (wday digits "0123456", 0=Sun), `last_reminded_on`, `voice` ("female"/"male"/"off"). Helpers `zone`, `today`, `display_name` |
 
 Exercise categories: `cardio lower upper core`. The colors are the CSS tokens `--cardio --lower --upper --core`.
 Exercise structural fields (slug, name, category, impact, level, equipment, floor, sides) are fixed in exercises.yml.
@@ -75,10 +75,11 @@ Defined by the rig pass; the authoritative description is the header comment of 
 tempo: 2.0            # seconds per loop through all keys
 yaw: 30               # default facing (deg) for the clearest view
 prop: chair           # optional: chair | wall
-keys:                 # poses, eased key0→key1→…→key0. {} = standing rest pose.
-  - {}
+keys:                 # poses, splined key0→key1→…→key0 (monotone cubic: smooth pass-through, soft stop at reversals). {} = standing rest pose.
+  - { t: 1.4, hold: 0.2 }   # t = relative length of the segment leaving this key (default 1; tempo unchanged), hold = paused fraction of it
   - { root: [pitch, yaw, roll], spine: [flex, twist, side], lhip: [flex, abd, twist], lkn: 90, air: 0.1 }
 ```
+A ~1° breathing oscillation (spine/shoulders) is added at runtime, so static holds need only one pose plus subtle extra keys.
 
 Hands (realistic model): fingers curl by `hands:` in the motion file (`relaxed` default, `fist`). A hand is auto-planted (wrist extended, palm flat, fingers forward) when its forearm points down and its fingertips or palm reach the floor or anchor height. If a weight-bearing hand floats on the contact sheet, flatten the body angle a little (planks need root pitch ≈ shoulder flex ≈ 70–75° for this model's arm length).
 
@@ -104,7 +105,7 @@ Hands (realistic model): fingers curl by `hands:` in the motion file (`relaxed` 
 | Catalog | `config/catalog/exercises.yml` content fields, `config/catalog/workouts.yml`, `test/models/catalog_test.rb`, `test/models/workout_test.rb` |
 | Science | `config/catalog/formats.yml` `science` text, `config/catalog/references.yml`, `app/views/pages/science.html.erb`, `PagesController` |
 | Install guide | `app/views/pages/install.html.erb` (CSS mockups in `install.css`, not real screenshots), `install_controller.js` (`beforeinstallprompt` button, standalone detection) |
-| Player sounds | `player_controller.js` `SFX` table + `bell()` (Web Audio synth, no audio files). Ticks fire on the last 3 s of every step longer than 4 s |
+| Player sounds | `public/audio/` (voice clips + SFX), `script/voices/*`, `player_controller.js` `loadClips/say/sfx` + `bell()` synth fallback. Ticks fire on the last 3 s of every step longer than 4 s |
 | 3D rig | `app/javascript/mannequin.js`, `figure_controller.js`, `thumb_controller.js`, `ExercisesController` + `app/views/exercises/*`, `exercises.css` |
 | Motions | `config/catalog/motions/*.yml` |
 | Player | `WorkoutsController#show #play`, `app/views/workouts/show + play`, `player_controller.js`, `WorkoutLogsController#create #show #update`, `app/views/workout_logs/show`, `player.css` |
@@ -152,6 +153,14 @@ process keeps rendering the player at about 500% CPU, which starves the next run
 `invalid session id` on every test. `application_system_test_case.rb` now kills orphaned `--enable-automation`
 Chromes (parent PID 1) at load. The suite takes about 40 s; if it hangs, check `ps` for those first.
 Brakeman's one ignored warning (`config/brakeman.ignore`) is `Exercise.find_by`, a Hash lookup, not SQL.
+
+## Audio
+
+- Voice cues are pre-rendered Kokoro-82M clips in `public/audio/voice/<female|male>/<key>.m4a` (cue keys + one per exercise slug);
+  SFX are Kenney CC0 clips in `public/audio/sfx/`. Credits: `public/audio/CREDITS.md`.
+- The player fetches/decodes them after the Start tap and plays through its AudioContext; a missing clip falls back to
+  `speechSynthesis` (voice) or `bell()` (SFX). User choice is `users.voice` (Settings, with a Preview button).
+- **Adding an exercise or cue = regenerate:** see `script/voices/README.md` (`generate.py` only renders missing files).
 
 ## Observability
 

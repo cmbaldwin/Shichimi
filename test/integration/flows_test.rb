@@ -88,10 +88,10 @@ class FlowsTest < ActionDispatch::IntegrationTest
     sign_in_as @user
     get settings_url
     assert_response :success
-    patch settings_url, params: { user: { name: "Zed", time_zone: "America/Denver", weight_kg: "70.5", weekly_goal: 3, voice_enabled: "0", reminders_enabled: "1", reminder_time: "06:30", reminder_days: %w[1 3 5] } }
+    patch settings_url, params: { user: { name: "Zed", time_zone: "America/Denver", weight_kg: "70.5", weekly_goal: 3, voice: "male", reminders_enabled: "1", reminder_time: "06:30", reminder_days: %w[1 3 5] } }
     @user.reload
     assert_equal [ "Zed", "America/Denver", 3, "135", "06:30" ], [ @user.name, @user.time_zone, @user.weekly_goal, @user.reminder_days, @user.reminder_time ]
-    assert_not @user.voice_enabled
+    assert_equal "male", @user.voice
     patch settings_url, params: { user: { time_zone: "Nowhere/Land" } }
     assert_response :unprocessable_entity
   end

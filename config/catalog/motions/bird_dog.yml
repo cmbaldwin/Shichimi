@@ -5,4 +5,4 @@ mirror: true
 feet: free
 keys:
   - { root: [80, 0, 0], lsh: [90, 5], rsh: [90, 5], lhip: [80, 3], rhip: [80, 3], lkn: 90, rkn: 90, lan: 70, ran: 70, head: -10 }
-  - { root: [80, 0, 0], lsh: [170, 0], rsh: [90, 5], lhip: [80, 3], rhip: [-5, 0], lkn: 90, rkn: 5, lan: 70, ran: 40, head: -15 }
+  - { t: 1.2, hold: 0.35, root: [80, 0, 0], lsh: [170, 0], rsh: [90, 5], lhip: [80, 3], rhip: [-5, 0], lkn: 90, rkn: 5, lan: 70, ran: 40, head: -15 }

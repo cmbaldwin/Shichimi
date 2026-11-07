@@ -2,5 +2,5 @@
 tempo: 2.8
 yaw: 65
 keys:
-  - { root: [130, 0, 0], lsh: [130, 12], rsh: [130, 12], lhip: [95, 3], rhip: [95, 3], head: 20 }
-  - { root: [150, 0, 0], lsh: [100, 28], rsh: [100, 28], lel: 90, rel: 90, lhip: [115, 3], rhip: [115, 3], head: 10 }
+  - { t: 1.3, hold: 0.06, root: [130, 0, 0], lsh: [130, 12], rsh: [130, 12], lhip: [95, 3], rhip: [95, 3], head: 20 }
+  - { t: 0.8, hold: 0.08, root: [150, 0, 0], lsh: [100, 28], rsh: [100, 28], lel: 90, rel: 90, lhip: [115, 3], rhip: [115, 3], head: 10 }

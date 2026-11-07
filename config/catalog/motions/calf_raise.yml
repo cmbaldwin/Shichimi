@@ -2,6 +2,6 @@
 tempo: 4
 yaw: 50
 keys:
-  - { lsh: [20, 12], rsh: [20, 12], lel: 10, rel: 10 }
-  - { lan: 70, ran: 70, lsh: [20, 12], rsh: [20, 12], lel: 10, rel: 10 }
-  - { lan: 70, ran: 70, lsh: [20, 12], rsh: [20, 12], lel: 10, rel: 10 }
+  - { t: 0.8, lsh: [20, 12], rsh: [20, 12], lel: 10, rel: 10 }
+  - { t: 0.6, lan: 70, ran: 70, lsh: [20, 12], rsh: [20, 12], lel: 10, rel: 10 }
+  - { t: 1.2, lan: 70, ran: 70, lsh: [20, 12], rsh: [20, 12], lel: 10, rel: 10 }

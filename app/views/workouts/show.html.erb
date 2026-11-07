@@ -52,6 +52,15 @@
             <span class="wo-ex-name"><%= ex.name %></span>
             <span class="chip" data-category="<%= ex.category %>"><%= ex.category %></span>
           </button>
+          <details class="wo-ex-more">
+            <summary>How to do it</summary>
+            <% if ex.cues.present? %><ul><% Array(ex.cues).first(3).each do |c| %><li><%= c %></li><% end %></ul><% end %>
+            <p class="row">
+              <%= link_to "Exercise page", exercise_path(ex) %>
+              <% if (ref = ex.reference || {})["video_url"].present? %><%= link_to "▶︎ Video demo", ref["video_url"], target: "_blank", rel: "noopener" %><% end %>
+              <% if ref["source_url"].present? %><%= link_to "Form guide (#{ref["source_name"]})", ref["source_url"], target: "_blank", rel: "noopener" %><% end %>
+            </p>
+          </details>
         </li>
       <% end %>
     </ol>
