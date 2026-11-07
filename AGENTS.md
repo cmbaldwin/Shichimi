@@ -130,7 +130,7 @@ writes only their actions. The other agent adds theirs with a small Edit. Never 
 
 ## Dev and verification
 ```bash
-bin/rails db:prepare db:seed        # demo user: demo@shichimi.test / shichimi-demo
+bin/rails db:prepare db:seed        # catalog; demo user only if SHICHIMI_DEMO_PASSWORD is set
 bin/rails server -p <your port>     # each agent uses its own port
 bin/rails test test/models/foo_test.rb   # run your own tests. If "database is locked" (another agent), retry
 bin/rubocop -a <your files>
