@@ -1,6 +1,17 @@
 require "test_helper"
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
+  # A killed run (or `pkill chromedriver`) orphans its headless Chrome (reparented to PID 1), and its
+  # SwiftShader GPU process keeps rendering the player at ~500% CPU forever. Two of those starve the
+  # next run's WebGL page until chromedriver hits the 60 s read timeout and the session dies.
+  # Reap orphaned automation Chromes before starting. ponytail: macOS/Linux `ps` only.
+  `ps -Ao pid=,ppid=,command=`.each_line do |line|
+    pid, ppid, cmd = line.strip.split(" ", 3)
+    Process.kill("KILL", pid.to_i) if ppid == "1" && cmd.include?("--enable-automation") && cmd.include?("Google Chrome")
+  rescue Errno::ESRCH, Errno::EPERM
+    nil
+  end
+
   Capybara.register_driver(:shichimi_chrome) do |app|
     opts = Selenium::WebDriver::Chrome::Options.new
     %w[--headless=new --no-sandbox --disable-dev-shm-usage --use-angle=swiftshader --enable-unsafe-swiftshader].each { opts.add_argument(it) }

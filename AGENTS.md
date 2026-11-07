@@ -145,6 +145,10 @@ System tests (`bin/rails test:system`) emulate a 390px iPhone at pixelRatio 1 (S
 Don't `select_option` on an auto-submitting `<select>` under touch emulation: Chrome's native picker wedges
 WebDriver. Set it with `execute_script` and dispatch `change` (see `journeys_test.rb`). A killed run can leave
 a process holding the test SQLite lock: `pkill -9 -f "rails test"` before re-running.
+A killed run also orphans its headless Chrome (`pkill chromedriver` doesn't kill it). Its SwiftShader GPU
+process keeps rendering the player at about 500% CPU, which starves the next run into `Net::ReadTimeout` and then
+`invalid session id` on every test. `application_system_test_case.rb` now kills orphaned `--enable-automation`
+Chromes (parent PID 1) at load. The suite takes about 40 s; if it hangs, check `ps` for those first.
 Brakeman's one ignored warning (`config/brakeman.ignore`) is `Exercise.find_by`, a Hash lookup, not SQL.
 
 ## Observability
