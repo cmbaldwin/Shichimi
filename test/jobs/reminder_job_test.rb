@@ -60,4 +60,35 @@ class ReminderJobTest < ActiveJob::TestCase
     end
     assert_not PushSubscription.exists?(sub.id)
   end
+
+  # Three past workouts at 07:30 Tokyo time (22:30 UTC the previous day).
+  def usual_0730!
+    3.times { |i| @user.workout_logs.create!(workout_name: "x", format: "classic", work_seconds: 30, rest_seconds: 10, performed_at: NOW - (i + 1).days + 30.minutes) }
+  end
+
+  test "smart reminders nudge 15 minutes before the usual workout time" do
+    @user.update!(reminders_enabled: false)
+    usual_0730!
+    assert_equal "07:15", @user.smart_reminder_time
+    run_job(NOW + 14.minutes) # 07:14
+    assert_empty @sent
+    run_job(NOW + 15.minutes)
+    assert_equal 1, @sent.size
+  end
+
+  test "smart reminders need history and can be turned off" do
+    @user.update!(reminders_enabled: false)
+    run_job(NOW + 1.hour)
+    assert_empty @sent, "no history yet"
+    usual_0730!
+    @user.update!(smart_reminders: false)
+    run_job(NOW + 1.hour)
+    assert_empty @sent
+  end
+
+  test "a fixed reminder time wins over the learned one" do
+    usual_0730!
+    @user.update!(reminder_time: "06:00")
+    assert_equal "06:00", @user.effective_reminder_time
+  end
 end

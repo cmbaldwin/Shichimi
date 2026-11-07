@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_06_010000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_07_010000) do
   create_table "push_subscriptions", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "endpoint", null: false
@@ -162,6 +162,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_06_010000) do
     t.date "last_reminded_on"
     t.boolean "voice_enabled", default: true, null: false
     t.boolean "admin", default: false, null: false
+    t.boolean "smart_reminders", default: true, null: false
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 

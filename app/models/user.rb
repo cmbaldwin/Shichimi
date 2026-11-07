@@ -19,6 +19,28 @@ class User < ApplicationRecord
   def display_name = name.presence || email_address.split("@").first
   def worked_out_on?(date) = workout_logs.where(performed_at: date.in_time_zone(zone).all_day).exists?
 
+  SMART_LEAD_MINUTES = 15
+
+  # Median local start time (minutes after midnight) of the last 20 workouts in 60 days; nil under 3.
+  def usual_workout_minute
+    times = workout_logs.where(performed_at: 60.days.ago..).order(performed_at: :desc).limit(20).pluck(:performed_at)
+    return if times.size < 3
+    times.map { t = it.in_time_zone(zone); t.hour * 60 + t.min }.sort[times.size / 2]
+  end
+
+  # "HH:MM" a little before the usual workout time, or nil without enough history.
+  def smart_reminder_time
+    m = usual_workout_minute or return
+    m = [ m - SMART_LEAD_MINUTES, 0 ].max
+    format("%02d:%02d", m / 60, m % 60)
+  end
+
+  # The fixed daily reminder wins when the user turned it on; otherwise the learned time.
+  def effective_reminder_time
+    return reminder_time if reminders_enabled?
+    smart_reminder_time if smart_reminders?
+  end
+
   # Next workout in the routine rotation: the one after the most recently logged routine workout.
   def next_routine_workout
     items = routine_items.includes(:workout).to_a

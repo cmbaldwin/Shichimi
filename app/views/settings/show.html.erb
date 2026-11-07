@@ -12,7 +12,13 @@
   <%= f.label :weekly_goal, "Weekly goal (workout days)" %>
   <%= f.number_field :weekly_goal, min: 1, max: 14 %>
   <label class="check"><%= f.check_box :voice_enabled %> Voice cues</label>
-  <label class="check"><%= f.check_box :reminders_enabled %> Daily reminders</label>
+  <label class="check"><%= f.check_box :smart_reminders %> Remind me around my usual workout time</label>
+  <p class="muted small">
+    <% if (t = u.smart_reminder_time) %>You usually start around <%= u.usual_workout_minute.then { format("%d:%02d", it / 60, it % 60) } %>, so the nudge comes at <%= t %>.
+    <% else %>Learns from your history after 3 workouts. Needs the installed app with notifications on.<% end %>
+    Skipped on days you've already trained.
+  </p>
+  <label class="check"><%= f.check_box :reminders_enabled %> Daily reminder at a fixed time instead</label>
   <%= f.label :reminder_time, "Reminder time" %><%= f.time_field :reminder_time %>
   <fieldset class="days"><legend>Reminder days</legend>
     <% %w[Sun Mon Tue Wed Thu Fri Sat].each_with_index do |d, i| %>
