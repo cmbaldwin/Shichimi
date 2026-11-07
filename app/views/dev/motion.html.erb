@@ -1,5 +1,6 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><title><%= @exercise.name %> motion sheet</title>
+<meta name="mannequin-model" content="<%= asset_path("mannequin.glb") %>">
 <%= javascript_importmap_tags %>
 <style>body{margin:8px;font:14px system-ui;background:#f7f2e9}h1{font-size:16px;margin:4px 0}
 .row{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-bottom:8px}
@@ -8,7 +9,8 @@ figure{margin:0;background:#fff;border:1px solid #ddd}figure img{width:100%;disp
 <h1><%= @exercise.name %> · tempo <%= @exercise.motion["tempo"] %>s · <%= Array(@exercise.motion["keys"]).size %> keys<%= " (+mirror)" if @exercise.motion["mirror"] %></h1>
 <div id="sheet"></div>
 <script type="module">
-  import { renderThumbnail } from "mannequin"
+  import { renderThumbnail, modelReady } from "mannequin"
+  await modelReady()
   const motion = JSON.parse(document.body.dataset.motion)
   const sheet = document.getElementById("sheet")
   for (const [label, turn] of [["view", 0], ["side (+90°)", 90]]) {

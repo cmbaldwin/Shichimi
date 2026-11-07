@@ -54,6 +54,16 @@ m.setMotion(motion, { mirrored })   // swap exercise (player does this every ste
 m.play(); m.pause(); m.setSpeed(1); m.dispose()
 renderThumbnail(motion, { key: 0, width: 240, height: 240, mirrored: false }) // → data URL (shared offscreen renderer)
 ```
+`modelReady()` (also exported) resolves `true` once thumbnails use the realistic model (`false` = procedural fallback);
+`thumb_controller` re-renders after it, the dev sheet awaits it.
+
+**Realistic body.** `app/assets/models/mannequin.glb` = Quaternius *Universal Base Characters* male (CC0,
+https://quaternius.com/packs/universalbasecharacters.html, see `app/assets/models/CREDITS.md`), textures stripped,
+outfit painted per vertex by dominant bone (shirt = category accent). Its digested URL comes from
+`<meta name="mannequin-model">` in the layout (and `dev/motion`). GLTFLoader r170 is vendored
+(`three/addons/...` pins). Retargeting: the old procedural `Rig` is still posed (hidden) from the motion keys; each
+driven bone gets world rotation = rig segment world rotation × a rest offset measured once with both in T-pose, then the
+model is grounded by markers on its own bones (heels, toes, knees, hands, elbows, head, butt, back). Motion files are unchanged.
 `motion` is the parsed `motions/<slug>.yml` (it's in `Exercise#to_player[:motion]`). Stimulus wrappers:
 `figure_controller.js` (`data-controller="figure" data-figure-motion-value="<json>"` on a `<canvas>`)
 and `thumb_controller.js` (on an `<img>`, with `data-thumb-motion-value` and `data-thumb-key-value`). Only one live
@@ -153,4 +163,5 @@ Brakeman's one ignored warning (`config/brakeman.ignore`) is `Exercise.find_by`,
   then `VAPID_PUBLIC_KEY=$(kamal secrets extract VAPID_PUBLIC_KEY ${SECRETS})`, same for private),
   list both under `env.secret` in `config/deploy.yml`, and put `VAPID_SUBJECT: mailto:cody@moab.jp` under `env.clear`
   (optional, that is also the default). Changing the pair later invalidates every existing subscription.
+- Smart reminders (`users.smart_reminders`, default **on**): `User#smart_reminder_time` = 15 min before the median local start of the last 20 workouts in 60 days (3+ needed). Applies only to users with a push subscription; a fixed reminder (`reminders_enabled`) overrides it (`User#effective_reminder_time`).
 - `ReminderJob` runs every 5 minutes via `config/recurring.yml` (Solid Queue in Puma). The settings page renders `push_subscriptions/_toggle`.

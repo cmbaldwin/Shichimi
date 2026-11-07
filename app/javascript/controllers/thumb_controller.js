@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import { renderThumbnail } from "mannequin"
+import { renderThumbnail, modelReady } from "mannequin"
 
 // <img data-controller="thumb" data-thumb-motion-value="<json>" data-thumb-key-value="0">
 // Rendered by the shared offscreen renderer, one per tick so long lists don't block the page.
@@ -9,6 +9,11 @@ export default class extends Controller {
   static values = { motion: Object, key: Number, mirrored: Boolean, size: { type: Number, default: 240 } }
 
   connect() {
+    this.render()
+    modelReady().then((real) => real && this.render()) // first pass may be the procedural fallback
+  }
+
+  render() {
     queue = queue.then(() => new Promise((done) => setTimeout(() => {
       if (this.element.isConnected) {
         const size = this.sizeValue

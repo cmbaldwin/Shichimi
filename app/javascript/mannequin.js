@@ -27,9 +27,13 @@
  * Grounding: after posing, the body is moved vertically so the lowest contact point (heels, toes, knees, hands,
  *   elbows, head, butt, upper back) touches y = 0. So push-ups/planks/lying poses never need a height.
  * mirrored option (setMotion/renderThumbnail): mirrors the whole motion (side plank other side).
- * Colors: motion.category (cardio|lower|upper|core) or option accent (CSS color) tints the joints.
+ * Colors: motion.category (cardio|lower|upper|core) or option accent (CSS color) tints the joints / the shirt.
+ * LOOK: a skinned glTF (app/assets/models/mannequin.glb, URL from <meta name="mannequin-model">) is retargeted
+ *   from the procedural Rig (see Body). The Rig is also the fallback while the model loads or if it fails.
+ *   renderThumbnail stays synchronous; await modelReady() before rendering if you need the final look.
  */
 import * as THREE from "three"
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js"
 
 const D = Math.PI / 180
 const VEC = { root: 3, spine: 3, head: 3, lsh: 3, rsh: 3, lhip: 3, rhip: 3, lel: 1, rel: 1, lkn: 1, rkn: 1, lan: 1, ran: 1, shift: 2, air: 1 }
@@ -163,15 +167,135 @@ class Rig {
       }
       this[s + "an"].rotation.x = a
     }
-    this.root.updateMatrixWorld(true)
-    const p = new THREE.Vector3()
-    const low = (n) => { const [o, r] = this.markers[n]; return o.getWorldPosition(p).y - r }
-    let dy
-    if (anchor?.parts?.length) dy = Number(anchor.y || 0) - anchor.parts.reduce((s, n) => s + low(n), 0) / anchor.parts.length
-    else dy = -Math.min(...Object.keys(this.markers).map(low))
-    this.root.position.y += dy + k.air[0]
-    this.root.updateMatrixWorld(true)
+    ground(this.root, this.markers, k, anchor)
   }
+}
+
+// Move `target` vertically so the lowest marker touches the floor (or the anchored parts sit at anchor.y).
+// markers: { name: [Object3D, radius] }, in world space.
+const _p = new THREE.Vector3()
+function ground(target, markers, k, anchor) {
+  target.updateMatrixWorld(true)
+  const low = (n) => { const [o, r] = markers[n]; return o.getWorldPosition(_p).y - r }
+  let dy
+  if (anchor?.parts?.length) dy = Number(anchor.y || 0) - anchor.parts.reduce((s, n) => s + low(n), 0) / anchor.parts.length
+  else dy = -Math.min(...Object.keys(markers).map(low))
+  target.position.y += dy + k.air[0]
+  target.updateMatrixWorld(true)
+}
+
+// ---------- realistic body: a skinned glTF (Quaternius Universal Base Characters, CC0) ----------
+// Retargeting: the procedural Rig above stays the source of truth and is posed (hidden) every frame.
+// Each driven bone gets world rotation = (rig segment world rotation) * restOffset, where restOffset is
+// measured once with both figures in T-pose. So motion files keep their exact meaning.
+const DRIVE = [ // [bone, rig segment, (rig segment to slerp toward, t)]
+  ["pelvis", "root"], ["spine_01", "root", "spine", 1 / 3], ["spine_02", "root", "spine", 2 / 3], ["spine_03", "spine"],
+  ["neck_01", "spine", "neck", 0.5], ["Head", "neck"],
+  ...["l", "r"].flatMap((s) => [
+    [`upperarm_${s}`, s + "sh"], [`lowerarm_${s}`, s + "el"], [`hand_${s}`, s + "el"],
+    [`thigh_${s}`, s + "hip"], [`calf_${s}`, s + "kn"], [`foot_${s}`, s + "an"]
+  ])
+]
+const SKIN = 0xc8987a, SHORTS = 0x2c2c34, SHOES = 0xeeeae4
+const outfit = (bone) => /^(spine|clavicle|upperarm)/.test(bone) ? "shirt" : /^(pelvis|thigh)/.test(bone) ? SHORTS : /^(foot|ball)/.test(bone) ? SHOES : SKIN
+
+class Body {
+  constructor(scene, rig) {
+    this.rig = rig
+    this.group = new THREE.Group()
+    this.group.add(scene)
+    this.bone = (n) => scene.getObjectByName(n)
+    scene.traverse((o) => {
+      if (!o.isSkinnedMesh) return
+      o.castShadow = true; o.frustumCulled = false
+      if (o.material.name === "Body") this.mesh = o
+    })
+    this.paint()
+    // calibrate in the container-free frame: rig in T-pose, model in its bind (T) pose
+    const parent = rig.root.parent
+    parent?.remove(rig.root)
+    rig.pose(normKey({ lsh: [0, 90], rsh: [0, 90] }), {})
+    this.group.updateMatrixWorld(true)
+    const q = new THREE.Quaternion(), v = new THREE.Vector3()
+    if (this.bone("ball_l").getWorldPosition(v).z < this.bone("foot_l").getWorldPosition(new THREE.Vector3()).z) {
+      scene.rotation.y = Math.PI; this.group.updateMatrixWorld(true) // model faces -Z: turn it to face +Z like the rig
+    }
+    this.drive = DRIVE.map(([name, a, b, t]) => {
+      const bone = this.bone(name)
+      const off = this.source(a, b, t, new THREE.Quaternion()).invert().multiply(bone.getWorldQuaternion(new THREE.Quaternion()))
+      return { bone, a, b, t, off }
+    })
+    this.markers = {}
+    const mark = (name, bone, r, dx = 0, dy = 0, dz = 0, y) => {
+      const b = this.bone(bone), w = b.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(dx, dy, dz))
+      if (y != null) w.y = y
+      const o = new THREE.Object3D(); o.position.copy(b.worldToLocal(w)); b.add(o)
+      this.markers[name] = [o, r]
+    }
+    const floor = this.mesh.geometry.boundingBox?.min.y ?? 0
+    for (const s of ["l", "r"]) {
+      mark(s + "heel", "foot_" + s, 0, 0, 0, -0.05, floor)
+      mark(s + "toe", "ball_leaf_" + s, 0, 0, 0, 0, floor)
+      mark(s + "knee", "calf_" + s, 0.055, 0, 0, 0.02)
+      mark(s + "hand", "middle_01_" + s, 0.025)
+      mark(s + "elbow", "lowerarm_" + s, 0.045)
+    }
+    mark("head", "Head", 0.1, 0, 0.1, 0)
+    mark("butt", "pelvis", 0.09, 0, -0.04, -0.04)
+    mark("back", "spine_03", 0.11)
+    parent?.add(rig.root)
+  }
+
+  source(a, b, t, out) {
+    this.rig[a].getWorldQuaternion(out)
+    if (b) out.slerp(this.rig[b].getWorldQuaternion(new THREE.Quaternion()), t)
+    return out
+  }
+
+  paint(accent = "#888") {
+    const g = this.mesh.geometry, bones = this.mesh.skeleton.bones
+    const si = g.attributes.skinIndex, sw = g.attributes.skinWeight, n = si.count
+    if (!this.kinds) {
+      this.kinds = new Array(n)
+      for (let i = 0; i < n; i++) {
+        let best = 0
+        for (let j = 1; j < 4; j++) if (sw.getComponent(i, j) > sw.getComponent(i, best)) best = j
+        this.kinds[i] = outfit(bones[si.getComponent(i, best)].name)
+      }
+      g.setAttribute("color", new THREE.BufferAttribute(new Float32Array(n * 3), 3))
+      this.mesh.material.vertexColors = true
+    }
+    const c = new THREE.Color(), shirt = new THREE.Color(accent), col = g.attributes.color
+    for (let i = 0; i < n; i++) {
+      const k = this.kinds[i]
+      if (k === "shirt") col.setXYZ(i, shirt.r, shirt.g, shirt.b); else { c.setHex(k); col.setXYZ(i, c.r, c.g, c.b) }
+    }
+    col.needsUpdate = true
+  }
+
+  pose(k, m) {
+    const q = new THREE.Quaternion()
+    this.group.position.set(0, 0, 0)
+    this.group.updateMatrixWorld(true)
+    const pelvis = this.drive[0].bone
+    pelvis.position.copy(pelvis.parent.worldToLocal(this.rig.root.getWorldPosition(new THREE.Vector3())))
+    for (const d of this.drive) {
+      const want = this.source(d.a, d.b, d.t, q).multiply(d.off)
+      d.bone.quaternion.copy(d.bone.parent.getWorldQuaternion(new THREE.Quaternion()).invert().multiply(want))
+      d.bone.updateMatrixWorld(true)
+    }
+    ground(this.group, this.markers, k, m.anchor)
+  }
+}
+
+let glb // one fetch of the model per page; each Stage parses its own copy (own skeleton + colours)
+function loadBody(rig) {
+  const url = document.querySelector('meta[name="mannequin-model"]')?.content
+  if (!url) return Promise.resolve(null)
+  glb ||= fetch(url).then((r) => (r.ok ? r.arrayBuffer() : null)).catch(() => null)
+  return glb.then((buf) => buf && new GLTFLoader().parseAsync(buf.slice(0), ""))
+    .then((gltf) => gltf && new Body(gltf.scene, rig))
+    .catch((e) => { console.warn("mannequin: model failed, keeping the procedural figure", e); return null })
 }
 
 function softDiscTexture() {
@@ -214,19 +338,33 @@ class Stage {
     this.container.add(this.rig.root, this.props)
     this.scene.add(this.container)
     this.yawOffset = 0
+    this.ready = loadBody(this.rig).then((body) => {
+      if (!body) return false
+      this.body = body
+      this.rig.root.visible = false
+      this.container.add(body.group)
+      if (this.args) this.load(...this.args)
+      return true
+    })
   }
 
   load(motion, { mirrored = false, accent } = {}) {
+    this.args = [motion, { mirrored, accent }]
     this.m = prepare(motion, mirrored)
     for (const k of this.m.keys) k.q = rootQuat(k.root)
     const c = new THREE.Color(accentColor(this.m.category, accent))
     this.rig.accent.color.copy(c)
     this.discMat.color.copy(c)
+    if (this.body && this.body.accent !== c.getHexString()) { this.body.paint(c); this.body.accent = c.getHexString() }
     this.buildProps()
     // fit the camera once to the bounds of every key at the base yaw
     this.container.rotation.y = this.m.yaw * D
     const box = new THREE.Box3()
-    this.m.keys.forEach((_, i) => { this.poseKey(i); box.union(new THREE.Box3().setFromObject(this.container)) })
+    this.m.keys.forEach((_, i) => {
+      this.poseKey(i)
+      this.body?.mesh.computeBoundingBox() // skinned bounds follow the current pose
+      box.union(new THREE.Box3().setFromObject(this.container))
+    })
     this.box = box
     const r = Math.max(0.5, Math.hypot(box.max.x - box.min.x, box.max.z - box.min.z) / 2 * 0.85)
     this.disc.scale.setScalar(r); this.shadow.scale.setScalar(r * 1.3)
@@ -248,7 +386,12 @@ class Stage {
     }
   }
 
-  poseKey(i) { this.rig.pose(this.m.keys[i % this.m.keys.length], this.m) }
+  pose(k) {
+    this.rig.pose(k, this.m)
+    this.body?.pose(k, this.m)
+  }
+
+  poseKey(i) { this.pose(this.m.keys[i % this.m.keys.length]) }
 
   poseAt(seconds) {
     const ks = this.m.keys, n = ks.length
@@ -256,7 +399,7 @@ class Stage {
     const i = Math.floor(u), t = smooth(u - i), a = ks[i], b = ks[(i + 1) % n]
     const k = lerpKey(a, b, t)
     k.q = a.q.clone().slerp(b.q, t)
-    this.rig.pose(k, this.m)
+    this.pose(k)
   }
 
   frame(aspect) {
@@ -306,6 +449,7 @@ export class Mannequin {
     if (interactive) this.bindDrag()
     this.resize()
     this.loop()
+    this.stage.ready.then(() => { if (!this.disposed) this.draw() })
   }
 
   setMotion(motion, { mirrored = false } = {}) {
@@ -357,7 +501,7 @@ export class Mannequin {
   }
 
   dispose() {
-    cancelAnimationFrame(this.raf); this.raf = null; this.playing = false
+    cancelAnimationFrame(this.raf); this.raf = null; this.playing = false; this.disposed = true
     this.ro.disconnect(); this.io.disconnect()
     document.removeEventListener("visibilitychange", this.onVis)
     this.renderer.dispose()
@@ -366,10 +510,12 @@ export class Mannequin {
 }
 
 let shared // one offscreen renderer + stage for every thumbnail on the page
+const sharedStage = () => (shared ||= { renderer: makeRenderer(document.createElement("canvas"), { preserveDrawingBuffer: true }), stage: new Stage() })
+// Resolves (true = realistic model, false = procedural fallback) once thumbnails render the final figure.
+export const modelReady = () => sharedStage().stage.ready
 // at: loop phase 0..1 (renders an in-between frame instead of a key); turn: extra view yaw in degrees.
 export function renderThumbnail(motion, { key = 0, at = null, turn = 0, width = 240, height = 240, mirrored = false, accent } = {}) {
-  shared ||= { renderer: makeRenderer(document.createElement("canvas"), { preserveDrawingBuffer: true }), stage: new Stage() }
-  const { renderer, stage } = shared
+  const { renderer, stage } = sharedStage()
   renderer.setPixelRatio(1)
   renderer.setSize(width, height, false)
   stage.load(motion, { mirrored, accent })
