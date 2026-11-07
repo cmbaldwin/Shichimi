@@ -1,11 +1,13 @@
-# Step-up onto a chair: whole foot on the seat, drive up through the heel, stand tall, step back down. mirror alternates the lead leg.
-tempo: 4.4
+# Step-up onto a chair: drive the knee up and over the seat, plant the whole foot, drive up through the heel, stand tall, step back down (knee clears the seat edge both ways). mirror alternates the lead leg.
+tempo: 5.4
 yaw: 60
 prop: chair
 prop_at: [0, 0.42]
 mirror: true
 keys:
   - { t: 0.8, lsh: [0, 6], rsh: [0, 6] }
-  - { t: 1.0, shift: [0, 0.08], root: [12, 0, 0], lhip: [90, 2, 0], lkn: 90, lsh: [-20, 6], rsh: [20, 6], lel: 20, rel: 20 }
+  - { t: 0.6, shift: [0, 0.04], root: [10, 0, 0], lhip: [105, 2, 0], lkn: 115, lsh: [-15, 6], rsh: [15, 6], lel: 20, rel: 20 }
+  - { t: 0.8, shift: [0, 0.08], root: [12, 0, 0], lhip: [90, 2, 0], lkn: 90, lsh: [-20, 6], rsh: [20, 6], lel: 20, rel: 20 }
   - { t: 1.0, hold: 0.15, shift: [0, 0.42], air: 0.45, rhip: [65, 2, 0], rkn: 85, lsh: [-20, 6], rsh: [20, 6], lel: 20, rel: 20 }
-  - { shift: [0, 0.08], root: [12, 0, 0], lhip: [90, 2, 0], lkn: 90, lsh: [-20, 6], rsh: [20, 6], lel: 20, rel: 20 }
+  - { t: 1.0, shift: [0, 0.08], root: [12, 0, 0], lhip: [90, 2, 0], lkn: 90, lsh: [-20, 6], rsh: [20, 6], lel: 20, rel: 20 }
+  - { t: 0.6, shift: [0, 0.04], root: [10, 0, 0], lhip: [105, 2, 0], lkn: 115, lsh: [-15, 6], rsh: [15, 6], lel: 20, rel: 20 }

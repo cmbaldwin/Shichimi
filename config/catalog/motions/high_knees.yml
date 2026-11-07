@@ -1,7 +1,7 @@
-# High knees: run in place, each knee to hip height, opposite arm pumps, quick light bounce. mirror adds the other knee.
-tempo: 1.5
+# High knees: run in place, each knee to hip height, opposite arm pumps, light flight phase between strides with the stance knee absorbing. mirror adds the other knee.
+tempo: 1.2
 yaw: 55
 mirror: true
 keys:
-  - { lhip: [92, 3, 0], lkn: 100, rsh: [65, 5], rel: 90, lsh: [-30, 5], lel: 90, ran: 10, air: 0.05, spine: [-3, 0, 0] }
-  - { lhip: [6, 3, 0], lkn: 12, rhip: [-4, 3, 0], rkn: 22, rsh: [-10, 5], rel: 90, lsh: [20, 5], lel: 90, spine: [-3, 0, 0], air: 0.03 }
+  - { t: 1.0, root: [3, 0, 0], spine: [-2, 0, 0], lhip: [92, 3, 0], lkn: 100, rhip: [-4, 3, 0], rkn: 22, lan: 10, rsh: [65, 5], rel: 90, lsh: [-30, 5], lel: 90 }
+  - { t: 0.9, root: [5, 0, 0], spine: [-2, 0, 0], lhip: [40, 3, 0], lkn: 75, rhip: [-12, 3, 0], rkn: 40, lan: 20, ran: 40, rsh: [20, 5], rel: 90, lsh: [15, 5], lel: 90, air: 0.07 }

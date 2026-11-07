@@ -1,8 +1,8 @@
-# Jumping jacks: hop out to a wide stance with arms overhead, hop back in.
-tempo: 1.2
+# Jumping jacks: sink, hop out to a wide stance with arms sweeping overhead, absorb the landing, hop back in. Each transition has a small airborne phase.
+tempo: 1.1
 yaw: 15
 keys:
-  - { lsh: [0, 8], rsh: [0, 8], lhip: [0, 2], rhip: [0, 2] }
-  - { lsh: [0, 95], rsh: [0, 95], lel: 10, rel: 10, lhip: [0, 9], rhip: [0, 9], lan: 25, ran: 25, air: 0.08 }
-  - { lsh: [0, 170], rsh: [0, 170], lel: 10, rel: 10, lhip: [0, 17], rhip: [0, 17], lkn: 8, rkn: 8 }
-  - { lsh: [0, 95], rsh: [0, 95], lel: 10, rel: 10, lhip: [0, 9], rhip: [0, 9], lan: 25, ran: 25, air: 0.08 }
+  - { t: 0.45, lsh: [0, 6], rsh: [0, 6], lhip: [8, 2], rhip: [8, 2], lkn: 16, rkn: 16 }
+  - { t: 0.55, lsh: [0, 100], rsh: [0, 100], lel: 10, rel: 10, lhip: [0, 10], rhip: [0, 10], lan: 35, ran: 35, air: 0.1 }
+  - { t: 0.45, lsh: [0, 168], rsh: [0, 168], lel: 10, rel: 10, lhip: [8, 17], rhip: [8, 17], lkn: 16, rkn: 16 }
+  - { t: 0.55, lsh: [0, 100], rsh: [0, 100], lel: 10, rel: 10, lhip: [0, 10], rhip: [0, 10], lan: 35, ran: 35, air: 0.1 }
