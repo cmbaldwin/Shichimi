@@ -43,7 +43,7 @@ UI walks · Kamal on the moab box.
 ## Develop
 ```bash
 bundle install
-bin/rails db:prepare db:seed      # seeds the catalog and the demo user demo@shichimi.test / shichimi-demo
+bin/rails db:prepare db:seed      # seeds the catalog; set SHICHIMI_DEMO_PASSWORD to also create demo@shichimi.test
 bin/rails dev:sample_logs         # optional: 6 months of fake history for the demo user
 bin/rails server
 bin/rails test                    # unit and integration
