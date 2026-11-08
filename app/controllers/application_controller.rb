@@ -10,6 +10,8 @@ class ApplicationController < ActionController::Base
   private
 
   def current_user = Current.session&.user
+  # Which rendered figure to show (Settings); signed-out visitors get the default.
+  helper_method def figure = current_user&.figure || "male"
 
   def use_user_time_zone(&)
     Time.use_zone(current_user&.time_zone || "Asia/Tokyo", &)

@@ -1,6 +1,6 @@
 <% f = @workout.workout_format %>
 <% content_for :title, "#{@workout.name} · Shichimi" %>
-<% motions = @exercises.uniq.to_h { [ it.slug, it.to_player.slice(:motion, :video) ] } %>
+<% motions = @exercises.uniq.to_h { [ it.slug, it.to_player(figure).slice(:motion, :video) ] } %>
 <article class="wo-show" data-controller="preview" data-preview-motions-value="<%= motions.to_json %>" data-preview-slug-value="<%= @exercises.first.slug %>">
   <header class="stack">
     <p class="muted"><%= link_to "Workouts", workouts_path %> /</p>

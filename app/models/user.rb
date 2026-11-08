@@ -15,6 +15,8 @@ class User < ApplicationRecord
   validates :reminder_time, format: { with: /\A([01]\d|2[0-3]):[0-5]\d\z/ }
   VOICES = %w[female male off].freeze
   validates :voice, inclusion: { in: VOICES }
+  FIGURES = %w[male female].freeze
+  validates :figure, inclusion: { in: FIGURES }
 
   def zone = ActiveSupport::TimeZone[time_zone]
   def today = zone.today

@@ -2,7 +2,7 @@
 <% content_for :title, "#{ex.name} · Shichimi" %>
 <div class="ex-show">
   <div class="ex-media">
-    <% if (video = ex.video) %>
+    <% if (video = ex.video(figure)) %>
       <video class="ex-figure ex-video" src="<%= video %>.mp4" poster="<%= video %>.webp"
              autoplay muted loop playsinline preload="auto" aria-label="Video of a figure doing <%= ex.name %>"></video>
     <% end %>

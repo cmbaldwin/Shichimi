@@ -10,7 +10,7 @@ Exercise = Data.define(:slug, :name, :ja, :category, :impact, :level, :equipment
   def self.slugs = index.keys
   def self.reload! = (@all = @index = @videos = nil)
   # Pre-rendered loops in public/videos/<slug>.mp4 (+ .webp poster), see script/vork.
-  def self.videos = @videos ||= Dir[Rails.public_path.join("videos/*.mp4")].map { File.basename(it, ".mp4") }.to_set
+  def self.videos = @videos ||= Dir[Rails.public_path.join("videos/**/*.mp4")].map { it.delete_prefix("#{Rails.public_path}/videos/").delete_suffix(".mp4") }.to_set
 
   def self.load_catalog
     dir = Rails.root.join("config/catalog")
@@ -23,6 +23,7 @@ Exercise = Data.define(:slug, :name, :ja, :category, :impact, :level, :equipment
 
   def to_param = slug
   def low_impact? = impact == "low"
-  def video = ("/videos/#{slug}" if Exercise.videos.include?(slug)) # + ".mp4" / ".webp"
-  def to_player = { slug:, name:, category:, sides: !!sides, cues: Array(cues), video:, motion: motion.merge("category" => category) }
+  # "/videos/<figure>/<slug>" (+ ".mp4" / ".webp"), falling back to the older single-figure render, else nil.
+  def video(figure = "male") = [ "#{figure}/#{slug}", slug ].find { Exercise.videos.include?(it) }&.then { "/videos/#{it}" }
+  def to_player(figure = "male") = { slug:, name:, category:, sides: !!sides, cues: Array(cues), video: video(figure), motion: motion.merge("category" => category) }
 end

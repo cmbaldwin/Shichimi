@@ -5,7 +5,7 @@
 <%= tag.div class: "player", data: {
       controller: "player heart-rate",
       player_timeline_value: @workout.timeline.to_json,
-      player_exercises_value: @exercises.to_h { [ it.slug, it.to_player ] }.to_json,
+      player_exercises_value: @exercises.to_h { [ it.slug, it.to_player(figure) ] }.to_json,
       player_voice_value: current_user.voice,
       player_name_value: @workout.name,
       player_autostart_value: (dev && params[:autostart].present?).to_json,
