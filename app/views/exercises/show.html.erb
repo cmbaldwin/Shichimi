@@ -1,8 +1,17 @@
 <% ex = @exercise %>
 <% content_for :title, "#{ex.name} · Shichimi" %>
 <div class="ex-show">
-  <canvas class="ex-figure" data-controller="figure" data-figure-motion-value="<%= motion_json(ex) %>"
-          aria-label="Animated figure doing <%= ex.name %> (drag to rotate)" role="img"></canvas>
+  <div class="ex-media">
+    <% if (video = File.exist?(Rails.public_path.join("videos/#{ex.slug}.mp4"))) %>
+      <video class="ex-figure ex-video" src="/videos/<%= ex.slug %>.mp4" poster="/videos/<%= ex.slug %>.webp"
+             autoplay muted loop playsinline preload="auto" aria-label="Video of a figure doing <%= ex.name %>"></video>
+    <% end %>
+    <canvas class="ex-figure" data-controller="figure" data-figure-motion-value="<%= motion_json(ex) %>"
+            aria-label="Animated figure doing <%= ex.name %> (drag to rotate)" role="img"></canvas>
+    <% if video %>
+      <label class="ex-3d-toggle chip"><input type="checkbox"> Interactive 3D</label>
+    <% end %>
+  </div>
   <div class="stack">
     <div>
       <h1><%= ex.name %></h1>

@@ -28,6 +28,8 @@ Rails.application.routes.draw do
   if Rails.env.development?
     get "dev/login" => "dev#login"
     get "dev/motion/:slug" => "dev#motion"
+    get "dev/export/:slug" => "dev#export"
+    post "dev/export/:slug" => "dev#save_export"
   end
 
   root "home#show"

@@ -185,4 +185,9 @@ Brakeman's one ignored warning (`config/brakeman.ignore`) is `Exercise.find_by`,
 - Exercise videos (Vork): finish the batch, re-render failed exports (`wall_sit`, `lateral_lunge`, `calf_raise`: raise `--virtual-time-budget` in `script/vork/render.sh`), review frames (step_up seat clearance, chair/wall props), ≤400 KB each, commit `public/videos` + the exercise-page video toggle.
 - shoulder_taps: firmer hand at the tap.
 - Clothing on the figure: hems are jagged (per-vertex paint on a low-poly CC0 model). A textured, clothed CC0 model would fix it.
-- **Health/fitness tracker connectivity** (user request 2026-11-08): Apple Watch / Apple Health, Google Health Connect, Strava, Garmin, Fitbit, live heart rate. A PWA can't reach HealthKit; see the research notes when added. Likely phases: Strava upload + .fit/.tcx export + Web Bluetooth HR (Android/desktop) first, then a Hotwire Native shell with HealthKit / Health Connect bridges.
+- **Health/fitness tracker connectivity** (user request 2026-11-08): Apple Watch / Apple Health, Google Health Connect, Strava, Garmin, Fitbit, live heart rate. Research (2026-11-08):
+  - Strava is the only open cloud API that accepts writes (OAuth `activity:write`, `POST /activities` or `/uploads`, sport_type `HighIntensityIntervalTraining`; new apps capped at 1 then 10 athletes until Strava review).
+  - Fitbit Web API shut down 2026-11-02; Google Health API not onboarding new projects; Google Fit REST deprecated; Garmin program business-only/paused.
+  - Apple Health/rings and Android Health Connect need native apps (Hotwire Native shell + HealthKit / Health Connect bridge; watchOS `HKWorkoutSession` for live HR).
+  - Web Bluetooth heart-rate straps work on Android/desktop Chromium only (not iOS).
+  - Phase 1: Connect Strava, FIT/TCX download, Web Bluetooth HR in the player, iOS Shortcuts "Log Workout" hand-off (unverified that a PWA can pass data in). Phase 2: Hotwire Native iOS + Android. Phase 3: watchOS companion.

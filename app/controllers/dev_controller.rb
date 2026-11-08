@@ -15,4 +15,20 @@ class DevController < ApplicationController
     @exercise = Exercise.find(params[:slug])
     render layout: false
   end
+
+  # GET /dev/export/squat → samples one loop into a skinned GLB clip (+ camera JSON) and POSTs it back.
+  def export
+    motion
+  end
+
+  # POST /dev/export/squat (raw body) → tmp/exports/<slug>.glb or .json (?kind=json). Feeds script/vork.
+  skip_forgery_protection only: :save_export
+  def save_export
+    # path/query params only: touching `params` makes Rack try to parse the binary body as a form.
+    slug = Exercise.find(request.path_parameters[:slug]).slug
+    kind = request.query_parameters["kind"] == "json" ? "json" : "glb"
+    dir = Rails.root.join("tmp/exports").tap(&:mkpath)
+    File.binwrite(dir.join("#{slug}.#{kind}"), request.raw_post)
+    head :no_content
+  end
 end

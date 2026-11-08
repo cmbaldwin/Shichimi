@@ -10,6 +10,12 @@
 .ex-show { display: grid; gap: 16px; }
 .ex-figure { width: 100%; aspect-ratio: 1; max-height: 70vh; border-radius: var(--radius);
   background: radial-gradient(circle at 50% 40%, var(--card), transparent 70%); }
+/* Pre-rendered video (public/videos/<slug>.mp4) when present; the checkbox swaps in the live, draggable 3D canvas. */
+.ex-media { position: relative; min-width: 0; }
+.ex-video { display: block; object-fit: cover; background: #f7f2e9; }
+.ex-media:has(.ex-video) canvas.ex-figure, .ex-media:has(.ex-3d-toggle :checked) .ex-video { display: none; }
+.ex-media:has(.ex-3d-toggle :checked) canvas.ex-figure { display: block; }
+.ex-3d-toggle { position: absolute; right: 8px; bottom: 8px; cursor: pointer; background: var(--paper); }
 @media (min-width: 760px) { .ex-show { grid-template-columns: 1.1fr 1fr; align-items: start; } }
 .ex-cues { margin: 0; padding-left: 1.2em; }
 .ex-variants { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
