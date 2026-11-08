@@ -1,0 +1,52 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title><%= @exercise.name %> export</title>
+<meta name="mannequin-model" content="<%= asset_path("mannequin.glb") %>">
+<%= javascript_importmap_tags %>
+</head><body data-motion="<%= motion_json(@exercise) %>" data-post="<%= request.path %>">
+<p id="status">exporting…</p>
+<script type="module">
+  // One seamless loop of the posed figure → skinned GLB with a baked clip, plus the app's camera framing.
+  import { THREE, modelReady, sharedStageForExport } from "mannequin"
+  import { GLTFExporter } from "three/addons/exporters/GLTFExporter.js"
+  const FPS = 30
+  const status = document.getElementById("status")
+  try {
+    await modelReady()
+    const stage = sharedStageForExport()
+    stage.load(JSON.parse(document.body.dataset.motion))
+    const root = stage.body.group
+    root.name ||= "figure"
+    const nodes = []
+    root.traverse((o) => { if (o.name && !o.isMesh) nodes.push(o) })
+    const tempo = stage.m.tempo, n = Math.round(tempo * FPS)
+    const times = [], q = new Map(nodes.map((o) => [o, []])), p = new Map(nodes.map((o) => [o, []]))
+    for (let i = 0; i <= n; i++) { // frame n == frame 0, so the clip loops seamlessly
+      stage.poseAt((i % n) / n * tempo)
+      times.push(i / n * tempo)
+      for (const o of nodes) { q.get(o).push(...o.quaternion.toArray()); p.get(o).push(...o.position.toArray()) }
+    }
+    const tracks = nodes.flatMap((o) => [
+      new THREE.QuaternionKeyframeTrack(`${o.name}.quaternion`, times, q.get(o)),
+      new THREE.VectorKeyframeTrack(`${o.name}.position`, times, p.get(o))
+    ])
+    const clip = new THREE.AnimationClip("loop", tempo, tracks)
+
+    // camera exactly as the app frames it (square aspect), in the container (yawed) frame
+    stage.frame(1)
+    const c = stage.box.getCenter(new THREE.Vector3())
+    const meta = {
+      slug: <%= raw @exercise.slug.to_json %>, tempo, fps: FPS, frames: n,
+      yaw: stage.m.yaw, category: stage.m.category, fov: stage.camera.fov,
+      camera: stage.camera.position.toArray(), target: [c.x, c.y - 0.02, c.z],
+      box: { min: stage.box.min.toArray(), max: stage.box.max.toArray() }
+    }
+    stage.poseAt(0)
+    const glb = await new GLTFExporter().parseAsync(root, { binary: true, animations: [clip] })
+    const url = document.body.dataset.post
+    await fetch(url, { method: "POST", body: glb, headers: { "Content-Type": "application/octet-stream" } })
+    await fetch(url + "?kind=json", { method: "POST", body: JSON.stringify(meta, null, 1), headers: { "Content-Type": "application/octet-stream" } })
+    status.textContent = `done ${n} frames`
+  } catch (e) { status.textContent = "error " + e; console.error(e) }
+  document.body.dataset.ready = "1"
+</script>
+</body></html>

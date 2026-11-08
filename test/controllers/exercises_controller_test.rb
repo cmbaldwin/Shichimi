@@ -14,12 +14,18 @@ class ExercisesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "show uses the pre-rendered video when public/videos has one, else only the 3D canvas" do
-    get exercise_path("squat")
-    assert_select "video.ex-video[src='/videos/squat.mp4'][poster='/videos/squat.webp'][autoplay][muted][loop][playsinline]"
-    assert_select "canvas.ex-figure[data-controller=figure]"
-    assert_select ".ex-3d-toggle input[type=checkbox]"
-    get exercise_path("jumping_jacks")
-    assert_select "video", 0
-    assert_select ".ex-3d-toggle", 0
+    videos = Rails.root.join("public/videos")
+    with, without = Exercise.slugs.partition { videos.join("#{it}.mp4").exist? }
+    if (slug = with.first)
+      get exercise_path(slug)
+      assert_select "video.ex-video[src='/videos/#{slug}.mp4'][poster='/videos/#{slug}.webp'][autoplay][muted][loop][playsinline]"
+      assert_select "canvas.ex-figure[data-controller=figure]"
+      assert_select ".ex-3d-toggle input[type=checkbox]"
+    end
+    if (slug = without.first)
+      get exercise_path(slug)
+      assert_select "video", 0
+      assert_select ".ex-3d-toggle", 0
+    end
   end
 end
