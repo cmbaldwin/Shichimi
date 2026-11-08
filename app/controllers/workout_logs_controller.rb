@@ -18,6 +18,10 @@ class WorkoutLogsController < ApplicationController
   end
 
   def show
+    respond_to do |format|
+      format.html
+      format.tcx { send_data render_to_string(formats: :tcx), type: :tcx, disposition: "attachment", filename: "shichimi-#{@log.performed_at.to_date}-#{@log.id}.tcx" }
+    end
   end
 
   def create
@@ -29,7 +33,7 @@ class WorkoutLogsController < ApplicationController
       workout: workout, workout_name: workout.name, format: workout.format,
       work_seconds: f.work, rest_seconds: f.rest, completed_slugs: slugs,
       duration_seconds: params[:duration_seconds].to_i.clamp(0, 4.hours.to_i),
-      performed_at: performed_at
+      performed_at: performed_at, avg_hr: hr(:avg_hr), max_hr: hr(:max_hr)
     )
     if log.save
       redirect_to log
@@ -47,6 +51,9 @@ class WorkoutLogsController < ApplicationController
   end
 
   private
+
+  # sane heart rate or nil: a bad strap value must never cost the user their logged workout
+  def hr(key) = (n = params[key].to_i) && (30..240).cover?(n) ? n : nil
 
   def set_log = @log = current_user.workout_logs.find(params[:id])
 

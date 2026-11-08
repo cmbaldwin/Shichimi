@@ -20,7 +20,7 @@ class PlayerTest < ActionDispatch::IntegrationTest
       assert_select "details.wo-ex-more a[href^='https://www.youtube.com/']", w.exercise_slugs.size
       get play_workout_path(w)
       assert_response :success
-      assert_select "[data-controller=player]"
+      assert_select "[data-controller~=player]"
     end
   end
 
@@ -75,5 +75,17 @@ class PlayerTest < ActionDispatch::IntegrationTest
     mine_other = @other.workout_logs.create!(workout_name: "x", format: "easy", work_seconds: 30, rest_seconds: 30, duration_seconds: 1, performed_at: Time.current)
     get workout_log_path(mine_other)
     assert_response :not_found
+  end
+
+  test "heart rate is stored when sane, dropped when not, and shown" do
+    post workout_logs_path, params: { workout_id: @mine.id, duration_seconds: 60, avg_hr: "142", max_hr: "171" }
+    log = @user.workout_logs.last
+    assert_equal [ 142, 171 ], [ log.avg_hr, log.max_hr ]
+    get workout_log_path(log)
+    assert_select "p", /avg 142.*max 171/
+    post workout_logs_path, params: { workout_id: @mine.id, duration_seconds: 60, avg_hr: "", max_hr: "999" }
+    assert_nil @user.workout_logs.last.avg_hr
+    assert_nil @user.workout_logs.last.max_hr
+    assert_not @user.workout_logs.build(workout_name: "x", format: "easy", performed_at: Time.current, avg_hr: 5).valid?
   end
 end

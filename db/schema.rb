@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_07_020000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_08_004536) do
   create_table "push_subscriptions", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "endpoint", null: false
@@ -180,6 +180,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_07_020000) do
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "avg_hr"
+    t.integer "max_hr"
     t.index ["user_id", "performed_at"], name: "index_workout_logs_on_user_id_and_performed_at"
     t.index ["user_id"], name: "index_workout_logs_on_user_id"
     t.index ["workout_id"], name: "index_workout_logs_on_workout_id"

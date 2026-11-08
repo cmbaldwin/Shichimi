@@ -114,7 +114,8 @@ class JourneysTest < ApplicationSystemTestCase
     assert_text "Add to Home Screen"
     assert_no_js_errors
     visit exercise_path(Exercise.all.first)
-    assert_selector "canvas.ex-figure"
+    # a pre-rendered video (public/videos) replaces the live canvas until "Interactive 3D" is toggled
+    assert_selector "canvas.ex-figure, video.ex-video"
     sleep 1 # let the WebGL figure render a few frames
     assert_no_js_errors
   end

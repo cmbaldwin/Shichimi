@@ -25,6 +25,8 @@ Live: https://shichimi.moab.jp
 - **100 catalog workouts.** No two adjacent moves share a muscle group (Klika & Jordan 2013). There are themes for
   quiet apartment mornings, standing desk breaks, hotel rooms, sore-leg days and more. You can also build your own.
 - **Player** with a drift-free timer, pre-rendered Kokoro voice cues (female/male/off) and CC0 sound effects (dink-dink-dink on the last 3 s of every interval, GO chime, rest, switch-sides, halfway and finish), regenerated via `script/voices/`, a screen wake lock, and side switching for side planks.
+- **Live heart rate** (Chromium on Android/desktop): connect a Bluetooth HR strap in the player; avg/max are saved with the workout.
+- **Trackers.** Every log has a `.tcx` download, and on iOS an "Add to Apple Health" button that runs a Shortcut.
 - **Smart reminders** (on by default): the installed app nudges you about 15 minutes before the time you usually work out, learned from your history. Skipped on days you've trained; switch off in Settings.
 - **Exercise references**: each exercise page links a YouTube demo and an official form guide (ACE, NASM, Mayo Clinic, NHS or Cleveland Clinic).
 - **`/install`**: how to add the app to an iPhone or Android home screen, with drawn menu mockups and a one-tap Install button where Chrome supports it.

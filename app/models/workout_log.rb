@@ -4,6 +4,7 @@ class WorkoutLog < ApplicationRecord
 
   validates :workout_name, :format, :performed_at, presence: true
   validates :rpe, inclusion: { in: 1..10 }, allow_nil: true
+  validates :avg_hr, :max_hr, inclusion: { in: 30..240 }, allow_nil: true
   validate { errors.add(:completed_slugs, "has unknown exercises") unless (Array(completed_slugs) - Exercise.slugs).empty? }
 
   scope :recent, -> { order(performed_at: :desc) }
@@ -15,4 +16,6 @@ class WorkoutLog < ApplicationRecord
     return unless weight_kg
     (exercises.sum { it.met.to_f * work_seconds } * weight_kg.to_f / 3600).round
   end
+
+  def heart_rate(kind) = (self[kind] if has_attribute?(kind)) # avg_hr / max_hr, when that migration exists
 end

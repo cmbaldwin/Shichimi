@@ -15,6 +15,8 @@
     <% end %>
   </div>
 
+  <% if @log.avg_hr %><p class="muted num">&hearts; avg <%= @log.avg_hr %> &middot; max <%= @log.max_hr %></p><% end %>
+
   <section class="card stack">
     <h2>Completed</h2>
     <% if @log.exercises.any? %>
@@ -47,6 +49,19 @@
       <%= f.text_area :notes, placeholder: "How did it feel?" %>
       <div><%= f.submit "Save notes", class: "btn btn-primary" %></div>
     <% end %>
+  </section>
+
+  <section class="card stack">
+    <h2>Export</h2>
+    <div class="row">
+      <%= link_to "Download .tcx", workout_log_path(@log, format: :tcx), class: "btn", data: { turbo: false } %>
+    </div>
+    <div class="stack" data-controller="ios" hidden>
+      <%= link_to "Add to Apple Health", apple_health_shortcut_url(@log), class: "btn" %>
+      <% if (install = ENV["SHORTCUT_INSTALL_URL"].presence) %>
+        <p class="muted small">First time? <%= link_to "Install the Shichimi to Health shortcut", install %>.</p>
+      <% end %>
+    </div>
   </section>
 
   <div class="row">

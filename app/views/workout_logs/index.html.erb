@@ -11,7 +11,7 @@
         <div>
           <div class="muted small"><%= log.performed_at.in_time_zone(current_user.zone).strftime("%a %-d %b, %H:%M") %></div>
           <%= link_to log.workout_name, workout_log_path(log), class: "wname" %>
-          <div class="muted small"><span class="num"><%= mmss log.duration_seconds %></span> · <%= log.completed_slugs.size %> done<%= " · RPE #{log.rpe}" if log.rpe %></div>
+          <div class="muted small"><span class="num"><%= mmss log.duration_seconds %></span> · <%= log.completed_slugs.size %> done<%= " · RPE #{log.rpe}" if log.rpe %><%= " · ♥ avg #{log.avg_hr} · max #{log.max_hr}" if log.avg_hr %></div>
         </div>
         <%= button_to "Delete", workout_log_path(log), method: :delete, class: "btn btn-small btn-danger", form: { data: { turbo_confirm: "Delete this entry?" } } %>
       </div>

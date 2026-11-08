@@ -25,7 +25,7 @@ Don't add more without a strong reason.
 | `WorkoutFormat` | `app/models/workout_format.rb`, a PORO from `config/catalog/formats.yml` | 7 formats: classic, sprint, tabata, fifty_ten, forty_twenty, easy, double. `#total_seconds(n)` |
 | `Workout` | DB. `user_id` nil = catalog (synced from `config/catalog/workouts.yml` by `Workout.sync_catalog!` in seeds) | `exercise_slugs` JSON. `#timeline`, `#same_category_neighbours`, derived `low_impact / needs_floor / equipment / total_seconds` |
 | `RoutineItem` | DB | user's ordered rotation. `User#next_routine_workout` |
-| `WorkoutLog` | DB, routes at `/history` | one finished (or partly finished) workout: snapshot of name/format/timing, `completed_slugs`, `duration_seconds`, `performed_at`, `rpe` (Borg CR10 1–10), `notes`. `#kcal` |
+| `WorkoutLog` | DB, routes at `/history` | one finished (or partly finished) workout: snapshot of name/format/timing, `completed_slugs`, `duration_seconds`, `performed_at`, `rpe` (Borg CR10 1–10), `avg_hr`/`max_hr` (nullable, 30..240, from Web Bluetooth strap), `notes`, `#heart_rate(:avg_hr)`. `GET /history/:id.tcx` |
 | `PushSubscription` | DB | endpoint, p256dh_key, auth_key |
 | `User` | DB | `time_zone` (IANA), `weight_kg` (optional, used for kcal), `weekly_goal`, `reminders_enabled`, `reminder_time` "HH:MM", `reminder_days` (wday digits "0123456", 0=Sun), `last_reminded_on`, `voice` ("female"/"male"/"off"). Helpers `zone`, `today`, `display_name` |
 
@@ -166,7 +166,7 @@ Brakeman's one ignored warning (`config/brakeman.ignore`) is `Exercise.find_by`,
 
 - **Uchujin** (error tracker, own tables in the primary DB, capture in `production` only): dashboard at `/uchujin`, gated by `users.admin` (the dev demo user is seeded admin). Config: `config/initializers/uchujin.rb`. Make a prod admin with `kamal app exec "bin/rails runner 'User.find_by(email_address: %q(you@x)).update!(admin: true)'"`.
 - **Slickrock** (Jev-steered random walk, oracles on 500s/JS errors/Turbo frame misses): `bin/rails s -p 3106` then `bin/slickrock [steps]` (localhost only, headless Chrome, `SLICKROCK_SEED=n` replays). Walks the public pages, then the signed-in ones through `/dev/login`. Walk list and avoid-list are at the top of `bin/slickrock`; add a path when you add a page. Optional `TYPESAFE_API_KEY` (or `jev auth set`) for steering; without one it is keyless/best-effort.
-- **Prod env (Kamal secrets only, no Rails credentials):** `UCHUJIN_DEPLOY_TOKEN`, `UCHUJIN_MCP_TOKEN`, `AWS_SES_SMTP_USERNAME`, `AWS_SES_SMTP_PASSWORD` (alert mail via SES); `GIT_REVISION` or `KAMAL_VERSION` is optional. Add them to `env.secret` in `config/deploy.yml` and `.kamal/secrets`.
+- **Prod env (Kamal secrets only, no Rails credentials):** `UCHUJIN_DEPLOY_TOKEN`, `UCHUJIN_MCP_TOKEN`, `AWS_SES_SMTP_USERNAME`, `AWS_SES_SMTP_PASSWORD` (alert mail via SES)), `SHORTCUT_INSTALL_URL` (optional iCloud link to the Shortcut; the install note is hidden without it); `GIT_REVISION` or `KAMAL_VERSION` is optional. Add them to `env.secret` in `config/deploy.yml` and `.kamal/secrets`.
 
 ## Push / PWA (deploy notes)
 - Manifest `/manifest.json`, service worker `/service-worker` (push only, no offline caching). Icons in `public/`.
@@ -190,4 +190,16 @@ Brakeman's one ignored warning (`config/brakeman.ignore`) is `Exercise.find_by`,
   - Fitbit Web API shut down 2026-11-02; Google Health API not onboarding new projects; Google Fit REST deprecated; Garmin program business-only/paused.
   - Apple Health/rings and Android Health Connect need native apps (Hotwire Native shell + HealthKit / Health Connect bridge; watchOS `HKWorkoutSession` for live HR).
   - Web Bluetooth heart-rate straps work on Android/desktop Chromium only (not iOS).
-  - Phase 1: Connect Strava, FIT/TCX download, Web Bluetooth HR in the player, iOS Shortcuts "Log Workout" hand-off (unverified that a PWA can pass data in). Phase 2: Hotwire Native iOS + Android. Phase 3: watchOS companion.
+  - Phase 1 (Strava dropped by the user 2026-11-08): TCX download (DONE; FIT skipped), Web Bluetooth HR in the player (DONE: `heart_rate_controller.js`, hidden without `navigator.bluetooth`), iOS Shortcuts "Log Workout" hand-off (DONE, **unverified on device**: see "Apple Health hand-off" below). Phase 2: Hotwire Native iOS + Android. Phase 3: watchOS companion.
+
+## Apple Health hand-off (iOS, unverified on device)
+The log page shows "Add to Apple Health" on iOS only (`ios_controller.js` unhides it). It opens
+`shortcuts://run-shortcut?name=Shichimi%20to%20Health&input=text&text=<json>` with
+`{"name":…,"duration_minutes":7.8,"kcal":62,"start":"2026-11-08T07:30:00+09:00"}` (`kcal` omitted without a weight;
+built by `WorkoutLogsHelper#apple_health_shortcut_url`). Build the Shortcut, named exactly **Shichimi to Health**:
+1. Receive **Text** input (Shortcut Input). **Get Dictionary from Input**.
+2. **Get Dictionary Value** `duration_minutes`, `kcal`, `start` (then **Get Dates from Input** on `start`).
+3. **Log Workout**: type High Intensity Interval Training, Duration = duration_minutes (minutes), Active Energy = kcal, Start Date = the date.
+4. Optional: **Open URLs** `https://shichimi.moab.jp/` to bounce back.
+Share it to iCloud and set the link as `SHORTCUT_INSTALL_URL` (Kamal env) to show the "first time?" note.
+

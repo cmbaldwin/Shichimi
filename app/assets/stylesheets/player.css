@@ -117,3 +117,10 @@ body.player-page { background: #0f0c09; color: #f3ece0; overscroll-behavior: non
 .wo-ex-more ul { margin: 6px 0; padding-left: 18px; }
 .wo-ex-more .row { gap: 6px 14px; margin: 4px 0 0; }
 .wo-ex-more a { font-weight: 600; }
+
+/* live heart rate (Web Bluetooth); element is [hidden] unless supported */
+.p-hr { position: absolute; top: 56px; right: 16px; display: flex; align-items: center; gap: 8px; z-index: 2; }
+.p-hr[hidden] { display: none; }
+.p-hr-val { font-size: 1.6rem; font-weight: 700; color: var(--cardio); }
+.p-hr-btn { min-height: 36px; padding: 0 14px; border-radius: 999px; font-size: .85rem; }
+.p-hr-btn[hidden] { display: none; }
