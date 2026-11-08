@@ -9,7 +9,7 @@
 .wo-start { flex: 1 1 100%; min-height: 60px; font-size: 1.3rem; }
 .wo-body { display: grid; gap: 16px; }
 .wo-figure { padding: 8px; text-align: center; }
-.wo-figure canvas { width: 100%; max-width: 360px; aspect-ratio: 1; margin: 0 auto; }
+.wo-figure :is(canvas, video) { display: block; border-radius: 12px; object-fit: cover; width: 100%; max-width: 360px; aspect-ratio: 1; margin: 0 auto; }
 .wo-figure-name { margin: 4px 0 0; font-weight: 600; }
 .wo-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
 .wo-ex {
@@ -61,8 +61,8 @@ body.player-page { background: #0f0c09; color: #f3ece0; overscroll-behavior: non
 .p-kind { font-weight: 800; letter-spacing: .18em; font-size: .85rem; color: var(--cat); }
 .p-name { font-size: clamp(1.6rem, 7vw, 2.4rem); font-weight: 700; line-height: 1.1; }
 .p-stage { grid-area: stage; min-height: 0; container-type: size; display: grid; place-items: center; }
-.p-stage canvas { width: min(100cqw, 100cqh); height: min(100cqw, 100cqh); max-width: none; transition: opacity .3s, filter .3s; }
-.player[data-kind="rest"] .p-stage canvas, .player[data-kind="prep"] .p-stage canvas { opacity: .55; filter: saturate(.6); }
+.p-stage :is(canvas, video) { border-radius: 16px; object-fit: cover; width: min(100cqw, 100cqh); height: min(100cqw, 100cqh); max-width: none; transition: opacity .3s, filter .3s; }
+.player:is([data-kind="rest"], [data-kind="prep"]) .p-stage :is(canvas, video) { opacity: .55; filter: saturate(.6); }
 
 .p-ring { grid-area: ring; position: relative; width: 132px; height: 132px; margin: 0 auto; }
 .p-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }

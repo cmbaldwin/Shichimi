@@ -2,8 +2,8 @@
 <% content_for :title, "#{ex.name} · Shichimi" %>
 <div class="ex-show">
   <div class="ex-media">
-    <% if (video = File.exist?(Rails.public_path.join("videos/#{ex.slug}.mp4"))) %>
-      <video class="ex-figure ex-video" src="/videos/<%= ex.slug %>.mp4" poster="/videos/<%= ex.slug %>.webp"
+    <% if (video = ex.video) %>
+      <video class="ex-figure ex-video" src="<%= video %>.mp4" poster="<%= video %>.webp"
              autoplay muted loop playsinline preload="auto" aria-label="Video of a figure doing <%= ex.name %>"></video>
     <% end %>
     <canvas class="ex-figure" data-controller="figure" data-figure-motion-value="<%= motion_json(ex) %>"

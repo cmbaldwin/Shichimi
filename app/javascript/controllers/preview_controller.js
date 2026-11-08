@@ -1,20 +1,21 @@
 import { Controller } from "@hotwired/stimulus"
-import { Mannequin } from "mannequin"
+import { StageFigure } from "stage_figure"
 
-// One live figure on the workout overview; tapping a list row swaps its motion.
+// One figure (video loop, or live 3D fallback) on the workout overview; tapping a list row swaps it.
 export default class extends Controller {
-  static targets = ["canvas", "name"]
+  static targets = ["video", "canvas", "name"]
   static values = { motions: Object, slug: String }
 
   connect() {
-    this.mannequin = new Mannequin(this.canvasTarget, { motion: this.motionsValue[this.slugValue], autoplay: true, interactive: true })
+    this.figure = new StageFigure(this.videoTarget, this.canvasTarget, { interactive: true })
+    this.figure.show(this.motionsValue[this.slugValue])
     this.mark(this.slugValue)
   }
 
-  disconnect() { this.mannequin?.dispose() }
+  disconnect() { this.figure?.dispose() }
 
   show({ params: { slug } }) {
-    this.mannequin.setMotion(this.motionsValue[slug])
+    this.figure.show(this.motionsValue[slug])
     this.mark(slug)
   }
 

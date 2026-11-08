@@ -13,7 +13,7 @@
   <div class="ex-grid">
     <% @exercises.each do |ex| %>
       <%= link_to exercise_path(ex), class: "card ex-card" do %>
-        <%= thumb_tag ex, size: 320, alt: "" %>
+        <%= still_tag ex, size: 320, alt: "" %>
         <div class="stack ex-meta">
           <strong><%= ex.name %></strong>
           <% if ex.ja.present? %><span class="ja"><%= ex.ja %></span><% end %>

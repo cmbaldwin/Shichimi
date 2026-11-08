@@ -1,10 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
-import { Mannequin } from "mannequin"
+import { StageFigure } from "stage_figure"
 
 const mmss = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`
 
 export default class extends Controller {
-  static targets = ["canvas", "form", "slugs", "duration", "startedAt", "station", "kind", "name", "count", "ring", "next", "bar", "elapsed", "remaining", "toggle", "ready"]
+  static targets = ["video", "canvas", "form", "slugs", "duration", "startedAt", "station", "kind", "name", "count", "ring", "next", "bar", "elapsed", "remaining", "toggle", "ready"]
   static values = { timeline: Array, exercises: Object, voice: String, name: String, autostart: Boolean, seek: Number }
 
   connect() {
@@ -21,7 +21,7 @@ export default class extends Controller {
     this.started = false
     this.done = new Set()
     this.said = new Set()
-    this.mannequin = new Mannequin(this.canvasTarget, { motion: this.motionFor(this.steps[0].slug), autoplay: true, interactive: false })
+    this.figure = new StageFigure(this.videoTarget, this.canvasTarget)
     this.keys = e => this.onKey(e)
     this.vis = () => this.onVisibility()
     document.addEventListener("keydown", this.keys)
@@ -37,7 +37,7 @@ export default class extends Controller {
     this.releaseWake()
     this.hush()
     this.audio?.close().catch(() => {})
-    this.mannequin?.dispose()
+    this.figure?.dispose()
   }
 
   // --- controls ---------------------------------------------------------
@@ -57,7 +57,7 @@ export default class extends Controller {
   pause() {
     this.running = false
     clearInterval(this.timer)
-    this.mannequin.pause()
+    this.figure.pause()
     this.releaseWake()
     this.toggleTarget.textContent = "Resume"
     this.hush()
@@ -69,7 +69,7 @@ export default class extends Controller {
     this.last = performance.now()
     clearInterval(this.timer)
     this.timer = setInterval(() => this.tick(), 100)
-    this.mannequin.play()
+    this.figure.play()
     this.acquireWake()
     this.toggleTarget.textContent = "Pause"
   }
@@ -132,8 +132,8 @@ export default class extends Controller {
     this.lastBeep = null
     this.element.dataset.category = ex.category
     this.element.dataset.kind = s.kind
-    this.mannequin.setMotion(ex.motion, { mirrored: false })
-    this.mannequin.setSpeed(s.kind === "work" ? 1 : 0.35)
+    this.figure.setSpeed(s.kind === "work" ? 1 : 0.35)
+    this.figure.show(ex, { mirrored: false })
     this.kindTarget.textContent = { prep: "GET READY", work: "WORK", rest: "REST" }[s.kind]
     this.nameTarget.textContent = ex.name
     const nx = this.steps.find((x, j) => j > (s.kind === "work" ? i : i + 1) && x.kind === "work")
@@ -165,7 +165,7 @@ export default class extends Controller {
     }
     if (s.kind === "work" && s.switch_at && !this.sideDone && inStep >= s.switch_at * 1000) {
       this.sideDone = true
-      this.mannequin.setMotion(this.exercises(s.slug).motion, { mirrored: true })
+      this.figure.show(this.exercises(s.slug), { mirrored: true })
       this.sfx("switch")
       this.say(["switch_sides"], "Switch sides")
     }
@@ -207,7 +207,6 @@ export default class extends Controller {
 
   // --- helpers ----------------------------------------------------------
   exercises(slug) { return this.exercisesValue[slug] }
-  motionFor(slug) { return this.exercises(slug).motion }
 
   unlockAudio() {
     try {

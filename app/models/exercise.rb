@@ -8,7 +8,9 @@ Exercise = Data.define(:slug, :name, :ja, :category, :impact, :level, :equipment
   def self.find_by(slug) = index[slug.to_s]
   def self.index = @index ||= all.index_by(&:slug)
   def self.slugs = index.keys
-  def self.reload! = (@all = @index = nil)
+  def self.reload! = (@all = @index = @videos = nil)
+  # Pre-rendered loops in public/videos/<slug>.mp4 (+ .webp poster), see script/vork.
+  def self.videos = @videos ||= Dir[Rails.public_path.join("videos/*.mp4")].map { File.basename(it, ".mp4") }.to_set
 
   def self.load_catalog
     dir = Rails.root.join("config/catalog")
@@ -21,5 +23,6 @@ Exercise = Data.define(:slug, :name, :ja, :category, :impact, :level, :equipment
 
   def to_param = slug
   def low_impact? = impact == "low"
-  def to_player = { slug:, name:, category:, sides: !!sides, cues: Array(cues), motion: motion.merge("category" => category) }
+  def video = ("/videos/#{slug}" if Exercise.videos.include?(slug)) # + ".mp4" / ".webp"
+  def to_player = { slug:, name:, category:, sides: !!sides, cues: Array(cues), video:, motion: motion.merge("category" => category) }
 end

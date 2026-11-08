@@ -1,6 +1,6 @@
 <% f = @workout.workout_format %>
 <% content_for :title, "#{@workout.name} · Shichimi" %>
-<% motions = @exercises.uniq.to_h { [ it.slug, it.motion ] } %>
+<% motions = @exercises.uniq.to_h { [ it.slug, it.to_player.slice(:motion, :video) ] } %>
 <article class="wo-show" data-controller="preview" data-preview-motions-value="<%= motions.to_json %>" data-preview-slug-value="<%= @exercises.first.slug %>">
   <header class="stack">
     <p class="muted"><%= link_to "Workouts", workouts_path %> /</p>
@@ -41,14 +41,14 @@
   </div>
 
   <div class="wo-body">
-    <div class="card wo-figure"><canvas data-preview-target="canvas" width="480" height="480" aria-label="Exercise preview"></canvas>
+    <div class="card wo-figure"><video data-preview-target="video" muted loop playsinline autoplay hidden aria-label="Exercise preview"></video><canvas data-preview-target="canvas" width="480" height="480" hidden aria-label="Exercise preview"></canvas>
       <p class="muted wo-figure-name" data-preview-target="name"></p></div>
     <ol class="wo-list">
       <% @exercises.each_with_index do |ex, i| %>
         <li>
           <button type="button" class="wo-ex" data-action="preview#show" data-preview-slug-param="<%= ex.slug %>" data-slug="<%= ex.slug %>" data-name="<%= ex.name %>">
             <span class="num muted"><%= i + 1 %></span>
-            <img alt="" width="56" height="56" data-controller="thumb" data-thumb-motion-value="<%= ex.motion.to_json %>" data-thumb-key-value="0">
+            <%= still_tag ex, size: 112, alt: "" %>
             <span class="wo-ex-name"><%= ex.name %></span>
             <span class="chip" data-category="<%= ex.category %>"><%= ex.category %></span>
           </button>
