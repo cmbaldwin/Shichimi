@@ -11,8 +11,11 @@ CHROME=${CHROME:-"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"}
 mkdir -p "$OUT" public/videos
 for slug in "$@"; do
   # 1. browser: pose one loop with the app's rig → tmp/exports/<slug>.glb + .json
-  "$CHROME" --headless=new --use-angle=swiftshader --enable-unsafe-swiftshader --virtual-time-budget=60000 \
-    --dump-dom "http://localhost:$PORT/dev/export/$slug" 2>/dev/null | grep -q 'id="status">done' \
+  # The page POSTs the files; check they were written (dump-dom can return before the status text updates).
+  rm -f "tmp/exports/$slug.glb" "tmp/exports/$slug.json"
+  "$CHROME" --headless=new --use-angle=swiftshader --enable-unsafe-swiftshader --virtual-time-budget=300000 \
+    --dump-dom "http://localhost:$PORT/dev/export/$slug" >/dev/null 2>&1 || true
+  [ -s "tmp/exports/$slug.glb" ] && [ -s "tmp/exports/$slug.json" ] \
     || { echo "export failed for $slug (see log/development.log)" >&2; exit 1; }
   # 2. scene + frames
   ruby script/vork/scene.rb "$slug" "$OUT"

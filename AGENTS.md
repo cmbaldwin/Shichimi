@@ -182,7 +182,7 @@ Brakeman's one ignored warning (`config/brakeman.ignore`) is `Exercise.find_by`,
 - `ReminderJob` runs every 5 minutes via `config/recurring.yml` (Solid Queue in Puma). The settings page renders `push_subscriptions/_toggle`.
 
 ## Roadmap / TODO
-- Exercise videos (Vork): finish the batch, re-render failed exports (`wall_sit`, `lateral_lunge`, `calf_raise`: raise `--virtual-time-budget` in `script/vork/render.sh`), review frames (step_up seat clearance, chair/wall props), ≤400 KB each, commit `public/videos` + the exercise-page video toggle.
+- Exercise videos (Vork): DONE, all 30 in `public/videos` (≤330 KB each, re-render one with `script/vork/render.sh <slug>`). Known nits: step_up trailing foot passes slightly under the seat.
 - shoulder_taps: firmer hand at the tap.
 - Clothing on the figure: hems are jagged (per-vertex paint on a low-poly CC0 model). A textured, clothed CC0 model would fix it.
 - **Health/fitness tracker connectivity** (user request 2026-11-08): Apple Watch / Apple Health, Google Health Connect, Strava, Garmin, Fitbit, live heart rate. Research (2026-11-08):
