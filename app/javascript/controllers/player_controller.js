@@ -69,6 +69,7 @@ export default class extends Controller {
     this.last = performance.now()
     clearInterval(this.timer)
     this.timer = setInterval(() => this.tick(), 100)
+    this.wakeAudio() // Resume is a tap too: revive a context iOS interrupted
     this.figure.play()
     this.acquireWake()
     this.toggleTarget.textContent = "Pause"
@@ -210,10 +211,12 @@ export default class extends Controller {
 
   unlockAudio() {
     try {
+      // iOS binds the session category when the context is created, so set "playback" (play through the
+      // ring/silent switch) BEFORE new AudioContext; set afterwards, Web Audio stays muted on silent.
+      if (navigator.audioSession) navigator.audioSession.type = "playback"
       this.audio = new (window.AudioContext || window.webkitAudioContext)()
       this.audio.resume().catch(() => {})
       this.bell(440, 0.03, 0.001) // silent-ish blip to fully unlock iOS
-      if (navigator.audioSession) navigator.audioSession.type = "playback" // play through the iOS silent switch
       this.loadClips()
     } catch { /* no audio */ }
   }
@@ -304,5 +307,12 @@ export default class extends Controller {
     try { this.wake = await navigator.wakeLock?.request("screen") } catch { /* denied */ }
   }
   releaseWake() { this.wake?.release().catch(() => {}); this.wake = null }
-  onVisibility() { if (document.visibilityState === "visible" && this.running) this.acquireWake() }
+  // iOS leaves the context "interrupted"/"suspended" after a screen lock, call or app switch.
+  wakeAudio() { if (this.audio && this.audio.state !== "running") this.audio.resume().catch(() => {}) }
+
+  onVisibility() {
+    if (document.visibilityState !== "visible" || !this.running) return
+    this.acquireWake()
+    this.wakeAudio()
+  }
 }

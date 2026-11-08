@@ -141,6 +141,7 @@ Headless screenshots, no shared browser (WebGL via SwiftShader):
   --enable-unsafe-swiftshader --hide-scrollbars --window-size=390,844 --virtual-time-budget=4000 \
   --screenshot=/path/out.png "http://localhost:<port>/dev/login?to=/stats"
 ```
+`--headless=new --window-size=390,...` actually lays out wider than 390 (content looks clipped on the right). For a true 390px shot use Selenium with `add_emulation(device_metrics: { width: 390, ... })`, as the system tests do.
 `/dev/login?to=<path>` (development only) signs in as the demo user and redirects.
 `/dev/motion/<slug>` (development only) is a motion contact sheet: 12 in-between frames from the view angle plus a +90° side row. It reloads the YAML on every request. Screenshot it at `--window-size=1400,1060`. Judge motions here, not from the small key thumbnails. Run each dev server with its own `-P tmp/pids/<port>.pid` so parallel servers don't collide.
 
@@ -156,6 +157,7 @@ Brakeman's one ignored warning (`config/brakeman.ignore`) is `Exercise.find_by`,
 
 ## Audio
 
+- iOS audio: set `navigator.audioSession.type = "playback"` BEFORE `new AudioContext()` (the category binds at creation; set later, the silent switch mutes everything). Resume the context on `visibilitychange` and on the Resume tap (iOS leaves it `interrupted` after a lock or app switch). Real-device check only.
 - Voice cues are pre-rendered Kokoro-82M clips in `public/audio/voice/<female|male>/<key>.m4a` (cue keys + one per exercise slug);
   SFX are Kenney CC0 clips in `public/audio/sfx/`. Credits: `public/audio/CREDITS.md`.
 - The player fetches/decodes them after the Start tap and plays through its AudioContext; a missing clip falls back to
