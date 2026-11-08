@@ -8,8 +8,9 @@ session, and shows you how you're doing.
 Live: https://shichimi.moab.jp
 
 ## What's in it
-- **30 exercises** in 4 categories (cardio, lower, upper, core). Each has a three.js animation of a rigged human
-  (Quaternius Universal Base Characters, CC0, retargeted from procedural motion keys), coaching cues, regressions and progressions, and MET values.
+- **30 exercises** in 4 categories (cardio, lower, upper, core). Each has a realistic demo video (Mixamo motion capture
+  rendered with Vork on Escalante; man or woman, chosen in Settings, in `public/videos/<male|female>/`), a live three.js
+  figure as fallback, coaching cues, regressions and progressions, and MET values.
 - **7 formats**, each named after a spice in shichimi tōgarashi:
 
   | Format | Spice | Timing | Total |

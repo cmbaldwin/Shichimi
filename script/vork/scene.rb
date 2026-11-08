@@ -10,10 +10,11 @@ require "fileutils"
 slug, out = ARGV
 abort "usage: scene.rb SLUG OUT_DIR" unless slug && out
 root = File.expand_path("../..", __dir__)
-meta = JSON.parse(File.read("#{root}/tmp/exports/#{slug}.json"))
+src = ENV.fetch("SRC", "#{root}/tmp/exports")        # Mixamo: SRC=tmp/mixamo/<character> (script/mocap/mixamo_glb.py)
+meta = JSON.parse(File.read("#{src}/#{slug}.json"))
 motion = YAML.load_file("#{root}/config/catalog/motions/#{slug}.yml")
 FileUtils.mkdir_p(out)
-FileUtils.cp("#{root}/tmp/exports/#{slug}.glb", "#{out}/#{slug}.glb")
+FileUtils.cp("#{src}/#{slug}.glb", "#{out}/#{slug}.glb")
 
 lin = ->(hex) { hex.scan(/../).map { |c| v = c.to_i(16) / 255.0; v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055)**2.4 } }
 add = ->(a, b, s = 1) { a.zip(b).map { _1 + _2 * s } }
@@ -23,6 +24,9 @@ rot = ->(x, z) { [ x * Math.cos(yaw) + z * Math.sin(yaw), -x * Math.sin(yaw) + z
 
 # --- framing: the export box spans every key of the loop (world space, after yaw)
 bmin, bmax = meta["box"]["min"], meta["box"]["max"]
+# Mixamo: lowest point of the loop touches the floor (shoe soles), except chair moves where the seat is the anchor
+lift = meta["mixamo"] && motion["prop"] != "chair" ? -bmin[1] : 0
+bmin, bmax = [ bmin[0], bmin[1] + lift, bmin[2] ], [ bmax[0], bmax[1] + lift, bmax[2] ] if meta["mixamo"]
 center = bmin.zip(bmax).map { (_1 + _2) / 2 }
 corners = [ 0, 1 ].product([ 0, 1 ], [ 0, 1 ]).map { |i, j, k| [ [ bmin, bmax ][i][0], [ bmin, bmax ][j][1], [ bmin, bmax ][k][2] ] }
 floor_move = (bmax[1] - bmin[1]) < 1.2                 # push-up, plank…: look down a little more
@@ -72,8 +76,8 @@ skin = { base_color: { attribute: "COLOR_0" }, specular_roughness: 0.55, specula
 wood = lin.("d9b98f")
 
 nodes = [
-  { type: "asset", name: "fig", file: "#{slug}.glb", rotation: { euler: [ 0, yaw, 0 ] },
-    materials: { "Body" => { inputs: skin } } },
+  { type: "asset", name: "fig", file: "#{slug}.glb", rotation: { euler: [ 0, yaw, 0 ] }, translation: [ 0, lift, 0 ],
+    materials: meta["mixamo"] ? {} : { "Body" => { inputs: skin } } },
   { type: "mesh", name: "cyc", geometry: { attributes: { POSITION: { type: "vec3", data: pos.each_slice(3).to_a }, NORMAL: { type: "vec3", data: nrm.each_slice(3).to_a } },
                                            indices: { type: "u32", data: idx } },
     materials: [ { inputs: { base_color: washi.map { _1 * 0.95 }, specular_roughness: 0.9, specular_weight: 0.0 } } ] },
