@@ -22,3 +22,5 @@
 2026-11-09 mountain_climbers male BAD Mixamo figure leaks into clip (pre-fix prompt); requeue
 2026-11-09 burpees male BAD Mixamo figure leaks into clip (pre-fix prompt); requeue
 2026-11-09 burpees female BAD Mixamo figure leaks into clip (pre-fix prompt); requeue
+2026-11-09 squat_jumps male FAIL grok exit 1 e 2-second clip with those frames pinned at 0.67s and 1.33s.Error: Internal error: {   "message": "API error (status 402 Payment Required): Grok Build usage balance exhausted",   "http_status": 402 } 
+2026-11-09 QUOTA 402 'Grok Build usage balance exhausted' at squat_jumps male. Remaining: squat_jumps skater_hops shadow_boxing lunge lateral_lunge glute_bridge calf_raise sumo_squat push_up knee_push_up push_up_rotation pike_push_up shoulder_taps inchworm crunch plank side_plank bicycle_crunch dead_bug bird_dog superman standing_knee_crunch tricep_dip mountain_climbers burpees 
