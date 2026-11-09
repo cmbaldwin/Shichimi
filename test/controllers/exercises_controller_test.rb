@@ -18,7 +18,7 @@ class ExercisesControllerTest < ActionDispatch::IntegrationTest
     if (slug = with.first)
       get exercise_path(slug)
       v = Exercise.find(slug).video
-      assert_select "video.ex-video[src='#{v}.mp4'][poster='#{v}.webp'][autoplay][muted][loop][playsinline]"
+      assert_select "video.ex-video[src='#{v[:mp4]}'][poster='#{v[:webp]}'][autoplay][muted][loop][playsinline]"
       assert_select "canvas.ex-figure[data-controller=figure]"
       assert_select ".ex-3d-toggle input[type=checkbox]"
     end

@@ -5,7 +5,7 @@ module ExercisesHelper
   # Poster frame of the rendered video when there is one, else a live-rendered thumbnail.
   def still_tag(exercise, size: 240, **opts)
     return thumb_tag(exercise, size:, **opts) unless (video = exercise.video(figure))
-    image_tag "#{video}.webp", alt: opts.delete(:alt) || exercise.name, width: size / 2, height: size / 2,
+    image_tag video[:webp], alt: opts.delete(:alt) || exercise.name, width: size / 2, height: size / 2,
               loading: "lazy", class: [ "thumb", opts.delete(:class) ], **opts
   end
 

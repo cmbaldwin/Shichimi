@@ -18,8 +18,8 @@ export class StageFigure {
       this.mannequin.setSpeed(this.speed)
     } else {
       this.mannequin?.pause()
-      const src = `${ex.video}.mp4`
-      if (!this.video.src.endsWith(src)) { this.video.src = src; this.video.poster = `${ex.video}.webp` }
+      const src = ex.video.mp4
+      if (!this.video.src.endsWith(src)) { this.video.src = src; this.video.poster = ex.video.webp }
       this.video.style.transform = mirrored ? "scaleX(-1)" : ""
       this.video.playbackRate = this.speed
       if (this.playing) this.video.play().catch(() => {}) // autoplay of muted video can still be refused; poster shows
