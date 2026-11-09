@@ -1,0 +1,13 @@
+2026-11-09 squat male OK 105179B
+2026-11-09 squat female OK 97703B
+2026-11-09 step_up male OK 212990B
+2026-11-09 step_up female FAIL no video:  four `image_edit` steps were not executed. Each retry came back as the same failed `reference_to_video` call, so steps 1–4 never produced files and step 5 could not run.  Saved output paths: none. 
+2026-11-09 step_up male OK 224108B
+2026-11-09 step_up female OK 256764B
+2026-11-09 tricep_dip male OK 141379B
+2026-11-09 tricep_dip female OK 153954B
+2026-11-09 wall_sit male OK 181368B
+2026-11-09 wall_sit female OK 181762B
+2026-11-09 tricep_dip male BAD beard in start frame, stool morphs; requeue
+2026-11-09 tricep_dip female BAD two stools, camera flips; requeue
+2026-11-09 wall_sit female WARN camera mirrors mid-clip

@@ -8,8 +8,8 @@ session, and shows you how you're doing.
 Live: https://shichimi.moab.jp
 
 ## What's in it
-- **30 exercises** in 4 categories (cardio, lower, upper, core). Each has a realistic demo video (Mixamo motion capture
-  rendered with Vork on Escalante; man or woman, chosen in Settings, in `public/videos/<male|female>/`), a live three.js
+- **30 exercises** in 4 categories (cardio, lower, upper, core). Each has a realistic demo video (AI-filmed with Grok Imagine,
+  driven by pose keyframes, see `script/grok/README.md`; man or woman, chosen in Settings, in `public/videos/<male|female>/`), a live three.js
   figure as fallback, coaching cues, regressions and progressions, and MET values.
 - **7 formats**, each named after a spice in shichimi tōgarashi:
 
