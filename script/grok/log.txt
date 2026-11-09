@@ -11,3 +11,14 @@
 2026-11-09 tricep_dip male BAD beard in start frame, stool morphs; requeue
 2026-11-09 tricep_dip female BAD two stools, camera flips; requeue
 2026-11-09 wall_sit female WARN camera mirrors mid-clip
+2026-11-09 jumping_jacks male OK 98178B
+2026-11-09 jumping_jacks female OK 106288B
+2026-11-09 high_knees male OK 104180B
+2026-11-09 high_knees female OK 100896B
+2026-11-09 mountain_climbers male OK 111139B
+2026-11-09 mountain_climbers female OK 86088B
+2026-11-09 burpees male OK 221114B
+2026-11-09 burpees female OK 198397B
+2026-11-09 mountain_climbers male BAD Mixamo figure leaks into clip (pre-fix prompt); requeue
+2026-11-09 burpees male BAD Mixamo figure leaks into clip (pre-fix prompt); requeue
+2026-11-09 burpees female BAD Mixamo figure leaks into clip (pre-fix prompt); requeue

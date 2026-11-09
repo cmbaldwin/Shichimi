@@ -37,7 +37,7 @@ if [ -z "${KEEP_RAW:-}" ] || [ ! -f raw.mp4 ]; then
   steps+="$((N+i0+1)). reference_to_video: aspect_ratio 1:1, resolution_name 720p, duration $DUR, first_frame $START, last_frame $START, keyframes [${kf%, }], images [$ID/$FIG.jpg]. Prompt: 'Real filmed fitness demo of $SLUG. Static locked-off camera, fixed 3/4 angle, no camera movement, no cuts. Same person throughout, hair unchanged. Exactly one prop, which never moves, duplicates or changes shape; camera never flips or mirrors. $PROPTXT Starts in the exact first frame, moves smoothly through the keyframe poses with natural realistic motion and hands, and ends in the exact starting pose.'"
   # ponytail: only image_edit + reference_to_video allowed; no shell for grok, no --always-approve
   grok -p "Run these steps strictly one at a time, in order, never in parallel; wait for each tool result before the next call. Pass the exact absolute file path each image_edit returns (under ~/.grok/sessions) wherever a step says 'result of step N'. Then list each saved output path:
-$steps" --tools "image_edit,reference_to_video" > grok.log 2>&1 || { log "FAIL grok exit $? $(tail -c 200 grok.log | tr '\n' ' ')"; exit 1; }
+$steps" --tools "image_edit,reference_to_video" < /dev/null > grok.log 2>&1 || { log "FAIL grok exit $? $(tail -c 200 grok.log | tr '\n' ' ')"; exit 1; }
   VID=$(grep -o '/[^ `)]*/videos/[0-9]*\.mp4' grok.log | tail -1 || true)
   [ -n "$VID" ] && [ -f "$VID" ] || { log "FAIL no video: $(tail -c 200 grok.log | tr '\n' ' ')"; exit 1; }
   cp "$VID" raw.mp4
