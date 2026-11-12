@@ -7,6 +7,11 @@
     <p class="muted"><%= @log.workout_name %> · <%= l(@log.performed_at, format: :long) %></p>
   </header>
 
+  <% if @log == current_user.workout_logs.recent.first && (st = Stats.new(current_user)).days_since_last_workout == 0 %>
+    <% g = st.weekly_goal_progress %>
+    <p class="card wo-goal"><strong class="num"><%= g[:done_days] %> of <%= g[:goal] %></strong> workout days this week<%= ", goal reached" if g[:done_days] >= g[:goal] %> · <strong class="num"><%= st.current_streak %></strong>-day streak</p>
+  <% end %>
+
   <div class="wo-stats">
     <div class="card"><div class="num wo-big"><%= @log.duration_seconds / 60 %>:<%= format("%02d", @log.duration_seconds % 60) %></div><span class="muted">time</span></div>
     <div class="card"><div class="num wo-big"><%= @log.completed_slugs.size %></div><span class="muted">intervals done</span></div>
@@ -67,5 +72,6 @@
   <div class="row">
     <%= link_to "Done", root_path, class: "btn btn-primary" %>
     <% if @log.workout %><%= link_to "Again", workout_path(@log.workout), class: "btn" %><% end %>
+    <%= button_to "Delete entry", workout_log_path(@log), method: :delete, class: "btn btn-danger", form: { data: { turbo_confirm: "Delete this entry?" } } %>
   </div>
 </article>

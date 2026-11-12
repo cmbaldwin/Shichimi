@@ -144,7 +144,8 @@ class Stats
     GODS.map do |g|
       value = g[:kind] == :total ? entries.size : longest_streak
       on = g[:kind] == :total ? entries[g[:goal] - 1]&.dig(:date) : streak_reached_on(g[:goal])
-      g.slice(:key, :name, :ja, :blurb, :format).merge(unlocked: !on.nil?, unlocked_on: on, progress: [ value, g[:goal] ].min, goal: g[:goal])
+      need = g[:kind] == :total ? "#{g[:goal]} #{"workout".pluralize(g[:goal])} in total" : "#{g[:goal]} days in a row"
+      g.slice(:key, :name, :ja, :blurb, :format, :kind).merge(need:, unlocked: !on.nil?, unlocked_on: on, progress: [ value, g[:goal] ].min, goal: g[:goal])
     end
   end
 

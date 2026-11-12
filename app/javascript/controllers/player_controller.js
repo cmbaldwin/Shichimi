@@ -4,7 +4,7 @@ import { StageFigure } from "stage_figure"
 const mmss = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`
 
 export default class extends Controller {
-  static targets = ["video", "canvas", "form", "slugs", "duration", "startedAt", "station", "kind", "name", "count", "ring", "next", "bar", "elapsed", "remaining", "toggle", "ready"]
+  static targets = ["video", "canvas", "form", "slugs", "duration", "startedAt", "station", "kind", "name", "count", "ring", "next", "bar", "elapsed", "remaining", "toggle", "ready", "muted"]
   static values = { timeline: Array, exercises: Object, voice: String, name: String, autostart: Boolean, seek: Number }
 
   connect() {
@@ -27,6 +27,7 @@ export default class extends Controller {
     document.addEventListener("keydown", this.keys)
     document.addEventListener("visibilitychange", this.vis)
     this.enter(0, { silent: true })
+    this.preload()
     if (this.autostartValue) this.start()
   }
 
@@ -35,8 +36,10 @@ export default class extends Controller {
     document.removeEventListener("keydown", this.keys)
     document.removeEventListener("visibilitychange", this.vis)
     this.releaseWake()
-    this.hush()
-    this.audio?.close().catch(() => {})
+    // After a finished workout the chime and "Done" ring out across the Turbo visit to the summary.
+    const audio = this.audio
+    if (this.finished && !this.early) setTimeout(() => audio?.close().catch(() => {}), 4000)
+    else { this.hush(); audio?.close().catch(() => {}) }
     this.figure?.dispose()
   }
 
@@ -60,6 +63,7 @@ export default class extends Controller {
     this.figure.pause()
     this.releaseWake()
     this.toggleTarget.textContent = "Resume"
+    this.kindTarget.textContent = "PAUSED"
     this.hush()
   }
 
@@ -73,6 +77,7 @@ export default class extends Controller {
     this.figure.play()
     this.acquireWake()
     this.toggleTarget.textContent = "Pause"
+    if (this.idx >= 0) this.kindTarget.textContent = this.constructor.KINDS[this.steps[this.idx].kind]
   }
 
   skip() { this.jump(this.idx + 1) }
@@ -135,23 +140,26 @@ export default class extends Controller {
     this.element.dataset.kind = s.kind
     this.figure.setSpeed(s.kind === "work" ? 1 : 0.35)
     this.figure.show(ex, { mirrored: false })
-    this.kindTarget.textContent = { prep: "GET READY", work: "WORK", rest: "REST" }[s.kind]
+    this.kindTarget.textContent = this.constructor.KINDS[s.kind]
     this.nameTarget.textContent = ex.name
     const nx = this.steps.find((x, j) => j > (s.kind === "work" ? i : i + 1) && x.kind === "work")
     this.nextTarget.textContent = nx ? this.exercises(nx.slug).name : "Finish"
     const n = this.steps.slice(0, i + 1).filter(x => x.kind === "work").length
     const upcoming = s.kind === "work" ? n : n + 1
-    this.stationTarget.textContent = `station ${Math.min(upcoming, this.stations)}/${this.stations} · round ${s.round}/${this.rounds}`
+    this.stationTarget.textContent = `${Math.min(upcoming, this.stations)} of ${this.stations}` + (this.rounds > 1 ? ` · round ${s.round}/${this.rounds}` : "")
     if (silent || !this.started) return
+    this.wakeAudio()
+    // the chime first, the voice just after it (never on top of each other)
     if (s.kind === "work") {
       this.sfx("go")
-      if (this.stepIsLast(i)) this.say(["last_one"], "Last one")
-    } else {
-      if (s.kind === "rest") this.sfx("rest")
-      if (s.kind === "prep") this.say(["get_ready", s.slug], `Get ready: ${ex.name}`)
-      else this.say(["rest", "next", s.slug], `Rest. Next: ${ex.name}`)
-    }
+      if (this.stepIsLast(i)) this.say(["last_one"], "Last one", 0.5)
+    } else if (s.kind === "rest") {
+      this.sfx("rest")
+      this.say(["rest", "next", s.slug], `Rest. Next: ${ex.name}`, 0.45)
+    } else this.say(["get_ready", s.slug], `Get ready: ${ex.name}`)
   }
+
+  static KINDS = { prep: "GET READY", work: "WORK", rest: "REST" }
 
   stepIsLast(i) { return this.steps.findLastIndex(x => x.kind === "work") === i }
 
@@ -168,12 +176,12 @@ export default class extends Controller {
       this.sideDone = true
       this.figure.show(this.exercises(s.slug), { mirrored: true })
       this.sfx("switch")
-      this.say(["switch_sides"], "Switch sides")
+      this.say(["switch_sides"], "Switch sides", 0.4)
     }
     if (s.kind === "work" && inStep > 5000 && this.elapsed >= this.total / 2 && !this.said.has("half")) {
       this.said.add("half")
       this.sfx("half")
-      this.say(["halfway"], "Halfway")
+      this.say(["halfway"], "Halfway", 0.5)
     }
   }
 
@@ -191,10 +199,11 @@ export default class extends Controller {
   finish({ early = false, natural = false } = {}) {
     if (this.finished) return
     this.finished = true
+    this.early = early
     clearInterval(this.timer)
     this.releaseWake()
     if (natural && this.steps[this.idx]?.kind === "work") this.done.add(this.idx)
-    if (!early) { this.sfx("done"); this.say(["done"], "Done") }
+    if (!early) { this.sfx("done"); this.say(["done"], "Done", 0.9) }
     const slugs = [...this.done].sort((a, b) => a - b).map(n => this.steps[n].slug)
     this.slugsTarget.replaceChildren(...slugs.map(v => {
       const el = document.createElement("input")
@@ -209,95 +218,95 @@ export default class extends Controller {
   // --- helpers ----------------------------------------------------------
   exercises(slug) { return this.exercisesValue[slug] }
 
+  // Voice clips (public/audio/voice, see script/voices). The bytes download while the Start screen is up and
+  // are decoded inside the Start tap, so the very first cue already speaks in the chosen voice.
+  preload() {
+    this.bytes = {}
+    if (this.voiceValue === "off") return
+    const keys = ["get_ready", "rest", "next", "last_one", "switch_sides", "halfway", "done", ...new Set(this.steps.map(s => s.slug))]
+    this.fetched = Promise.all(keys.map(k => fetch(`/audio/voice/${this.voiceValue}/${k}.m4a`)
+      .then(r => r.ok ? r.arrayBuffer() : Promise.reject(r.status))
+      .then(b => { this.bytes[k] = b })
+      .catch(() => {})))
+  }
+
   unlockAudio() {
     try {
       // iOS binds the session category when the context is created, so set "playback" (play through the
       // ring/silent switch) BEFORE new AudioContext; set afterwards, Web Audio stays muted on silent.
       if (navigator.audioSession) navigator.audioSession.type = "playback"
-      this.audio = new (window.AudioContext || window.webkitAudioContext)()
-      this.audio.resume().catch(() => {})
+      const a = this.audio = new (window.AudioContext || window.webkitAudioContext)()
+      // Everything plays through one limiter, so a chime under the voice never clips.
+      this.out = a.createDynamicsCompressor()
+      this.out.threshold.value = -6; this.out.knee.value = 6; this.out.ratio.value = 12
+      this.out.attack.value = 0.003; this.out.release.value = 0.1
+      this.out.connect(a.destination)
+      a.onstatechange = () => this.soundState()
+      a.resume().catch(() => {})
       this.bell(440, 0.03, 0.001) // silent-ish blip to fully unlock iOS
-      this.loadClips()
+      this.clips = {}
+      this.decoded = (this.fetched || Promise.resolve()).then(() => Promise.all(Object.entries(this.bytes).map(([k, b]) =>
+        a.decodeAudioData(b).then(buf => { this.clips[k] = buf }).catch(() => {}))))
     } catch { /* no audio */ }
   }
 
-  // Pre-rendered clips in public/audio (see script/voices). Anything missing falls back to bell()/speechSynthesis.
-  loadClips() {
-    this.clips = {}
-    const voice = this.voiceValue !== "off" && this.voiceValue
-    const urls = Object.keys(this.constructor.SFX).map(n => [`sfx/${n}`, `/audio/sfx/${n}.m4a`])
-    if (voice) {
-      const slugs = new Set(this.steps.map(s => s.slug))
-      for (const k of ["get_ready", "rest", "next", "last_one", "switch_sides", "halfway", "done", ...slugs])
-        urls.push([k, `/audio/voice/${voice}/${k}.m4a`])
-    }
-    for (const [key, url] of urls) {
-      fetch(url).then(r => r.ok ? r.arrayBuffer() : Promise.reject(r.status))
-        .then(b => this.audio.decodeAudioData(b))
-        .then(buf => { this.clips[key] = buf })
-        .catch(() => {})
-    }
-  }
-
-  playClip(buf, at = 0, gain = 1) {
+  playClip(buf, at = 0, gain = 0.9) {
     const src = this.audio.createBufferSource(), g = this.audio.createGain()
     src.buffer = buf
     g.gain.value = gain
-    src.connect(g).connect(this.audio.destination)
+    src.connect(g).connect(this.out)
     src.start(this.audio.currentTime + at)
     return src
   }
 
-  // Fallback cue palette when public/audio/sfx/<name>.m4a hasn't loaded: [frequency Hz, delay s, decay s] per note.
+  // Cue palette, synthesized (no files to load, so a cue can never go missing): [frequency Hz, delay s, decay s] per note.
   static SFX = {
-    tick:   [[1568, 0, 0.18]],                                   // dink (G6)
-    go:     [[2093, 0, 0.7], [1047, 0, 0.7]],                    // bright C7 + C6 on GO
-    rest:   [[1319, 0, 0.35], [988, 0.14, 0.5]],                 // falling E6-B5
-    switch: [[1568, 0, 0.2], [1568, 0.12, 0.3]],                 // double dink
-    half:   [[1175, 0, 0.3], [1568, 0.12, 0.4]],                 // rising D6-G6
-    done:   [[1047, 0, 0.4], [1319, 0.12, 0.4], [1568, 0.24, 0.4], [2093, 0.36, 1.2]] // C-E-G-C arpeggio
+    tick:   [[1568, 0, 0.32]],                                   // dink (G6)
+    go:     [[2093, 0, 0.8], [1047, 0, 0.8]],                    // bright C7 + C6 on GO
+    rest:   [[1319, 0, 0.4], [988, 0.15, 0.6]],                  // falling E6-B5
+    switch: [[1568, 0, 0.2], [1568, 0.13, 0.35]],                // double dink
+    half:   [[1175, 0, 0.3], [1568, 0.13, 0.5]],                 // rising D6-G6
+    done:   [[1047, 0, 0.4], [1319, 0.13, 0.4], [1568, 0.26, 0.4], [2093, 0.39, 1.4]] // C-E-G-C arpeggio
   }
 
-  sfx(name) {
-    const buf = this.clips?.[`sfx/${name}`]
-    if (buf) this.playClip(buf, 0, 0.6)
-    else for (const [f, at, d] of this.constructor.SFX[name]) this.bell(f, d, 0.22, at)
-  }
+  sfx(name) { for (const [f, at, d] of this.constructor.SFX[name]) this.bell(f, d, 0.34, at) }
 
-  // Small bell: sine fundamental + inharmonic partial, fast attack, exponential decay.
-  bell(freq, dur, gain = 0.22, at = 0) {
+  // Small bell: sine fundamental + a quieter inharmonic partial that dies sooner, fast attack, exponential decay.
+  bell(freq, dur, gain = 0.34, at = 0) {
     const a = this.audio
     if (!a) return
     const t = a.currentTime + at
-    const g = a.createGain()
-    g.gain.setValueAtTime(0.0001, t)
-    g.gain.exponentialRampToValueAtTime(gain, t + 0.004)
-    g.gain.exponentialRampToValueAtTime(0.0001, t + dur)
-    g.connect(a.destination)
-    for (const [mult, level] of [[1, 1], [2.76, 0.25]]) {
-      const o = a.createOscillator(), og = a.createGain()
+    for (const [mult, level, len] of [[1, 1, dur], [2.76, 0.3, dur * 0.45]]) {
+      const o = a.createOscillator(), g = a.createGain()
       o.frequency.value = freq * mult
-      og.gain.value = level
-      o.connect(og).connect(g)
+      g.gain.setValueAtTime(0.0001, t)
+      g.gain.exponentialRampToValueAtTime(gain * level, t + 0.004)
+      g.gain.exponentialRampToValueAtTime(0.001, t + len) // -50 dB: a tail you can hear, not a blip
+      o.connect(g).connect(this.out)
       o.start(t)
-      o.stop(t + dur + 0.05)
+      o.stop(t + len + 0.05)
     }
   }
 
-  // Queue voice clips back to back ("Rest", "Next up:", "<exercise>"); speechSynthesis if any clip is missing.
-  say(keys, text) {
+  // Queue voice clips back to back ("Rest", "Next up:", "<exercise>"), `delay` s from now. Waits for the clips
+  // to finish decoding; speechSynthesis only if one is really missing (or there is no Web Audio at all).
+  say(keys, text, delay = 0.05) {
     if (this.voiceValue === "off") return
     this.hush()
-    const bufs = keys.map(k => this.clips?.[k])
-    if (this.audio && bufs.every(Boolean)) {
-      let at = 0.05
+    const speak = () => { if ("speechSynthesis" in window) speechSynthesis.speak(new SpeechSynthesisUtterance(text)) }
+    if (!this.audio) return speak()
+    const turn = this.turn
+    this.decoded.then(() => {
+      if (turn !== this.turn) return // a newer cue, or a pause, replaced this one
+      const bufs = keys.map(k => this.clips[k])
+      if (!bufs.every(Boolean)) return speak()
+      let at = delay
       this.voices = bufs.map(b => { const src = this.playClip(b, at); at += b.duration + 0.08; return src })
-    } else if ("speechSynthesis" in window) {
-      speechSynthesis.speak(new SpeechSynthesisUtterance(text))
-    }
+    })
   }
 
   hush() {
+    this.turn = (this.turn || 0) + 1
     for (const v of this.voices || []) try { v.stop() } catch { /* already done */ }
     this.voices = []
     if ("speechSynthesis" in window) speechSynthesis.cancel()
@@ -307,12 +316,16 @@ export default class extends Controller {
     try { this.wake = await navigator.wakeLock?.request("screen") } catch { /* denied */ }
   }
   releaseWake() { this.wake?.release().catch(() => {}); this.wake = null }
-  // iOS leaves the context "interrupted"/"suspended" after a screen lock, call or app switch.
+  // iOS parks the context ("interrupted"/"suspended") after a screen lock, call, Siri or app switch, and may
+  // ignore resume() outside a tap. So: retry on every step and on any tap in the player (click->player#wakeAudio),
+  // and while it is down show the "Tap for sound" pill instead of running on in silence.
   wakeAudio() { if (this.audio && this.audio.state !== "running") this.audio.resume().catch(() => {}) }
+  soundState() { this.mutedTarget.hidden = !this.audio || this.audio.state === "running" || this.finished }
 
+  // Leaving the page (lock, call, app switch) pauses the workout: the clock must not run on unseen and unheard,
+  // and the Resume tap is the user gesture iOS needs to bring the sound back.
   onVisibility() {
-    if (document.visibilityState !== "visible" || !this.running) return
-    this.acquireWake()
-    this.wakeAudio()
+    if (document.visibilityState === "hidden") { if (this.running) this.pause() }
+    else this.wakeAudio()
   }
 }

@@ -11,6 +11,7 @@
   <p class="muted small">Optional. Only used to estimate calories burned.</p>
   <%= f.label :weekly_goal, "Weekly goal (workout days)" %>
   <%= f.number_field :weekly_goal, min: 1, max: 14 %>
+  <p class="muted small">How many days a week you want to work out. Today counts your days toward it; nothing happens if you miss it.</p>
   <fieldset class="row" data-controller="voice-preview"><legend>Voice cues</legend>
     <% { "female" => "Female", "male" => "Male", "off" => "Off" }.each do |v, label| %>
       <label class="check"><%= f.radio_button :voice, v, data: { voice_preview_target: "choice" } %> <%= label %></label>

@@ -1,7 +1,8 @@
 <% f = workout.workout_format %>
 <%= link_to workout_path(workout), class: "card wcard", data: { format: workout.format, turbo_frame: "_top" } do %>
+  <% if local_assigns[:label] %><span class="wcard-label"><%= label %></span><% end %>
   <div class="spread"><strong><%= workout.name %></strong><span class="num muted"><%= mmss workout.total_seconds %></span></div>
-  <div class="muted"><%= f.spice %> <%= heat_marks f.heat %> · <%= level_label workout.level %></div>
+  <div class="muted"><%= f.spice %> <%= heat_marks f.heat %> · <%= f.work %>s on, <%= f.rest %>s off · <%= level_label workout.level %></div>
   <div class="row chips"><%= category_summary workout %></div>
   <div class="muted small"><%= workout_flags(workout).join(" · ") %></div>
 <% end %>

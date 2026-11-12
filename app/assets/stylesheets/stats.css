@@ -63,15 +63,12 @@
 .empty { text-align: center; padding: 32px 16px !important; }
 
 /* Shichifuku medallions (partial is also used outside .stats, so no .stats scope) */
-.gods { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; text-align: center; }
-.god { display: grid; gap: 2px; justify-items: center; font-size: .65rem; min-width: 0; }
-.god .medal { width: 100%; max-width: 44px; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; font-size: 1.15rem; font-weight: 700; border: 2px solid var(--line); color: var(--muted); }
-.god.unlocked .medal { background: var(--format); border-color: var(--format); color: var(--paper); box-shadow: 0 0 0 2px var(--card), 0 0 0 4px var(--format); }
-.god .gname { font-weight: 600; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.god.locked .gname, .god.locked .gstate { color: var(--muted); }
-.god .gstate { font-family: var(--mono); font-size: .6rem; }
-.god .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-@media (max-width: 480px) { .god .gname { font-size: .55rem; } .god .medal { font-size: .95rem; } }
+.gods { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.god { display: grid; grid-template-columns: 44px 1fr auto; gap: 12px; align-items: center; line-height: 1.3; }
+.god .medal { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-size: 1.1rem; font-weight: 700; border: 2px solid var(--line); color: var(--muted); }
+.god.unlocked .medal { background: var(--format); border-color: var(--format); color: var(--paper); }
+.god.locked strong, .god.locked .gstate { color: var(--muted); }
+.god.unlocked .gstate { color: var(--ok); font-weight: 700; }
 
 .stats, .stats > * { min-width: 0; }
 .spark { max-height: 130px; }

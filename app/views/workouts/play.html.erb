@@ -4,6 +4,7 @@
 <% dev = Rails.env.local? %><%# ?autostart=1&seek=N: dev and test only %>
 <%= tag.div class: "player", data: {
       controller: "player heart-rate",
+      action: "click->player#wakeAudio",
       player_timeline_value: @workout.timeline.to_json,
       player_exercises_value: @exercises.to_h { [ it.slug, it.to_player(figure) ] }.to_json,
       player_voice_value: current_user.voice,
@@ -22,18 +23,20 @@
   <% end %>
 
   <header class="p-top">
-    <span class="p-station num" data-player-target="station">station 1/1 · round 1/1</span>
-    <button type="button" class="p-btn p-end" data-action="player#end" aria-label="End workout">End</button>
+    <span class="p-station num" data-player-target="station">1 of 1</span>
+    <span class="p-top-right">
+      <button type="button" class="p-btn p-pill" data-player-target="muted" hidden>🔇 Tap for sound</button>
+      <span class="p-hr" data-heart-rate-target="ui" hidden>
+        <span class="p-hr-val num"><span aria-hidden="true">&hearts;</span> <span data-heart-rate-target="bpm">—</span></span>
+        <button type="button" class="p-btn p-pill" data-heart-rate-target="button" data-action="heart-rate#connectStrap">Connect</button>
+      </span>
+      <button type="button" class="p-btn p-pill" data-action="player#end" aria-label="End workout">End</button>
+    </span>
   </header>
 
   <div class="p-step">
     <div class="p-kind" data-player-target="kind">GET READY</div>
     <div class="p-name" data-player-target="name"><%= @workout.name %></div>
-  </div>
-
-  <div class="p-hr" data-heart-rate-target="ui" hidden>
-    <span class="p-hr-val num"><span aria-hidden="true">&hearts;</span> <span data-heart-rate-target="bpm">—</span></span>
-    <button type="button" class="p-btn p-hr-btn" data-heart-rate-target="button" data-action="heart-rate#connectStrap">Connect heart rate</button>
   </div>
 
   <div class="p-stage"><video data-player-target="video" muted loop playsinline hidden aria-hidden="true"></video><canvas data-player-target="canvas" hidden width="640" height="640" aria-hidden="true"></canvas></div>

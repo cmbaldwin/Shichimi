@@ -45,6 +45,19 @@ class User < ApplicationRecord
     smart_reminder_time if smart_reminders?
   end
 
+  # What Today offers: the routine rotation when there is one, else a tour of the catalog.
+  def next_workout = next_routine_workout || suggested_workout
+
+  # Tour of the catalog (or a slice of it): a different spice each time, never-done workouts first, then the
+  # one done longest ago. Hard (level 3) workouts wait until 10 workouts are logged.
+  def suggested_workout(scope = Workout.catalog, except: nil)
+    scope = scope.where(level: ..2) if workout_logs.count < 10
+    last_done = workout_logs.group(:workout_id).maximum(:performed_at)
+    tour = scope.where.not(id: except).order(:id).group_by(&:format).values
+      .flat_map { it.each_with_index.to_a }.sort_by { |w, rank| [ rank, w.id ] }.map(&:first)
+    tour.each_with_index.min_by { |w, i| [ last_done[w.id].to_f, i ] }&.first
+  end
+
   # Next workout in the routine rotation: the one after the most recently logged routine workout.
   def next_routine_workout
     items = routine_items.includes(:workout).to_a

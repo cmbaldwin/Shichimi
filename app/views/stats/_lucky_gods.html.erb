@@ -1,15 +1,15 @@
 <%# Shichifuku: the Seven Lucky Gods. Locals: stats (a Stats). Styles in stats.css (loaded app-wide). %>
 <% gods = stats.lucky_gods %>
 <section class="card gods-card" aria-labelledby="h-gods">
-  <h2 id="h-gods">Seven Lucky Gods <span class="ja">七福神 · <span class="num"><%= gods.count { it[:unlocked] } %> / 7</span></span></h2>
+  <h2 id="h-gods">Badges: Seven Lucky Gods <span class="ja">七福神 · <span class="num"><%= gods.count { it[:unlocked] } %> / 7</span></span></h2>
+  <p class="muted small">One god joins you at each milestone. Streak badges count your longest run of days in a row, so they stay once earned.</p>
   <ol class="gods">
     <% gods.each do |g| %>
-      <li class="god <%= g[:unlocked] ? "unlocked" : "locked" %>" data-format="<%= g[:format] %>"
-          title="<%= g[:name] %>: <%= g[:blurb] %> <%= g[:unlocked] ? "Unlocked #{g[:unlocked_on]}." : "#{g[:progress]} of #{g[:goal]}." %>">
+      <li class="god <%= g[:unlocked] ? "unlocked" : "locked" %>" data-format="<%= g[:format] %>">
         <span class="medal" aria-hidden="true"><%= g[:ja].first %></span>
-        <span class="gname"><%= g[:name] %></span>
+        <span class="gbody"><strong><%= g[:name] %></strong> <span class="ja"><%= g[:ja] %></span><br>
+          <span class="muted small"><%= g[:unlocked] ? g[:blurb] : "#{g[:need].capitalize}." %></span></span>
         <span class="gstate num"><%= g[:unlocked] ? "✓" : "#{g[:progress]}/#{g[:goal]}" %></span>
-        <span class="visually-hidden"><%= g[:ja] %>. <%= g[:blurb] %> <%= g[:unlocked] ? "Unlocked on #{g[:unlocked_on]}." : "Locked, #{g[:progress]} of #{g[:goal]}." %></span>
       </li>
     <% end %>
   </ol>

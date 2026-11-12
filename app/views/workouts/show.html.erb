@@ -12,8 +12,8 @@
     </div>
     <div class="row wo-facts">
       <span class="num wo-total"><%= @workout.total_seconds / 60 %>:<%= format("%02d", @workout.total_seconds % 60) %></span>
-      <span class="chip">Level <%= @workout.level %></span>
-      <span class="chip"><%= @workout.focus.titleize %></span>
+      <span class="chip"><%= level_label @workout.level %></span>
+      <span class="chip"><%= @workout.focus == "full" ? "Full body" : @workout.focus.titleize %></span>
       <% if @workout.low_impact %><span class="chip">Low impact</span><% end %>
       <% unless @workout.needs_floor %><span class="chip">No floor</span><% end %>
       <% @workout.equipment.to_s.split.each do |eq| %><span class="chip"><%= eq.humanize %></span><% end %>

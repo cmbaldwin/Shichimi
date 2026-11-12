@@ -105,7 +105,7 @@ Hands (realistic model): fingers curl by `hands:` in the motion file (`relaxed` 
 | Catalog | `config/catalog/exercises.yml` content fields, `config/catalog/workouts.yml`, `test/models/catalog_test.rb`, `test/models/workout_test.rb` |
 | Science | `config/catalog/formats.yml` `science` text, `config/catalog/references.yml`, `app/views/pages/science.html.erb`, `PagesController` |
 | Install guide | `app/views/pages/install.html.erb` (CSS mockups in `install.css`, not real screenshots), `install_controller.js` (`beforeinstallprompt` button, standalone detection) |
-| Player sounds | `public/audio/` (voice clips + SFX), `script/voices/*`, `player_controller.js` `loadClips/say/sfx` + `bell()` synth fallback. Ticks fire on the last 3 s of every step longer than 4 s |
+| Player sounds | `public/audio/voice/` (voice clips), `script/voices/*`, `player_controller.js` `preload/say/sfx/bell`. Chimes are synthesized by `bell()` (no SFX files: the old Kenney clips were 10 ms clicks from a bad fade and too slight anyway). Ticks fire on the last 3 s of every step longer than 4 s |
 | 3D rig | `app/javascript/mannequin.js`, `figure_controller.js`, `thumb_controller.js`, `ExercisesController` + `app/views/exercises/*`, `exercises.css` |
 | Motions | `config/catalog/motions/*.yml` |
 | Player | `WorkoutsController#show #play`, `app/views/workouts/show + play`, `player_controller.js`, `WorkoutLogsController#create #show #update`, `app/views/workout_logs/show`, `player.css` |
@@ -159,9 +159,12 @@ Brakeman's one ignored warning (`config/brakeman.ignore`) is `Exercise.find_by`,
 
 - iOS audio: set `navigator.audioSession.type = "playback"` BEFORE `new AudioContext()` (the category binds at creation; set later, the silent switch mutes everything). Resume the context on `visibilitychange` and on the Resume tap (iOS leaves it `interrupted` after a lock or app switch). Real-device check only.
 - Voice cues are pre-rendered Kokoro-82M clips in `public/audio/voice/<female|male>/<key>.m4a` (cue keys + one per exercise slug);
-  SFX are Kenney CC0 clips in `public/audio/sfx/`. Credits: `public/audio/CREDITS.md`.
-- The player fetches/decodes them after the Start tap and plays through its AudioContext; a missing clip falls back to
-  `speechSynthesis` (voice) or `bell()` (SFX). User choice is `users.voice` (Settings, with a Preview button).
+  chimes are synthesized (`bell()`), all through one limiter node. Credits: `public/audio/CREDITS.md`.
+- The player downloads the clips while the Start screen is up, decodes them in the Start tap, and `say()` waits for that,
+  so every cue uses the chosen voice (`speechSynthesis` only if a clip is missing). The context is revived on every step and
+  tap; a "Tap for sound" pill shows while it is down; hiding the page pauses the workout (Resume is the gesture iOS needs).
+- Today's workout: `User#next_workout` = routine rotation, else `suggested_workout` (catalog tour, a new spice each time,
+  never-done first, then least recently done; Hard waits for 10 logs). Quick picks rotate the same way. User choice is `users.voice` (Settings, with a Preview button).
 - **Adding an exercise or cue = regenerate:** see `script/voices/README.md` (`generate.py` only renders missing files).
 
 ## Observability

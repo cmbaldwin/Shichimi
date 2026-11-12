@@ -101,6 +101,7 @@ p { margin: 0 0 1em; }
 
 /* primitives */
 .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); }
+.card > :last-child { margin-bottom: 0; }
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   min-height: 44px; padding: 10px 18px; border-radius: 999px;
