@@ -24,3 +24,100 @@
 2026-11-09 burpees female BAD Mixamo figure leaks into clip (pre-fix prompt); requeue
 2026-11-09 squat_jumps male FAIL grok exit 1 e 2-second clip with those frames pinned at 0.67s and 1.33s.Error: Internal error: {   "message": "API error (status 402 Payment Required): Grok Build usage balance exhausted",   "http_status": 402 } 
 2026-11-09 QUOTA 402 'Grok Build usage balance exhausted' at squat_jumps male. Remaining: squat_jumps skater_hops shadow_boxing lunge lateral_lunge glute_bridge calf_raise sumo_squat push_up knee_push_up push_up_rotation pike_push_up shoulder_taps inchworm crunch plank side_plank bicycle_crunch dead_bug bird_dog superman standing_knee_crunch tricep_dip mountain_climbers burpees 
+2026-11-12 squat_jumps male FAIL no video: 1874d8aa67d1/images/1.jpg` 2. `/Users/cody/.grok/sessions/%2FUsers%2Fcody%2FDev%2Fshichimi%2Ftmp%2Fgrok%2Fmale%2Fsquat_jumps/01a1cd65-50d1-75d1-bb83-1874d8aa67d1/images/2.jpg` 3. No saved video path. 
+2026-11-12 squat_jumps male OK 114809B
+2026-11-12 squat_jumps female FAIL imagine exit 1 Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py", line 611, in http_error_default     raise HTTPError(req.full_url, code, msg, hdrs, fp) urllib.error.HTTPError: HTTP Error 403: Forbidden 
+2026-11-12 squat_jumps female FAIL imagine exit 1 w/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 1138, in read     return self._sslobj.read(len, buffer)            ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^ TimeoutError: The read operation timed out 
+2026-11-12 squat_jumps female FAIL imagine exit 1 w/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 1138, in read     return self._sslobj.read(len, buffer)            ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^ TimeoutError: The read operation timed out 
+2026-11-12 squat_jumps female OK 100120B
+2026-11-12 skater_hops male FAIL imagine exit 1 uration 2 keyframes [0.667, 1.333] request cea33252-8af2-9c02-88fe-cc688ea6b9be video cea33252-8af2-9c02-88fe-cc688ea6b9be pending video cea33252-8af2-9c02-88fe-cc688ea6b9be pending video poll timed out cea33252-8af2-9c02-88fe-cc688ea6b9be 
+2026-11-12 skater_hops female FAIL imagine exit 1 3f-a18e-15a2c5c7462c pending video 43ae3bb2-3155-9c3f-a18e-15a2c5c7462c pending video 43ae3bb2-3155-9c3f-a18e-15a2c5c7462c pending video 43ae3bb2-3155-9c3f-a18e-15a2c5c7462c pending video poll timed out 43ae3bb2-3155-9c3f-a18e-15a2c5c7462c 
+2026-11-12 shadow_boxing male FAIL imagine exit 1 52-be32-895ef67ca1f5 pending video 0885deed-13f2-9952-be32-895ef67ca1f5 pending video 0885deed-13f2-9952-be32-895ef67ca1f5 pending video 0885deed-13f2-9952-be32-895ef67ca1f5 pending video poll timed out 0885deed-13f2-9952-be32-895ef67ca1f5 
+2026-11-12 shadow_boxing female OK 145818B
+2026-11-12 skater_hops male OK 118961B
+2026-11-12 skater_hops female OK 114770B
+2026-11-12 shadow_boxing male OK 148020B
+2026-11-12 lunge male OK 204895B
+2026-11-12 skater_hops male BAD Mixamo clothes and face in the pose stills; requeue
+2026-11-12 skater_hops female BAD Mixamo pink outfit in the pose stills; requeue
+2026-11-12 lunge female OK 227400B
+2026-11-12 lateral_lunge male OK 194278B
+2026-11-12 lateral_lunge female OK 235165B
+2026-11-12 glute_bridge male OK 144518B
+2026-11-12 glute_bridge female FAIL imagine exit 1 dc9-94cd-955c-9969-f236408e713f video 4f8addc9-94cd-955c-9969-f236408e713f pending 0 HTTP 403 /videos/4f8addc9-94cd-955c-9969-f236408e713f {"code":"unauthenticated:bad-credentials","error":"The OAuth2 access token could not be validated."} 
+2026-11-12 calf_raise male FAIL imagine exit 1 edit pose 1 at 0.8s -> key 0.667s HTTP 422 /images/edits Failed to deserialize the JSON body into the target type: image[0]: invalid type: map, expected a string at line 1 column 525 
+2026-11-12 calf_raise female FAIL imagine exit 1 edit pose 1 at 0.8s -> key 0.667s HTTP 422 /images/edits Failed to deserialize the JSON body into the target type: image[0]: invalid type: map, expected a string at line 1 column 525 
+2026-11-12 sumo_squat male FAIL imagine exit 1 edit pose 1 at 0.64s -> key 0.667s HTTP 422 /images/edits Failed to deserialize the JSON body into the target type: image[0]: invalid type: map, expected a string at line 1 column 525 
+2026-11-12 sumo_squat female FAIL imagine exit 1 edit pose 1 at 0.64s -> key 0.667s HTTP 422 /images/edits Failed to deserialize the JSON body into the target type: image[0]: invalid type: map, expected a string at line 1 column 525 
+2026-11-12 push_up male FAIL imagine exit 1 edit start pose HTTP 422 /images/edits Failed to deserialize the JSON body into the target type: image[0]: invalid type: map, expected a string at line 1 column 540 
+2026-11-12 push_up female FAIL imagine exit 1 edit start pose HTTP 422 /images/edits Failed to deserialize the JSON body into the target type: image[0]: invalid type: map, expected a string at line 1 column 540 
+2026-11-12 knee_push_up male FAIL imagine exit 1 edit start pose HTTP 422 /images/edits Failed to deserialize the JSON body into the target type: image[0]: invalid type: map, expected a string at line 1 column 550 
+2026-11-12 knee_push_up female FAIL imagine exit 1 edit start pose HTTP 422 /images/edits Failed to deserialize the JSON body into the target type: image[0]: invalid type: map, expected a string at line 1 column 550 
+2026-11-12 push_up_rotation male FAIL imagine exit 143 frames [1.667, 3.667, 5.333, 7.333] request c9b5f5a6-8509-9988-8377-40fe996b27a2 video c9b5f5a6-8509-9988-8377-40fe996b27a2 pending 0 video c9b5f5a6-8509-9988-8377-40fe996b27a2 pending 1 video c9b5f5a6-8509-9988-8377-40fe996b27a2 pending 1 
+2026-11-12 push_up_rotation female FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 pike_push_up male FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 pike_push_up female FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 shoulder_taps male FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 shoulder_taps female FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 inchworm male FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 inchworm female FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 crunch male FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 crunch female FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 plank male FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 plank female FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 side_plank male FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 side_plank female FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 bicycle_crunch male FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 bicycle_crunch female FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 dead_bug male FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 dead_bug female FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 bird_dog male FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 bird_dog female FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 superman male FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 superman female FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 standing_knee_crunch male FAIL imagine exit 1 edit pose 1 at 0.64s -> key 0.667s HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 standing_knee_crunch female FAIL imagine exit 1 edit pose 1 at 0.64s -> key 0.667s HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 tricep_dip male FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 tricep_dip female FAIL imagine exit 1 edit start pose HTTP 400 /images/edits Failed to parse the request body as JSON: EOF while parsing a value at line 1 column 0 
+2026-11-12 burpees male FAIL imagine exit 143 edit start pose 
+2026-11-12 glute_bridge female OK 114203B
+2026-11-12 skater_hops male OK 100722B
+2026-11-12 skater_hops female OK 106624B
+2026-11-12 calf_raise male OK 121483B
+2026-11-12 calf_raise female OK 126220B
+2026-11-12 sumo_squat male OK 181371B
+2026-11-12 sumo_squat female OK 172447B
+2026-11-12 push_up male OK 75708B
+2026-11-12 push_up female OK 90672B
+2026-11-12 knee_push_up male OK 129616B
+2026-11-12 knee_push_up female OK 164481B
+2026-11-12 push_up_rotation male OK 335202B
+2026-11-12 push_up_rotation female FAIL imagine exit 1 w/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/ssl.py", line 1138, in read     return self._sslobj.read(len, buffer)            ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^ TimeoutError: The read operation timed out 
+2026-11-12 pike_push_up male OK 137987B
+2026-11-12 pike_push_up female OK 109354B
+2026-11-12 shoulder_taps male OK 174084B
+2026-11-12 shoulder_taps female OK 160534B
+2026-11-12 inchworm male OK 363241B
+2026-11-12 inchworm female OK 359381B
+2026-11-12 crunch male OK 96643B
+2026-11-12 crunch female OK 89186B
+2026-11-12 plank male OK 205669B
+2026-11-12 plank female OK 213443B
+2026-11-12 side_plank male OK 197132B
+2026-11-12 side_plank female OK 207503B
+2026-11-12 bicycle_crunch male OK 84479B
+2026-11-12 bicycle_crunch female OK 73400B
+2026-11-12 dead_bug male OK 232495B
+2026-11-12 dead_bug female OK 235144B
+2026-11-12 bird_dog male OK 272025B
+2026-11-12 bird_dog female OK 221013B
+2026-11-12 superman male OK 156294B
+2026-11-12 superman female OK 150224B
+2026-11-12 standing_knee_crunch male OK 163216B
+2026-11-12 standing_knee_crunch female FAIL imagine exit 1 56s -> key 3.333s HTTP 403 /images/edits {"code":"personal-team-blocked:spending-limit","error":"You have run out of credits or need a Grok subscription. Add credits at https://grok.com/?_s=usage or upgrade at https://grok.com/supergrok."} 
+2026-11-12 tricep_dip male FAIL imagine exit 1 edit start pose HTTP 403 /images/edits {"code":"personal-team-blocked:spending-limit","error":"You have run out of credits or need a Grok subscription. Add credits at https://grok.com/?_s=usage or upgrade at https://grok.com/supergrok."} 
+2026-11-12 tricep_dip female FAIL imagine exit 1 edit start pose HTTP 403 /images/edits {"code":"personal-team-blocked:spending-limit","error":"You have run out of credits or need a Grok subscription. Add credits at https://grok.com/?_s=usage or upgrade at https://grok.com/supergrok."} 
+2026-11-12 burpees male FAIL imagine exit 1 edit start pose HTTP 403 /images/edits {"code":"personal-team-blocked:spending-limit","error":"You have run out of credits or need a Grok subscription. Add credits at https://grok.com/?_s=usage or upgrade at https://grok.com/supergrok."} 
+2026-11-12 burpees female FAIL imagine exit 1 edit start pose HTTP 403 /images/edits {"code":"personal-team-blocked:spending-limit","error":"You have run out of credits or need a Grok subscription. Add credits at https://grok.com/?_s=usage or upgrade at https://grok.com/supergrok."} 
+2026-11-12 mountain_climbers male FAIL imagine exit 1 edit start pose HTTP 403 /images/edits {"code":"personal-team-blocked:spending-limit","error":"You have run out of credits or need a Grok subscription. Add credits at https://grok.com/?_s=usage or upgrade at https://grok.com/supergrok."} 
+2026-11-12 push_up_rotation female FAIL imagine exit 2 t pose 2 at 3.6s -> key 3.667s QUOTA 403 {"code":"personal-team-blocked:spending-limit","error":"You have run out of credits or need a Grok subscription. Add credits at https://grok.com/?_s=usage or upgrade at https://grok.com/supergrok."} 

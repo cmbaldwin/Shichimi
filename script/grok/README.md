@@ -12,12 +12,12 @@ KEEP_RAW=1 script/grok/make.sh male squat # re-run only the ffmpeg post-process 
 ## What make.sh does
 1. Copies the existing render to `tmp/grok/<figure>/<slug>/src.mp4` (the motion source) and grabs 2 pose frames (4 for clips over 2.6 s).
    Prop and floor moves (`prop:` in the motion yml, `floor: true` in exercises.yml) first get their own start still (base + render frame 0), which is used as first/last frame, so the stool or floor pose is in the loop frame.
-2. Runs one headless grok call with only the media tools:
-   `grok -p "<steps>" --tools "image_edit,reference_to_video"`. There is no shell and no `--always-approve`.
-   - `image_edit` [base, render frame] makes a pose still for each keyframe.
-   - `reference_to_video`: 1:1, 720p, duration = ceil(render length) (2–15 s), `first_frame` = `last_frame` = base (this makes the loop), `keyframes` = the pose stills, `images` = [identity].
+2. `imagine.py` calls the Imagine API with the logged-in grok token (the CLI accepts a video and then drops the status poll).
+   - image edit [base, render frame] makes a pose still for each keyframe.
+   - reference-to-video: 1:1, 720p, duration = ceil(render length) (2–15 s), first frame = last frame = base (this makes the loop), keyframes = the pose stills, one identity reference.
    - Props (`prop:` in the motion yml): chair becomes a plain stool, wall becomes a plain wall. The prompt says hands and body don't pass through them.
-3. Copies the video out of `~/.grok/sessions/<cwd>/<session>/videos/N.mp4` (the path grok prints).
+   Exit 2 means the usage balance is exhausted; stop the batch.
+3. Downloads the finished mp4 to `raw.mp4`.
 4. ffmpeg: a 3-frame crossfade at the loop seam; ≤720p H.264 yuv420p, faststart, no audio; CRF raised until the file is <400 KB. The poster is the first frame through `cwebp` (this ffmpeg has no webp encoder). `strip.png` goes in the tmp dir for review.
 5. Appends `date slug figure OK|FAIL note` to `log.txt`.
 
