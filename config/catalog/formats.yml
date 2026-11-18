@@ -55,24 +55,24 @@
   ja: 青のり
   heat: 2
   work: 40
-  rest: 20
+  rest: 10
   rounds: 1
-  round_rest: 20
-  stations: 7
-  summary: A 2:1 work-to-rest ratio across 7 moves. Enough rest to keep form crisp, enough work to stay breathless.
-  science: "A 2:1 ratio is what Tabata et al. (1996) used (20 s on, 10 s off); we found no source showing it is the most common or best ratio. The 40 s / 20 s version is a longer-bout adaptation, so treat it as a middle setting."
+  round_rest: 10
+  stations: 9
+  summary: 40-second efforts with 10-second switches across 9 moves. Longer bouts, same quick transitions.
+  science: "A 2:1 ratio is what Tabata et al. (1996) used (20 s on, 10 s off); we found no source showing it is the most common or best ratio. The 40 s / 10 s version is a longer-bout adaptation, so treat it as a middle setting."
 - key: easy
   name: Goma Easy
   spice: Goma
   ja: 胡麻
   heat: 1
   work: 30
-  rest: 30
+  rest: 10
   rounds: 1
-  round_rest: 30
-  stations: 7
-  summary: Equal work and rest across 7 moves. For beginners, recovery days and slow mornings.
-  science: "Bull et al. (2020), WHO guidelines, British Journal of Sports Medicine 54(24):1451-1462: adults should do 150-300 min of moderate or 75-150 min of vigorous aerobic activity per week, plus muscle-strengthening on 2 or more days. They set no interval ratio, so the 1:1 split is a gentler pacing choice, not a tested protocol."
+  round_rest: 10
+  stations: 11
+  summary: 30 seconds on, 10 to switch, across 11 moves. For beginners, recovery days and slow mornings.
+  science: "Bull et al. (2020), WHO guidelines, British Journal of Sports Medicine 54(24):1451-1462: adults should do 150-300 min of moderate or 75-150 min of vigorous aerobic activity per week, plus muscle-strengthening on 2 or more days. They set no interval ratio, so this 11-move circuit is a gentler pacing choice, not a tested protocol."
 - key: double
   name: Asa no Mi Double
   spice: Asa no mi

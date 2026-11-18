@@ -45,7 +45,7 @@ class PlayerTest < ActionDispatch::IntegrationTest
     end
     log = @user.workout_logs.last
     assert_redirected_to workout_log_path(log)
-    assert_equal [ "Mine", "easy", 30, 30 ], [ log.workout_name, log.format, log.work_seconds, log.rest_seconds ]
+    assert_equal [ "Mine", "easy", 30, 10 ], [ log.workout_name, log.format, log.work_seconds, log.rest_seconds ]
     assert_equal slugs, log.completed_slugs
     assert_in_delta 10.minutes.ago, log.performed_at, 5
     assert_equal 0, @other.workout_logs.count

@@ -1032,8 +1032,10 @@
   - step_up
   - squat
   - tricep_dip
-  about: The first seven moves from Klika & Jordan with a longer rest. 40 seconds
-    on and 20 off give you time to keep your form tidy.
+  - high_knees
+  - lunge
+  about: The first seven moves from Klika & Jordan plus two, in longer 40-second
+    bouts. Slow down enough to keep your form tidy.
 - slug: quiet-forty
   name: Quiet Forty
   format: forty_twenty
@@ -1047,7 +1049,9 @@
   - shadow_boxing
   - glute_bridge
   - tricep_dip
-  about: Seven low-impact moves with a generous 20-second rest. Quiet enough for a
+  - mountain_climbers
+  - wall_sit
+  about: Nine low-impact moves, 40 seconds each. Quiet enough for a
     flat at any hour.
 - slug: hotel-forty
   name: Hotel Forty
@@ -1062,8 +1066,10 @@
   - jumping_jacks
   - lateral_lunge
   - shoulder_taps
-  about: Seven moves for a hotel room. Just floor space; 20 seconds of rest is enough
-    to reset for the next move.
+  - mountain_climbers
+  - wall_sit
+  about: Nine moves for a hotel room. Just floor space and 40 steady seconds
+    per move.
 - slug: forty-standing
   name: Forty Standing
   format: forty_twenty
@@ -1077,6 +1083,8 @@
   - high_knees
   - lateral_lunge
   - shadow_boxing
+  - squat
+  - squat_jumps
   about: All standing, with a chair for the dips. Good for an office, living room
     or hallway.
 - slug: forty-for-beginners
@@ -1092,8 +1100,9 @@
   - step_up
   - squat
   - bird_dog
-  about: Easy moves and a slow pace. 20 seconds of rest per move is plenty to catch
-    your breath.
+  - jumping_jacks
+  - wall_sit
+  about: Easy moves and a slow pace. Long, steady bouts with quick switches.
 - slug: forty-peak
   name: Forty Peak
   format: forty_twenty
@@ -1107,6 +1116,8 @@
   - squat_jumps
   - lunge
   - pike_push_up
+  - jumping_jacks
+  - squat
   about: 'The advanced seven: burpees, jumps, rotating push-ups and pike push-ups.
     Long rests let you hold form on the hardest moves.'
 - slug: forty-cardio
@@ -1122,8 +1133,10 @@
   - skater_hops
   - crunch
   - mountain_climbers
-  about: Four cardio moves with strength between them. The 20-second rest helps you
-    sustain the cardio through the whole set.
+  - wall_sit
+  - burpees
+  about: Four cardio moves with strength between them. Pace the cardio so you
+    last the whole set.
 - slug: forty-legs
   name: Forty Legs
   format: forty_twenty
@@ -1137,6 +1150,8 @@
   - squat_jumps
   - wall_sit
   - bicycle_crunch
+  - jumping_jacks
+  - squat
   about: Cardio and legs alternate, with one core finisher. The lower body does most
     of the work.
 - slug: forty-upper
@@ -1152,6 +1167,8 @@
   - pike_push_up
   - plank
   - shoulder_taps
+  - high_knees
+  - wall_sit
   about: Pushing moves in every other slot. Legs, cardio and core fill the gaps so
     your arms recover.
 - slug: forty-core
@@ -1167,6 +1184,8 @@
   - side_plank
   - push_up
   - dead_bug
+  - jumping_jacks
+  - squat
   about: Four core moves, each separated by cardio, legs or arms. Your trunk works
     hard while the rest of you gets a breather.
 - slug: forty-arms-abs
@@ -1182,6 +1201,8 @@
   - push_up_rotation
   - side_plank
   - knee_push_up
+  - jumping_jacks
+  - squat
   about: 'Arms and trunk alternate: no legs, ideal for sore-leg days.'
 - slug: forty-lower-core
   name: Forty Lower & Core
@@ -1196,6 +1217,8 @@
   - glute_bridge
   - side_plank
   - lateral_lunge
+  - jumping_jacks
+  - wall_sit
   about: Legs and core alternate, so sore arms and shoulders can rest.
 - slug: forty-posterior
   name: Forty Posterior
@@ -1210,6 +1233,8 @@
   - sumo_squat
   - inchworm
   - lunge
+  - jumping_jacks
+  - squat
   about: Back-of-body moves that counter sitting. Low impact and joint friendly.
 - slug: forty-hard-first
   name: Forty Hard First
@@ -1224,8 +1249,10 @@
   - high_knees
   - squat
   - tricep_dip
-  about: Technical moves first, simpler ones last. The 20-second rest helps you hold
-    form on the early hard moves.
+  - jumping_jacks
+  - wall_sit
+  about: Technical moves first, simpler ones last. Hold form on the early hard
+    moves.
 - slug: forty-agility
   name: Forty Agility
   format: forty_twenty
@@ -1239,6 +1266,8 @@
   - jumping_jacks
   - lunge
   - inchworm
+  - high_knees
+  - squat
   about: Hops and changes of direction. Forty seconds is long enough to find a rhythm,
     and the rest keeps the landings controlled.
 - slug: gentle-start
@@ -1254,6 +1283,10 @@
   - step_up
   - sumo_squat
   - tricep_dip
+  - mountain_climbers
+  - squat
+  - push_up
+  - wall_sit
   about: 'A soft start to your morning: no jumping, equal work and rest, and a pace
     you can talk through.'
 - slug: recovery-roll
@@ -1269,6 +1302,10 @@
   - sumo_squat
   - dead_bug
   - squat
+  - mountain_climbers
+  - wall_sit
+  - step_up
+  - lunge
   about: For the day after a hard workout. Slow, low-impact moves for the glutes,
     back and trunk, with as much rest as work.
 - slug: lights-out
@@ -1284,6 +1321,10 @@
   - calf_raise
   - tricep_dip
   - bird_dog
+  - mountain_climbers
+  - wall_sit
+  - step_up
+  - lunge
   about: Slow and silent. Seven calm moves before bed, with a break for each to let
     your heart rate settle.
 - slug: desk-unwind
@@ -1299,6 +1340,10 @@
   - shadow_boxing
   - calf_raise
   - jumping_jacks
+  - wall_sit
+  - high_knees
+  - lunge
+  - squat_jumps
   about: A standing break from your chair. No floor, and a long rest between moves,
     so you will not need to shower afterward.
 - slug: hotel-warm-up
@@ -1314,6 +1359,10 @@
   - shadow_boxing
   - sumo_squat
   - bird_dog
+  - high_knees
+  - wall_sit
+  - mountain_climbers
+  - lunge
   about: A light, equipment-free routine to get moving after a flight or a long drive.
     Half the time is rest.
 - slug: first-week
@@ -1329,6 +1378,10 @@
   - jumping_jacks
   - glute_bridge
   - tricep_dip
+  - high_knees
+  - wall_sit
+  - mountain_climbers
+  - lunge
   about: The very first workout to try. Easy versions of each move, and as much rest
     as work.
 - slug: easy-arms-abs
@@ -1344,6 +1397,10 @@
   - inchworm
   - plank
   - push_up
+  - jumping_jacks
+  - squat
+  - high_knees
+  - wall_sit
   about: A gentle upper-body and trunk session with no legs. The knee push-up and
     dead bug keep the intensity down.
 - slug: gentle-legs-core
@@ -1359,8 +1416,12 @@
   - glute_bridge
   - plank
   - lateral_lunge
-  about: Easy legs and trunk work for sore arms. The equal rest lets your heart rate
-    fall between each move.
+  - jumping_jacks
+  - wall_sit
+  - high_knees
+  - lunge
+  about: Easy legs and trunk work for sore arms. Gentle enough that your heart rate
+    stays steady.
 - slug: stand-tall
   name: Stand Tall
   format: easy
@@ -1374,6 +1435,10 @@
   - step_up
   - calf_raise
   - standing_knee_crunch
+  - high_knees
+  - wall_sit
+  - squat_jumps
+  - lunge
   about: Entirely on your feet, with a chair for the step-ups. A gentle option for
     days when the floor is out of the question.
 - slug: slow-burn
@@ -1389,6 +1454,10 @@
   - high_knees
   - wall_sit
   - tricep_dip
+  - jumping_jacks
+  - squat
+  - burpees
+  - lateral_lunge
   about: Stronger moves with a long rest after each. Meant to build your base, not
     leave you breathless.
 - slug: steady-heart
@@ -1404,6 +1473,10 @@
   - jumping_jacks
   - dead_bug
   - mountain_climbers
+  - wall_sit
+  - high_knees
+  - lunge
+  - burpees
   about: 'A gentle cardio session: four low-effort cardio moves with strength between
     them. Half the time is rest.'
 - slug: back-line-easy
@@ -1419,6 +1492,10 @@
   - sumo_squat
   - inchworm
   - lunge
+  - jumping_jacks
+  - squat
+  - high_knees
+  - wall_sit
   about: Slow glute and back moves. A kind counter to sitting that you can do in a
     short time.
 - slug: the-original-double
