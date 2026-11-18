@@ -121,3 +121,10 @@
 2026-11-12 burpees female FAIL imagine exit 1 edit start pose HTTP 403 /images/edits {"code":"personal-team-blocked:spending-limit","error":"You have run out of credits or need a Grok subscription. Add credits at https://grok.com/?_s=usage or upgrade at https://grok.com/supergrok."} 
 2026-11-12 mountain_climbers male FAIL imagine exit 1 edit start pose HTTP 403 /images/edits {"code":"personal-team-blocked:spending-limit","error":"You have run out of credits or need a Grok subscription. Add credits at https://grok.com/?_s=usage or upgrade at https://grok.com/supergrok."} 
 2026-11-12 push_up_rotation female FAIL imagine exit 2 t pose 2 at 3.6s -> key 3.667s QUOTA 403 {"code":"personal-team-blocked:spending-limit","error":"You have run out of credits or need a Grok subscription. Add credits at https://grok.com/?_s=usage or upgrade at https://grok.com/supergrok."} 
+2026-11-18 standing_knee_crunch female OK 170120B
+2026-11-18 tricep_dip male OK 98318B
+2026-11-18 tricep_dip female OK 178340B
+2026-11-18 burpees male OK 223887B
+2026-11-18 burpees female OK 232594B
+2026-11-18 mountain_climbers male OK 109914B
+2026-11-18 push_up_rotation female OK 196191B

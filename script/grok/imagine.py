@@ -5,7 +5,7 @@ The grok CLI's video status poll drops the request (network error) after the
 server has already accepted it, so this calls the API directly and polls itself.
 Exit 2 = usage balance exhausted (stop the batch). Other failures exit 1.
 """
-import base64, json, math, subprocess, sys, time, urllib.error, urllib.request
+import base64, json, subprocess, sys, time, urllib.error, urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -161,7 +161,9 @@ def main():
     length = float(subprocess.check_output(
         ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(src)],
         text=True).strip())
-    dur = min(15, max(2, math.ceil(length)))
+    # Reference workout apps use a ~4s seamless loop (3–5s). The source clip only
+    # supplies the poses; the rendered demo is always one 4s cycle.
+    dur = 4
     n = 2 if length < 2.6 else 4
     prop = ""
     motion = (ROOT / "config/catalog/motions" / f"{slug}.yml").read_text()

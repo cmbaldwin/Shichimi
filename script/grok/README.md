@@ -14,7 +14,7 @@ KEEP_RAW=1 script/grok/make.sh male squat # re-run only the ffmpeg post-process 
    Prop and floor moves (`prop:` in the motion yml, `floor: true` in exercises.yml) first get their own start still (base + render frame 0), which is used as first/last frame, so the stool or floor pose is in the loop frame.
 2. `imagine.py` calls the Imagine API with the logged-in grok token (the CLI accepts a video and then drops the status poll).
    - image edit [base, render frame] makes a pose still for each keyframe.
-   - reference-to-video: 1:1, 720p, duration = ceil(render length) (2–15 s), first frame = last frame = base (this makes the loop), keyframes = the pose stills, one identity reference.
+   - reference-to-video: 1:1, 720p, duration 4 s (a 3–5 s loop, like the reference apps), first frame = last frame = base (this makes the loop), keyframes = the pose stills, one identity reference.
    - Props (`prop:` in the motion yml): chair becomes a plain stool, wall becomes a plain wall. The prompt says hands and body don't pass through them.
    Exit 2 means the usage balance is exhausted; stop the batch.
 3. Downloads the finished mp4 to `raw.mp4`.
